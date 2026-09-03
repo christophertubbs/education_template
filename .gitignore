@@ -72,6 +72,10 @@ generated/*
 # Temporary project-generation workspace
 generated/.tmp/
 
+# Target repository checkouts are source material, not generator source.
+repository/*
+!repository/.gitkeep
+
 # If generation is configured outside generated/, keep common scratch paths out.
 tmp/
 temp/
