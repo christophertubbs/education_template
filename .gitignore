@@ -1,0 +1,194 @@
+# -----------------------------------------------------------------------------
+# Python
+# -----------------------------------------------------------------------------
+
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Native Python extensions
+*.so
+
+# Packaging / build output
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# -----------------------------------------------------------------------------
+# Virtual environments
+# -----------------------------------------------------------------------------
+
+.venv/
+venv/
+env/
+ENV/
+
+# Conda
+.conda/
+conda-meta/
+
+# -----------------------------------------------------------------------------
+# Django
+# -----------------------------------------------------------------------------
+
+# Local SQLite databases
+*.sqlite3
+*.sqlite3-journal
+
+# Collected static files
+staticfiles/
+
+# User-uploaded / runtime media
+media/
+
+# Local Django overrides
+local_settings.py
+
+# -----------------------------------------------------------------------------
+# Environment / secrets
+# -----------------------------------------------------------------------------
+
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx
+
+# -----------------------------------------------------------------------------
+# Generated projects
+# -----------------------------------------------------------------------------
+
+# Preserve generated/ itself with generated/.gitignore, but ignore everything
+# the application creates inside it.
+generated/*
+!generated/.gitignore
+
+# Temporary project-generation workspace
+generated/.tmp/
+
+# If generation is configured outside generated/, keep common scratch paths out.
+tmp/
+temp/
+
+# -----------------------------------------------------------------------------
+# Testing / coverage
+# -----------------------------------------------------------------------------
+
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+.tox/
+.nox/
+
+# Hypothesis
+.hypothesis/
+
+# -----------------------------------------------------------------------------
+# Type checking / linting / formatting
+# -----------------------------------------------------------------------------
+
+.mypy_cache/
+.pyright/
+.pyre/
+.ruff_cache/
+
+# -----------------------------------------------------------------------------
+# Documentation builds
+# -----------------------------------------------------------------------------
+
+docs/_build/
+site/
+
+# -----------------------------------------------------------------------------
+# Jupyter
+# -----------------------------------------------------------------------------
+
+.ipynb_checkpoints/
+
+# -----------------------------------------------------------------------------
+# IDEs / editors
+# -----------------------------------------------------------------------------
+
+# JetBrains
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# Vim
+*.swp
+*.swo
+*.swn
+*~
+
+# Emacs
+\#*\#
+.#*
+
+# -----------------------------------------------------------------------------
+# Operating systems
+# -----------------------------------------------------------------------------
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux desktop cruft
+.directory
+
+# -----------------------------------------------------------------------------
+# Logs / runtime state
+# -----------------------------------------------------------------------------
+
+*.log
+logs/
+
+*.pid
+*.pid.lock
+
+# -----------------------------------------------------------------------------
+# Cache / scratch
+# -----------------------------------------------------------------------------
+
+.cache/
+.cache-*/
+scratch/
+
+# -----------------------------------------------------------------------------
+# Local tooling
+# -----------------------------------------------------------------------------
+
+.python-version
+
+# Optional direnv configuration
+.direnv/
+
+# -----------------------------------------------------------------------------
+# Project-specific local files
+# -----------------------------------------------------------------------------
+
+# Agent/runtime scratch data should not be committed unless explicitly intended.
+docs/agent/*.tmp
+docs/agent/*.bak
+
+# Keep actual agent state files tracked:
+# docs/agent/STATUS.md
+# docs/agent/TASKS.md
+# docs/agent/DECISIONS.md
