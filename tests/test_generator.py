@@ -62,6 +62,37 @@ class ArtifactValidationTests(unittest.TestCase):
         report = validate_artifacts(artifacts)
         self.assertIn("required items remain unresolved", report.errors)
 
+    def test_paragraph_only_lesson_fails_presentation_validation(self) -> None:
+        artifacts = load_artifacts(Path("curricula/cfe"))
+        artifacts.curriculum["lessons"][0]["content"] = [
+            {"type": "paragraph", "inline": [{"type": "text", "text": "Flat"}]}
+        ]
+        report = validate_artifacts(artifacts)
+        self.assertTrue(any("flattens all content" in error for error in report.errors))
+
+    def test_equation_requires_accessible_text(self) -> None:
+        artifacts = load_artifacts(Path("curricula/cfe"))
+        artifacts.curriculum["lessons"][0]["content"] = [
+            {"type": "equation", "latex": "x=1"}
+        ]
+        report = validate_artifacts(artifacts)
+        self.assertTrue(
+            any("lacks accessible equation text" in error for error in report.errors)
+        )
+
+    def test_glossary_mentions_require_a_lesson_definition(self) -> None:
+        artifacts = load_artifacts(Path("curricula/cfe"))
+        schaake = next(
+            item
+            for item in artifacts.curriculum["glossary"]
+            if item["identifier"] == "schaake"
+        )
+        schaake["lesson_identifiers"].remove("partitioning-and-et")
+        report = validate_artifacts(artifacts)
+        self.assertTrue(
+            any("mentions glossary entry schaake" in error for error in report.errors)
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

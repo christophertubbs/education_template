@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Education Runtime{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'education_runtime/runtime.css' %}">
+  {% block head %}{% endblock %}
 </head>
 <body data-curriculum-id="{{ curriculum.identifier|default:'' }}" data-curriculum-version="{{ curriculum.version|default:'' }}" data-pop-url="{% if curriculum %}{{ curriculum.get_pop_assessment_url }}{% endif %}" data-pop-probability="{{ curriculum.pop_quiz_probability|default:0 }}" data-pop-cooldown="{{ curriculum.pop_quiz_cooldown|default:3 }}">
   <a class="skip-link" href="#main">Skip to content</a>

@@ -14,8 +14,13 @@
   assessment, and provenance artifacts.
 * Record prior/current source revisions and changed-file impact during
   regeneration.
+* Implement structured lesson blocks and inline semantics, accessible MathJax
+  equations, source-aware code, variable tables, examples, diagnostics,
+  callouts, and lesson-linked glossary definitions. Regenerate CFE lessons under
+  schema 2.1 and product/runtime 1.1.
 
 ## Ready
 
-* Add browser-level WCAG 2.2 AA and pop-quiz navigation tests.
+* Add browser-level WCAG 2.2 AA coverage for rendered mathematics, responsive
+  tables, glossary-definition navigation, and pop-quiz navigation.
 * Enforce semantic runtime compatibility before product migration.

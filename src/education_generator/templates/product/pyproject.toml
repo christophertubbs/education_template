@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "__APP_NAME__"
-version = "1.0.0"
+version = "__PRODUCT_VERSION__"
 description = "Curriculum Product for __DISPLAY_NAME__."
 requires-python = ">=3.11"
 dependencies = ["education-curriculum-system__RUNTIME_COMPATIBILITY__"]
@@ -14,4 +14,3 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 __APP_NAME__ = ["data/*.json"]
-

@@ -9,3 +9,7 @@ Target source: `__REPOSITORY_URL__` at `__RESOLVED_COMMIT__` (configured as
 Current state: all generator validation and audit fields were complete when
 this product was promoted. Canonical baseline data is packaged under
 `src/__APP_NAME__/data/`; evidence and audits are under `provenance/`.
+
+Lesson content uses schema 2.1 semantic blocks for equations, code, callouts,
+definitions, tables, variables, worked examples, and diagnostics. Glossary
+relationships make referenced definitions visible within each lesson.
