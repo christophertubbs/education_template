@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Progress{% endblock %}
+{% block content %}
+<section class="progress-page">
+    <h1>Progress</h1>
+    <div data-progress-summary></div>
+    <div class="button-row">
+        <button class="primary-button" data-export-progress>Export</button>
+        <label class="file-button">
+            Import
+            <input type="file" accept="application/json" data-import-progress>
+        </label>
+        <button class="secondary-button" data-reset-progress>Reset</button>
+    </div>
+    <pre data-progress-json></pre>
+</section>
+{% endblock %}

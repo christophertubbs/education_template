@@ -1,0 +1,12 @@
+"""Version and template-location constants for the education generator."""
+
+from pathlib import Path
+from typing import Final
+
+
+GENERATOR_NAME: Final[str] = "education_template"
+GENERATOR_VERSION: Final[str] = "0.2.0"
+CURRICULUM_SCHEMA_VERSION: Final[str] = "1.0"
+TEMPLATE_VERSION: Final[str] = "0.2.0"
+PACKAGE_ROOT: Final[Path] = Path(__file__).resolve().parent
+TEMPLATE_ROOT: Final[Path] = PACKAGE_ROOT / "templates"

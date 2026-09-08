@@ -1,7 +1,7 @@
 {
-    "repository_url": "https://github.com/NOAA-OWP/lstm.git",
-    "name": "lstm",
+    "repository_url": "https://github.com/NOAA-OWP/cfe.git",
+    "name": "cfe",
     "revision": "master",
-    "curriculum_app_name": "lstm",
-    "display_name": "lstm"
+    "curriculum_app_name": "cfe",
+    "display_name": "cfe"
 }

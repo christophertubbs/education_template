@@ -25,14 +25,25 @@
   lesson.
 * Generalize generated Django scaffold for other repositories. Requirements:
   `SPEC.md` sections 4, 7-13, 32-35. Generator now parameterizes app labels,
-  URL namespaces, static paths, migrations, loader imports, progress storage,
-  host import paths, generated README paths, and optional external curriculum
+  URL namespaces, static paths, loader imports, progress storage,
+  host import paths, generated README paths, and external curriculum
   content.
+* Refactor generator artifacts and curriculum data out of Python. Requirements:
+  `SPEC.md` sections 4, 6-7, 11, 13, 29, 33-35, 39. Reusable Python, HTML,
+  CSS, JavaScript, TOML, and Markdown scaffolds now live in natural files;
+  LSTM curriculum records live in `curricula/lstm/curriculum.json`; Django
+  creates `manage.py` and derives migrations with `makemigrations`.
+* Include the reusable launcher in newly generated standalone hosts.
+  Requirements: `SPEC.md` sections 7-10, 33-35, 39. The natural shell artifact
+  is stored with the generator, copied with executable mode preserved, and
+  documented as the default launch command.
+* Generate a CFE curriculum while preserving the existing standalone host.
+  Requirements: `SPEC.md` sections 5-7, 9, 13-23, 31-35, 42. Added conventional
+  per-repository curriculum paths, preserved existing host files, generated
+  independent migrations, and created the CFE app at `generated/education/cfe`.
 
 ## Ready
 
-* Add broader automated tests for generated output structure and a complete
-  non-`lstm` fixture generation path.
 * Expand curriculum depth further for hydrology prerequisites, CAMELS data
   interpretation, PyTorch recurrent-state mechanics, and NextGen operational
   failure modes.

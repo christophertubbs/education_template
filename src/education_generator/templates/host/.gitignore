@@ -1,0 +1,5 @@
+/db.sqlite3
+/staticfiles/
+/__REPOSITORY_NAME__/
+__pycache__/
+*.py[cod]

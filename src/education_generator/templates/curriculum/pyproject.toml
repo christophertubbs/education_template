@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=70"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "__APP_NAME__-education"
+version = "0.1.0"
+description = "Reusable Django curriculum app for __DISPLAY_NAME__"
+requires-python = ">=3.12"
+dependencies = [
+    "Django>=5.0,<6.0",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"__APP_NAME__" = [
+    "data/*.json",
+    "templates/__APP_NAME__/*.html",
+    "static/__APP_NAME__/css/*.css",
+    "static/__APP_NAME__/js/*.js",
+]

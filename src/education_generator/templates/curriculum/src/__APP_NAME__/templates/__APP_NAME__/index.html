@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}__DISPLAY_NAME__ Curriculum{% endblock %}
+{% block content %}
+<section class="hero-band">
+    <div>
+        <p class="eyebrow">Source-traceable course</p>
+        <h1>__DISPLAY_NAME__ Repository Curriculum</h1>
+        <p>Learn the target repository from prerequisites through source-level contribution work.</p>
+    </div>
+    <div class="progress-card" data-progress-summary></div>
+</section>
+<section class="content-grid">
+    <div>
+        <h2>Lessons</h2>
+        <ol class="lesson-list">
+            {% for lesson in lessons %}
+                <li>
+                    <a href="{% url '__APP_NAME__:lesson' lesson.identifier %}">{{ lesson.title }}</a>
+                    <p>{{ lesson.summary }}</p>
+                </li>
+            {% endfor %}
+        </ol>
+    </div>
+    <aside>
+        <h2>Assessments</h2>
+        {% for assessment in assessments %}
+            <a class="assessment-link" href="{% url '__APP_NAME__:assessment' assessment.identifier %}">
+                <span>{{ assessment.title }}</span>
+                <small>{{ assessment.get_assessment_type_display }}</small>
+            </a>
+        {% endfor %}
+    </aside>
+</section>
+{% endblock %}

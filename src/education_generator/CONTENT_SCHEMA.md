@@ -1,12 +1,22 @@
 # Curriculum Content JSON
 
-The generator can reuse the Django host and curriculum-app scaffold for another
-repository by adding this optional field to `project.json`:
+The generator reuses the Django host and curriculum-app scaffold for each
+repository by loading curriculum from a data path in `project.json`:
 
 ```json
 {
   "curriculum_content_path": "path/to/curriculum.json"
 }
+```
+
+When the field is omitted, the generator uses the conventional path
+`curricula/<repository-name>/curriculum.json`.
+
+The path is relative to `project.json`. A caller may upload a different data
+file for one generation run without changing project configuration:
+
+```bash
+python -m education_generator --curriculum-content /path/to/curriculum.json
 ```
 
 The content file must contain the same top-level structure packaged into the
@@ -77,5 +87,7 @@ generated app:
 ```
 
 The generator replaces any supplied `metadata` object with current generation
-metadata, including the resolved target repository commit. Keep section quizzes
-one-to-one with lessons when using the current lesson-completion flow.
+metadata, including the resolved target repository commit. The Python generator
+contains no fallback lessons, glossary entries, assessments, or questions. Keep
+section quizzes one-to-one with lessons when using the current lesson-completion
+flow.
