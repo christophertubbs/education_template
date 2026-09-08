@@ -143,8 +143,20 @@ Current validation result:
   lesson contains 241-284 words.
 * Existing host tracked diff fingerprint remained
   `07182b710bed4721225dc600fa2a0be600e29dfe60ce3be95b2c5b947c140267`.
+* Documented how to clone `lstm_onboarding` and `cfe_onboarding` into
+  package-matching host directories, install them as editable packages, apply
+  migrations, load each curriculum explicitly, validate, launch, and update.
+  Updated both `generated/education/README.md` and the reusable host README
+  template.
 
-Current failures: none known.
+Current failures affecting documentation verification:
+
+* The current generated host fails before Django system checks because
+  `standalone/app_common.py` passes a missing configuration environment value
+  to `pathlib.Path`; with that environment value supplied, curriculum discovery
+  does not populate `INSTALLED_APPS` because `standalone/settings.py` checks for
+  `urls` rather than `urls.py`. These pre-existing host implementation defects
+  were not changed by the documentation-only task.
 
 Important assumptions:
 

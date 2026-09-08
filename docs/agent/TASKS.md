@@ -41,6 +41,11 @@
   Requirements: `SPEC.md` sections 5-7, 9, 13-23, 31-35, 42. Added conventional
   per-repository curriculum paths, preserved existing host files, generated
   independent migrations, and created the CFE app at `generated/education/cfe`.
+* Document installation of onboarding repositories into the generated host.
+  Requirements: `SPEC.md` sections 9-11, 13, 33, 35. Added clone naming,
+  editable installation, migration, package-specific curriculum loading,
+  validation, launch, and update instructions to the current and templated host
+  READMEs.
 
 ## Ready
 
