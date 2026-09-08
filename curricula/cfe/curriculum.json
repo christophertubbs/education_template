@@ -42,20 +42,339 @@
       "summary": "CFE is a deliberately simplified conceptual hydrologic model designed to reproduce key National Water Model runoff behaviors behind a BMI interface.",
       "content": [
         {
-          "type": "paragraph",
-          "text": "CFE means Conceptual Functional Equivalent. The repository README describes it as a simplified conceptual model intended to be functionally equivalent to the National Water Model for important runoff-generation behavior. MODEL.md calls the scientific idea a t-shirt approximation: replace detail that behaves conceptually in practice with explicit conceptual stores and routing components. This is not a claim that CFE reproduces every NWM state or spatial process. It is a testable hypothesis that rainfall partitioning, vadose-zone storage, groundwater response, and routing can be represented more simply while retaining useful catchment response."
+          "type": "definition",
+          "term": "Conceptual Functional Equivalent (CFE)",
+          "inline": [
+            {
+              "type": "text",
+              "text": "A deliberately simplified conceptual hydrologic model intended to reproduce important runoff-generation behavior of the National Water Model. It is an explicit, testable approximation\u2014not a claim that every NWM state or spatial process is reproduced."
+            }
+          ]
         },
         {
           "type": "paragraph",
-          "text": "The implementation is primarily C. Public structures and function declarations live under include/, while src/cfe.c contains the timestep science and src/bmi_cfe.c adapts model state to the C Basic Model Interface. Separate src/conceptual_reservoir.c, src/giuh.c, and src/nash_cascade.c modules implement storage and routing behavior. The original_author_code directory preserves the earlier non-BMI program as historical evidence; it is not the implementation linked into the current BMI library."
+          "inline": [
+            {
+              "type": "text",
+              "text": "The current implementation is primarily C and exposes a "
+            },
+            {
+              "type": "glossary",
+              "text": "Basic Model Interface (BMI)",
+              "glossary_identifier": "bmi",
+              "definition": "The lifecycle, timing, variable, value-access, and grid function contract exposed by CFE for framework coupling."
+            },
+            {
+              "type": "text",
+              "text": ". The timestep science is separate from framework exchange, which lets you diagnose hydrologic behavior without confusing it with lifecycle or data-transfer behavior."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "A developer should distinguish hydrologic depth from discharge. Most core storages and timestep fluxes are represented as meters of water over a catchment. The model eventually combines surface runoff, delayed lateral runoff, and groundwater discharge into Qout_m. A framework can convert that catchment-depth result for downstream use. Keeping units visible is essential because configuration includes meters, meters per second, meters per hour, dimensionless ratios, and inverse-time coefficients."
+          "type": "table",
+          "caption": "Repository map: begin an investigation in the narrowest responsible module",
+          "headers": [
+            "Path",
+            "Responsibility",
+            "Typical question"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "file",
+                  "text": "src/cfe.c"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Timestep water movement, ET, partitioning, and aggregation"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Where did this timestep's water go?"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "file",
+                  "text": "src/bmi_cfe.c"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Initialization, configuration, BMI metadata, and value exchange"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Why did initialization or coupling fail?"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "file",
+                  "text": "src/conceptual_reservoir.c"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Thresholded soil and groundwater outlet fluxes"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Why did storage release too much or too little?"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "file",
+                  "text": "src/giuh.c"
+                },
+                {
+                  "type": "text",
+                  "text": " and "
+                },
+                {
+                  "type": "file",
+                  "text": "src/nash_cascade.c"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Surface and lateral-flow delay"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Why is the outlet hydrograph mistimed?"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "file",
+                  "text": "include/"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Public structures and function contracts"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "What state and parameters cross module boundaries?"
+                }
+              ]
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "The repository supports several execution arrangements. BASE reads local forcing without potential evapotranspiration. FORCING receives precipitation through BMI from AORC. FORCINGPET couples AORC and PET. AETROOTZONE also couples a soil-moisture-profile component. NGEN builds the shared BMI library for framework integration. When evaluating a defect, first identify the build mode, forcing source, runoff schemes, and optional couplings; otherwise the same source can follow materially different paths."
+          "type": "variable_table",
+          "caption": "Core quantities that should remain visually distinct during debugging",
+          "rows": [
+            {
+              "symbol": "P_t",
+              "accessible_symbol": "P sub t",
+              "identifier": "timestep_rainfall_input_m",
+              "meaning": "Rainfall remaining after direct rainfall ET",
+              "units": "m per timestep",
+              "role": "input/flux",
+              "constraints": "nonnegative"
+            },
+            {
+              "symbol": "S_s",
+              "accessible_symbol": "S sub s",
+              "identifier": "soil_reservoir.storage_m",
+              "meaning": "Current soil water storage",
+              "units": "m",
+              "role": "state",
+              "constraints": "between zero and storage_max_m"
+            },
+            {
+              "symbol": "Q_t",
+              "accessible_symbol": "Q sub t",
+              "identifier": "Qout_m",
+              "meaning": "Total catchment runoff depth leaving this timestep",
+              "units": "m per timestep",
+              "role": "output",
+              "constraints": "surface + lateral + groundwater"
+            },
+            {
+              "symbol": "\u0394t",
+              "accessible_symbol": "delta t",
+              "identifier": "time_step_size",
+              "meaning": "Model timestep duration",
+              "units": "s",
+              "role": "input",
+              "constraints": "positive; convert before combining with hourly coefficients"
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "important",
+          "title": "Depth is not volumetric discharge",
+          "inline": [
+            {
+              "type": "text",
+              "text": "Most CFE stores and timestep fluxes are water depths over a catchment. "
+            },
+            {
+              "type": "code",
+              "text": "Qout_m"
+            },
+            {
+              "type": "text",
+              "text": " is not cubic metres per second. Any conversion to discharge needs catchment area and timestep duration; silently mixing these quantities can yield plausible-looking but wrong output."
+            }
+          ]
+        },
+        {
+          "type": "comparison_table",
+          "caption": "Build modes change the execution boundary, not the underlying source identity",
+          "headers": [
+            "Mode",
+            "Forcing / coupling",
+            "Result"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "BASE"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Local forcing; no PET coupling"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Standalone executable"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "FORCING"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "AORC precipitation through BMI"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Pseudo-framework executable"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "FORCINGPET"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "AORC plus PET"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Coupled executable"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "AETROOTZONE"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "AORC, PET, and soil-moisture profile"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Root-zone AET executable"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "NGEN"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Framework supplies BMI values"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Shared library "
+                },
+                {
+                  "type": "code",
+                  "text": "cfebmi"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "debugging-tip",
+          "title": "Establish the active path first",
+          "inline": [
+            {
+              "type": "text",
+              "text": "Before interpreting a defect, record the build mode, forcing source, rainfall-partitioning scheme, surface-routing scheme, and optional soil-freeze or root-zone couplings. The same source revision can follow materially different branches."
+            }
+          ]
         }
       ],
       "concept_identifiers": [
@@ -76,19 +395,222 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "The central science entry point is cfe(...) in src/cfe.c. Its arguments expose the state-space boundary directly: soil and groundwater reservoir structures, rainfall depth, partitioning parameters, GIUH and Nash state arrays, evapotranspiration state, mass-balance accumulators, timestep duration, and output pointers. At entry it copies pointed-to values into local variables for readable domain calculations. The comments state that storages use meters and fluxes use meters per timestep."
+          "inline": [
+            {
+              "type": "text",
+              "text": "The central science entry point is "
+            },
+            {
+              "type": "code",
+              "text": "cfe(...)"
+            },
+            {
+              "type": "text",
+              "text": " in "
+            },
+            {
+              "type": "file",
+              "text": "src/cfe.c"
+            },
+            {
+              "type": "text",
+              "text": ". It advances one catchment timestep while preserving separate surface, lateral, groundwater, evapotranspiration, and storage paths."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "A timestep first adds rainfall to volin and cumulative_vol. Potential evapotranspiration in meters per second is multiplied by time_step_size to obtain a timestep depth. Actual ET is then taken in an ordered sequence: from rainfall, from surface-retention storage when a surface Nash cascade exists, and from soil when storage exceeds wilting-point storage. Each removal updates dedicated ET totals, volout, and the reduced potential-ET budget so the same atmospheric demand is not spent repeatedly."
+          "type": "ordered_list",
+          "items": [
+            [
+              {
+                "type": "text",
+                "text": "Record rainfall input and convert potential ET from a rate to a timestep depth."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Remove actual ET from rainfall, then surface retention, then soil."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Recalculate the soil deficit after ET changes storage."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Partition remaining rainfall with "
+              },
+              {
+                "type": "glossary",
+                "text": "Schaake",
+                "glossary_identifier": "schaake",
+                "definition": "CFE rainfall partitioning based on soil moisture deficit, timestep, soil properties, and optional frozen-soil limitation."
+              },
+              {
+                "type": "text",
+                "text": " or "
+              },
+              {
+                "type": "glossary",
+                "text": "Xinanjiang",
+                "glossary_identifier": "xinanjiang",
+                "definition": "An alternative variable-contributing-area partitioning method configured with inflection, shape, and urban-fraction parameters."
+              },
+              {
+                "type": "text",
+                "text": " logic."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Move infiltration into soil; compute percolation and lateral fluxes."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Route surface and lateral water, add groundwater baseflow, and update mass-balance accumulators."
+              }
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "After ET changes soil storage, CFE recalculates the soil storage deficit. Positive rainfall is partitioned by the configured Schaake or Xinanjiang method into infiltration and infiltration excess. If proposed infiltration exceeds available soil capacity, the amount that cannot fit is returned to surface runoff. Infiltration enters the soil reservoir; conceptual_reservoir_flux_calc then computes primary percolation toward groundwater and secondary lateral flow toward the subsurface Nash cascade."
+          "type": "equation",
+          "latex": "P_t = ET_t + Q_t + L_t + \\Delta S_t",
+          "accessible_text": "Rainfall depth equals evapotranspiration plus outlet runoff plus leakage plus the change in total stored water",
+          "caption": "Catchment-depth water balance for one timestep. Internal transfers cancel when every store is included.",
+          "number": "1"
         },
         {
-          "type": "paragraph",
-          "text": "The outlet result is assembled from distinct travel paths. Surface excess is delayed by either GIUH convolution or a surface Nash cascade. Lateral soil flow is delayed by the subsurface Nash cascade. The groundwater reservoir contributes baseflow. Qout_m is their sum for the timestep. The massbal structure records cumulative inputs, outputs, internal transfers, ET, storage changes, and known leakage. Debugging should compare the component paths and storage deltas before blaming the final sum."
+          "type": "variable_table",
+          "caption": "Water-balance terms and their implementation counterparts",
+          "rows": [
+            {
+              "symbol": "P_t",
+              "accessible_symbol": "P sub t",
+              "identifier": "timestep_rainfall_input_m",
+              "meaning": "External rainfall input",
+              "units": "m per timestep",
+              "role": "input",
+              "constraints": ""
+            },
+            {
+              "symbol": "ET_t",
+              "accessible_symbol": "E T sub t",
+              "identifier": "actual_et_m_per_timestep",
+              "meaning": "Actual evapotranspiration from all enabled stores",
+              "units": "m per timestep",
+              "role": "output flux",
+              "constraints": ""
+            },
+            {
+              "symbol": "Q_t",
+              "accessible_symbol": "Q sub t",
+              "identifier": "Qout_m",
+              "meaning": "Surface + lateral + groundwater outlet water",
+              "units": "m per timestep",
+              "role": "output flux",
+              "constraints": ""
+            },
+            {
+              "symbol": "L_t",
+              "accessible_symbol": "L sub t",
+              "identifier": "vol_sch_runoff",
+              "meaning": "Known water loss or leakage accounted outside the outlet sum",
+              "units": "m",
+              "role": "cumulative accounting",
+              "constraints": ""
+            },
+            {
+              "symbol": "\u0394S_t",
+              "accessible_symbol": "delta S sub t",
+              "identifier": "storage_change_m and routing queues",
+              "meaning": "Change across soil, groundwater, GIUH, and Nash stores",
+              "units": "m",
+              "role": "state change",
+              "constraints": ""
+            }
+          ]
+        },
+        {
+          "type": "code",
+          "language": "c",
+          "code": "evap_struct->potential_et_m_per_timestep =\n    evap_struct->potential_et_m_per_s * time_step_size;\n...\nsoil_reservoir_storage_deficit_m =\n    NWM_soil_params_struct.smcmax * NWM_soil_params_struct.D\n    - soil_reservoir_struct->storage_m;",
+          "caption": "ET demand is converted and soil deficit is recomputed after soil ET",
+          "source_file": "src/cfe.c",
+          "line_range": "74-119",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "exact source code"
+        },
+        {
+          "type": "callout",
+          "semantic_type": "scientific-assumption",
+          "title": "Ordering changes the model result",
+          "inline": [
+            {
+              "type": "text",
+              "text": "ET occurs before the deficit used by rainfall partitioning is recalculated. Moving ET after partitioning changes infiltration capacity and runoff even if total ET remains similar."
+            }
+          ]
+        },
+        {
+          "type": "worked_example",
+          "title": "Close a simple timestep balance",
+          "scenario": "A 10 mm rainfall timestep produces 1 mm ET, 3 mm outlet runoff, no leakage, and increases all modeled stores by 6 mm.",
+          "known_values": [
+            {
+              "name": "Rainfall",
+              "value": "10 mm"
+            },
+            {
+              "name": "ET",
+              "value": "1 mm"
+            },
+            {
+              "name": "Runoff",
+              "value": "3 mm"
+            },
+            {
+              "name": "Storage change",
+              "value": "+6 mm"
+            }
+          ],
+          "steps": [
+            [
+              {
+                "type": "text",
+                "text": "Keep every term as catchment depth; no area conversion is needed."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Compute accounted water: 1 mm + 3 mm + 0 mm + 6 mm = 10 mm."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Residual = input \u2212 accounted water = 10 mm \u2212 10 mm = 0 mm."
+              }
+            ]
+          ],
+          "result": "The timestep closes exactly at the precision shown.",
+          "interpretation": "A nonzero residual should trigger store-by-store inspection before calibration or parameter changes."
+        },
+        {
+          "type": "diagnostic_example",
+          "title": "Runoff changes after an ET refactor",
+          "observed_behavior": "Total ET is nearly unchanged, but infiltration excess increases.",
+          "conditions": "The ET calls were moved, cached soil deficit was retained, or units were converted at a different point.",
+          "candidate_causes": "Changed process ordering; stale soil deficit; PET rate/depth mismatch; routing state reset.",
+          "reasoning": "Routing cannot alter partitioned volume at its source. A stale or differently timed deficit directly changes partitioning capacity, so inspect ET ordering and deficit recomputation first.",
+          "recommended_action": "Compare rainfall ET, retention ET, soil ET, deficit, infiltration, excess, and soil storage immediately before and after the refactor."
         }
       ],
       "concept_identifiers": [
@@ -109,19 +631,398 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Surface-water partitioning decides how much rainfall becomes infiltration versus infiltration excess. With Schaake selected, Schaake_partitioning_scheme uses timestep length, field-capacity-related storage, a soil-adjusted magic constant, current deficit, soil capacity, depth, and optional ice information. Its behavior approaches complete runoff as available storage disappears. With Xinanjiang selected, Xinanjiang_partitioning_scheme uses maximum and current storage plus inflection, shape, and urban-fraction parameters to describe variable contributing areas."
+          "inline": [
+            {
+              "type": "text",
+              "text": "Rainfall partitioning divides available surface water into infiltration and "
+            },
+            {
+              "type": "glossary",
+              "text": "infiltration excess",
+              "glossary_identifier": "infiltration-excess",
+              "definition": "Rainfall depth not admitted to soil storage by the selected partitioning method and therefore sent to surface routing."
+            },
+            {
+              "type": "text",
+              "text": ". CFE selects either "
+            },
+            {
+              "type": "glossary",
+              "text": "Schaake Partitioning",
+              "glossary_identifier": "schaake",
+              "definition": "CFE rainfall partitioning based on soil moisture deficit, timestep, soil properties, and optional frozen-soil limitation."
+            },
+            {
+              "type": "text",
+              "text": " or "
+            },
+            {
+              "type": "glossary",
+              "text": "Xinanjiang Partitioning",
+              "glossary_identifier": "xinanjiang",
+              "definition": "An alternative variable-contributing-area partitioning method configured with inflection, shape, and urban-fraction parameters."
+            },
+            {
+              "type": "text",
+              "text": "; their parameter sets are not interchangeable."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Configuration must match the selected method. surface_water_partitioning_scheme accepts Schaake or Xinanjiang. Xinanjiang additionally requires a_Xinanjiang_inflection_point_parameter, b_Xinanjiang_shape_parameter, x_Xinanjiang_shape_parameter, and urban_decimal_fraction. Soil-freeze coupling supplies an ice fraction to either method. Schaake also requires ice_content_threshold when SFT coupling is enabled. When SFT is disabled, cfe explicitly resets the relevant ice fraction to zero before partitioning."
+          "type": "comparison_table",
+          "caption": "Required inputs differ by rainfall-partitioning scheme",
+          "headers": [
+            "Concern",
+            "Schaake",
+            "Xinanjiang"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Primary behavior"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Infiltration capacity scales with the current whole-column deficit and timestep"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Variable contributing area from tension/free storage distributions"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Scheme parameters"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Schaake_adjusted_magic_constant_by_soil_type"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "a_Xinanjiang_inflection_point_parameter"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "b_Xinanjiang_shape_parameter"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "x_Xinanjiang_shape_parameter"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "urban_decimal_fraction"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Shared state"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Water input, field capacity, soil deficit, porosity, depth"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Water input, field capacity, maximum storage, current storage"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Frozen-soil input"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "ice_fraction_schaake"
+                },
+                {
+                  "type": "text",
+                  "text": " and "
+                },
+                {
+                  "type": "code",
+                  "text": "ice_content_threshold"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "ice_fraction_xinanjiang"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Near saturation"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Capacity tends to zero with deficit"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Contributing area and impervious runoff increase"
+                }
+              ]
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Evapotranspiration is constrained by both demand and available water. et_from_rainfall removes up to the timestep rainfall amount and reduces remaining potential ET. et_from_retention_depth can draw from the first surface Nash reservoir when storage is above zero. et_from_soil operates only when the soil reservoir exceeds wilting-point storage. The standard path uses a Budyko-style reduction; the optional root-zone path uses layer depths and a maximum root-zone layer supplied through coupling."
+          "type": "equation",
+          "latex": "I_c = D_s\\left(1-e^{-K_s\\Delta t_d}\\right)",
+          "accessible_text": "Infiltration capacity I sub c equals soil moisture deficit D sub s times one minus exponential negative K sub s times timestep in days",
+          "caption": "Schaake capacity uses the whole-column soil deficit and a timestep expressed in days.",
+          "number": "2"
         },
         {
-          "type": "paragraph",
-          "text": "Ordering is part of the model contract. ET occurs before the soil deficit used for rainfall partitioning is recalculated. Moving ET after partitioning changes both infiltration capacity and runoff even when the ET total looks reasonable. A useful test therefore checks not only total Qout but also rainfall ET, soil ET, infiltration, excess, and the updated soil storage. This is also why a stale storage-deficit variable is a serious scientific bug rather than a cosmetic implementation detail."
+          "type": "equation",
+          "latex": "I = P_x\\frac{I_c}{P_x+I_c}, \\qquad R = P_x-I",
+          "accessible_text": "Infiltration equals water input times capacity divided by water input plus capacity; runoff excess equals water input minus infiltration",
+          "caption": "CFE's unfrozen Schaake partition before the final frozen-soil multiplier.",
+          "number": "3"
+        },
+        {
+          "type": "variable_table",
+          "caption": "Schaake variables: all are needed to interpret or reproduce the branch",
+          "rows": [
+            {
+              "symbol": "P_x",
+              "accessible_symbol": "P sub x",
+              "identifier": "water_input_depth_m",
+              "meaning": "Water available to partition",
+              "units": "m per timestep",
+              "role": "input",
+              "constraints": "nonnegative"
+            },
+            {
+              "symbol": "D_s",
+              "accessible_symbol": "D sub s",
+              "identifier": "column_total_soil_moisture_deficit_m",
+              "meaning": "Unfilled whole-column soil storage",
+              "units": "m",
+              "role": "state-derived input",
+              "constraints": "zero at saturation"
+            },
+            {
+              "symbol": "K_s",
+              "accessible_symbol": "K sub s",
+              "identifier": "Schaake_adjusted_magic_constant_by_soil_type",
+              "meaning": "Soil-adjusted infiltration constant",
+              "units": "day^-1",
+              "role": "parameter",
+              "constraints": "must be paired with timestep_h / 24"
+            },
+            {
+              "symbol": "I_c",
+              "accessible_symbol": "I sub c",
+              "identifier": "Ic",
+              "meaning": "Spatially averaged infiltration capacity",
+              "units": "m",
+              "role": "intermediate",
+              "constraints": ""
+            },
+            {
+              "symbol": "I",
+              "accessible_symbol": "I",
+              "identifier": "infiltration_depth_m",
+              "meaning": "Water admitted to soil",
+              "units": "m per timestep",
+              "role": "output flux",
+              "constraints": "capped by available soil storage"
+            },
+            {
+              "symbol": "R",
+              "accessible_symbol": "R",
+              "identifier": "infiltration_excess_m",
+              "meaning": "Water sent to surface routing",
+              "units": "m per timestep",
+              "role": "output flux",
+              "constraints": "equals input minus infiltration"
+            },
+            {
+              "symbol": "f_i",
+              "accessible_symbol": "f sub i",
+              "identifier": "ice_fraction_schaake",
+              "meaning": "Frozen fraction used to reduce infiltration",
+              "units": "dimensionless",
+              "role": "coupled input",
+              "constraints": "reset to zero when SFT is disabled"
+            },
+            {
+              "symbol": "f_{th}",
+              "accessible_symbol": "f sub threshold",
+              "identifier": "ice_content_threshold",
+              "meaning": "Configured ice threshold",
+              "units": "dimensionless",
+              "role": "parameter",
+              "constraints": "required for coupled Schaake"
+            }
+          ]
+        },
+        {
+          "type": "variable_table",
+          "caption": "Xinanjiang-only configuration variables",
+          "rows": [
+            {
+              "symbol": "a",
+              "accessible_symbol": "a",
+              "identifier": "a_Xinanjiang_inflection_point_parameter",
+              "meaning": "Inflection point of the double-parabolic capacity curve",
+              "units": "dimensionless",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "b",
+              "accessible_symbol": "b",
+              "identifier": "b_Xinanjiang_shape_parameter",
+              "meaning": "Shape below the inflection point",
+              "units": "dimensionless",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "x",
+              "accessible_symbol": "x",
+              "identifier": "x_Xinanjiang_shape_parameter",
+              "meaning": "Shape above the inflection point",
+              "units": "dimensionless",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "u",
+              "accessible_symbol": "u",
+              "identifier": "urban_decimal_fraction",
+              "meaning": "Urban land fraction used in impervious-area weighting",
+              "units": "dimensionless fraction",
+              "role": "parameter",
+              "constraints": "expected from zero to one"
+            },
+            {
+              "symbol": "f_i",
+              "accessible_symbol": "f sub i",
+              "identifier": "ice_fraction_xinanjiang",
+              "meaning": "Frozen top-layer fraction",
+              "units": "dimensionless fraction",
+              "role": "coupled input",
+              "constraints": "reset to zero when SFT is disabled"
+            }
+          ]
+        },
+        {
+          "type": "code",
+          "language": "c",
+          "code": "if (surface_water_partitioning_scheme == Schaake) {\n    Schaake_partitioning_scheme(...);\n}\nelse if (surface_water_partitioning_scheme == Xinanjiang) {\n    Xinanjiang_partitioning_scheme(...);\n}",
+          "caption": "The configured enumeration selects exactly one parameter contract",
+          "source_file": "src/cfe.c",
+          "line_range": "123-159",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "simplified source code"
+        },
+        {
+          "type": "callout",
+          "semantic_type": "common-mistake",
+          "title": "Do not tune parameters from the inactive scheme",
+          "inline": [
+            {
+              "type": "text",
+              "text": "Changing Xinanjiang shape parameters has no effect when "
+            },
+            {
+              "type": "code",
+              "text": "surface_water_partitioning_scheme=Schaake"
+            },
+            {
+              "type": "text",
+              "text": ". Always capture the active enumeration and its complete variable set before calibration or diagnosis."
+            }
+          ]
+        },
+        {
+          "type": "worked_example",
+          "title": "Schaake response to available storage",
+          "scenario": "Partition 10 mm of water with a 20 mm soil deficit and a parenthetical timestep factor of 0.5; ignore frozen-soil reduction.",
+          "known_values": [
+            {
+              "name": "P\u2093",
+              "value": "0.010 m"
+            },
+            {
+              "name": "D\u209b",
+              "value": "0.020 m"
+            },
+            {
+              "name": "1 \u2212 exp(\u2212K\u209b\u0394t)",
+              "value": "0.5"
+            }
+          ],
+          "steps": [
+            [
+              {
+                "type": "text",
+                "text": "Capacity: I_c = 0.020 m \u00d7 0.5 = 0.010 m."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Infiltration: I = 0.010 \u00d7 0.010 / (0.010 + 0.010) = 0.005 m."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Excess: R = 0.010 \u2212 0.005 = 0.005 m."
+              }
+            ]
+          ],
+          "result": "5 mm infiltrates and 5 mm enters surface routing.",
+          "interpretation": "If the deficit fell to zero, capacity and infiltration would also fall to zero; the input would become surface excess."
         }
       ],
       "concept_identifiers": [
@@ -142,19 +1043,241 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "struct conceptual_reservoir stores current and maximum water depth, primary and secondary outlet coefficients, exponents, activation thresholds, and outlet counts. It also carries soil-layer and freeze-thaw fields used by optional couplings. The same general flux routine can represent different stores because behavior comes from configured outlet arrays rather than separate hard-coded equations for every reservoir."
+          "inline": [
+            {
+              "type": "text",
+              "text": "A "
+            },
+            {
+              "type": "glossary",
+              "text": "conceptual reservoir",
+              "glossary_identifier": "conceptual-reservoir",
+              "definition": "A water store with thresholded outlet coefficients and exponents used for soil and groundwater behavior."
+            },
+            {
+              "type": "text",
+              "text": " represents soil or groundwater with shared state and configurable outlet laws. The soil instance normally has primary percolation and secondary lateral outlets; groundwater contributes primary baseflow."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "conceptual_reservoir_flux_calc computes primary and secondary discharge from storage above each outlet threshold. A normalized storage ratio is raised to the configured exponent and multiplied by a coefficient. Flux is bounded by available water so the routine cannot withdraw more storage than exists. The soil reservoir has two important pathways: primary percolation to groundwater and secondary lateral flow. Groundwater contributes a primary baseflow path to the channel."
+          "type": "equation",
+          "latex": "q_j = C_j\\left(\\frac{\\max(S-T_j,0)}{S_{max}-T_j}\\right)^{n_j}",
+          "accessible_text": "Outlet flux q sub j equals coefficient C sub j times normalized storage above threshold T sub j raised to exponent n sub j",
+          "caption": "Non-exponential primary or secondary outlet law. CFE then caps flux by water available above the threshold.",
+          "number": "4"
         },
         {
-          "type": "paragraph",
-          "text": "Several configuration values carry physical units that must not be mixed. soil_params.depth and reservoir storage depths are meters. soil_params.satdk is meters per second, while Cgw is documented in meters per hour. soil_params.slop scales the lower-boundary hydraulic gradient: one indicates free drainage and zero indicates no flow. gw_storage and soil_storage are initial fractions of their maximum stores rather than absolute meter depths."
+          "type": "equation",
+          "latex": "q_{gw}=C_{gw}\\left[\\exp\\left(n_{gw}\\frac{S}{S_{max}}\\right)-1\\right]",
+          "accessible_text": "Groundwater flux equals C g w times exponential of n g w times storage divided by maximum storage minus one",
+          "caption": "Alternative single-outlet exponential groundwater formulation.",
+          "number": "5"
         },
         {
-          "type": "paragraph",
-          "text": "Field-capacity and threshold calculations connect soil parameters to conceptual storage behavior. In root-zone mode, initialization verifies that the final soil_layer_depths value equals soil_params.depth, computes each layer thickness, and derives field-capacity water content from Clapp-Hornberger parameters. If depths are inconsistent, initialization returns BMI_FAILURE. Reservoir debugging should inspect maximum storage, current storage, thresholds, coefficients, exponents, and timestep units together; changing one value without its unit context can produce plausible but incorrect hydrographs."
+          "type": "variable_table",
+          "caption": "Reservoir state and outlet parameters",
+          "rows": [
+            {
+              "symbol": "S",
+              "accessible_symbol": "S",
+              "identifier": "storage_m",
+              "meaning": "Current stored water depth",
+              "units": "m",
+              "role": "state",
+              "constraints": "bounded by available-water checks"
+            },
+            {
+              "symbol": "S_{max}",
+              "accessible_symbol": "S max",
+              "identifier": "storage_max_m",
+              "meaning": "Maximum reservoir storage",
+              "units": "m",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "T_j",
+              "accessible_symbol": "T sub j",
+              "identifier": "storage_threshold_primary_m / secondary_m",
+              "meaning": "Storage below which outlet j is inactive",
+              "units": "m",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "C_j",
+              "accessible_symbol": "C sub j",
+              "identifier": "coeff_primary / coeff_secondary",
+              "meaning": "Outlet discharge coefficient",
+              "units": "coefficient units",
+              "role": "parameter",
+              "constraints": "units depend on timestep/formulation"
+            },
+            {
+              "symbol": "n_j",
+              "accessible_symbol": "n sub j",
+              "identifier": "exponent_primary / exponent_secondary",
+              "meaning": "Outlet nonlinearity",
+              "units": "dimensionless",
+              "role": "parameter",
+              "constraints": "one gives a linear normalized outlet"
+            },
+            {
+              "symbol": "q_j",
+              "accessible_symbol": "q sub j",
+              "identifier": "primary_flux_m / secondary_flux_m",
+              "meaning": "Computed outlet water for the current call",
+              "units": "m per timestep",
+              "role": "flux",
+              "constraints": ""
+            }
+          ]
+        },
+        {
+          "type": "code",
+          "language": "c",
+          "code": "storage_above_threshold_m = da_reservoir->storage_m\n    - da_reservoir->storage_threshold_primary_m;\nif (storage_above_threshold_m > 0.0) {\n    *primary_flux_m = da_reservoir->coeff_primary *\n        pow(storage_above_threshold_m /\n            (da_reservoir->storage_max_m\n             - da_reservoir->storage_threshold_primary_m),\n            da_reservoir->exponent_primary);\n}",
+          "caption": "Primary thresholded reservoir outlet",
+          "source_file": "src/conceptual_reservoir.c",
+          "line_range": "51-64",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "exact source code, whitespace simplified"
+        },
+        {
+          "type": "callout",
+          "semantic_type": "important",
+          "title": "Initial storage values are fractions",
+          "inline": [
+            {
+              "type": "text",
+              "text": "Configuration keys "
+            },
+            {
+              "type": "code",
+              "text": "gw_storage"
+            },
+            {
+              "type": "text",
+              "text": " and "
+            },
+            {
+              "type": "code",
+              "text": "soil_storage"
+            },
+            {
+              "type": "text",
+              "text": " initialize fractions of maximum storage, not absolute metre depths. By contrast, "
+            },
+            {
+              "type": "code",
+              "text": "storage_m"
+            },
+            {
+              "type": "text",
+              "text": " inside the reservoir structure is a depth."
+            }
+          ]
+        },
+        {
+          "type": "table",
+          "caption": "Frequently confused soil and groundwater units",
+          "headers": [
+            "Identifier",
+            "Units",
+            "Interpretation"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "soil_params.depth"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "m"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Soil column depth"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "soil_params.satdk"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "m s\u207b\u00b9"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Saturated hydraulic conductivity"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "Cgw"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "m h\u207b\u00b9"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Groundwater outlet coefficient in configuration"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "soil_params.slop"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "dimensionless"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Lower-boundary hydraulic-gradient scale; 0 means no flow and 1 means free drainage"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "diagnostic_example",
+          "title": "Plausible hydrograph, wrong reservoir timescale",
+          "observed_behavior": "Baseflow shape looks smooth but drains much faster than expected.",
+          "conditions": "A coefficient documented per hour was applied as if it were per second, or an initial storage fraction was treated as metres.",
+          "candidate_causes": "Unit mismatch; wrong exponential flag; incorrect threshold; timestep change without parameter conversion.",
+          "reasoning": "Routing can delay a flux but cannot repair a reservoir outlet computed on the wrong timescale. Inspect the reservoir law and coefficient units before tuning routing.",
+          "recommended_action": "Record storage, maximum storage, threshold, coefficient, exponent, exponential flag, and timestep units together for both soil and groundwater."
         }
       ],
       "concept_identifiers": [
@@ -175,19 +1298,267 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "Partitioning determines water-path volume, while routing determines when that water reaches the outlet. The default surface_runoff_scheme is GIUH. giuh_ordinates is an array of dimensionless weights in timestep units. giuh_convolution_integral multiplies current runoff by each ordinate, adds those contributions to a runoff queue, returns the queue head as current direct runoff, then shifts the remaining queue toward the present."
+          "inline": [
+            {
+              "type": "text",
+              "text": "Partitioning determines water-path volume; routing determines arrival time. Surface excess uses either a "
+            },
+            {
+              "type": "glossary",
+              "text": "GIUH",
+              "glossary_identifier": "giuh",
+              "definition": "Geomorphological instantaneous unit hydrograph; a weighted discrete travel-time distribution used to route surface runoff."
+            },
+            {
+              "type": "text",
+              "text": " queue or a surface "
+            },
+            {
+              "type": "glossary",
+              "text": "Nash Cascade",
+              "glossary_identifier": "nash-cascade",
+              "definition": "A series of conceptual linear reservoirs that delays surface or lateral flow while preserving routed storage."
+            },
+            {
+              "type": "text",
+              "text": ". Lateral soil flow always uses the subsurface Nash cascade."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "A GIUH queue encodes a discrete travel-time distribution. Ordinates should collectively preserve the routed volume; malformed weights can create an apparent mass-balance problem even when partitioning is correct. The queue is persistent model state, so resetting it between updates removes delayed water. A sharp rainfall pulse should produce outlet response over multiple timesteps according to the ordinate pattern rather than disappearing after one call."
+          "type": "equation",
+          "latex": "Q_t^{GIUH}=\\sum_{i=0}^{N-1} u_i R_{t-i}, \\qquad \\sum_i u_i \\approx 1",
+          "accessible_text": "GIUH outflow at time t equals the sum of each ordinate u sub i times prior runoff R; ordinates should sum approximately to one",
+          "caption": "The persistent queue implements a discrete convolution; normalized ordinates preserve routed volume.",
+          "number": "6"
         },
         {
-          "type": "paragraph",
-          "text": "Nash routing represents delay with a series of conceptual linear reservoirs. nash_cascade_subsurface adds lateral flow to the first store, computes outflow from each store using K_nash, transfers that outflow into the next store, and returns discharge from the final store. The optional surface Nash path similarly routes infiltration excess, supports substeps, and can move a Kinf-controlled fraction back toward soil while retaining water below a configured depth in its first reservoir."
+          "type": "equation",
+          "latex": "Q_i=K S_i, \\qquad S_i^{t+1}=S_i^t-Q_i+Q_{i-1}",
+          "accessible_text": "Reservoir i outflow equals K times its storage; next storage equals current storage minus outflow plus upstream outflow",
+          "caption": "Subsurface Nash cascade update, with lateral inflow entering the first reservoir.",
+          "number": "7"
         },
         {
-          "type": "paragraph",
-          "text": "CFE always uses a subsurface Nash cascade for lateral soil flow, while surface runoff can select GIUH or NASH_CASCADE. Configuration therefore separates N_nash_subsurface, K_nash_subsurface, and nash_storage_subsurface from N_nash_surface, K_nash_surface, nash_storage_surface, nsubsteps_nash_surface, Kinf_nash_surface, and retention_depth_nash_surface. When diagnosing timing, identify the path first: direct surface, delayed lateral, or groundwater baseflow."
+          "type": "variable_table",
+          "caption": "Routing variables and state that must survive between updates",
+          "rows": [
+            {
+              "symbol": "R_t",
+              "accessible_symbol": "R sub t",
+              "identifier": "infiltration_excess_m",
+              "meaning": "Surface water entering routing",
+              "units": "m per timestep",
+              "role": "input flux",
+              "constraints": ""
+            },
+            {
+              "symbol": "u_i",
+              "accessible_symbol": "u sub i",
+              "identifier": "giuh_ordinates[i]",
+              "meaning": "Fraction arriving after i timestep delays",
+              "units": "dimensionless",
+              "role": "parameter array",
+              "constraints": "sum should preserve volume"
+            },
+            {
+              "symbol": "G_i",
+              "accessible_symbol": "G sub i",
+              "identifier": "runoff_queue_m_per_timestep[i]",
+              "meaning": "Queued GIUH water at delay i",
+              "units": "m",
+              "role": "persistent state",
+              "constraints": "do not reset between updates"
+            },
+            {
+              "symbol": "N",
+              "accessible_symbol": "N",
+              "identifier": "N_nash_subsurface / N_nash_surface",
+              "meaning": "Number of cascade reservoirs",
+              "units": "count",
+              "role": "configuration",
+              "constraints": ""
+            },
+            {
+              "symbol": "K",
+              "accessible_symbol": "K",
+              "identifier": "K_nash_subsurface / K_nash_surface",
+              "meaning": "Linear reservoir release fraction/rate",
+              "units": "timestep-dependent",
+              "role": "parameter",
+              "constraints": ""
+            },
+            {
+              "symbol": "S_i",
+              "accessible_symbol": "S sub i",
+              "identifier": "nash_storage_*[i]",
+              "meaning": "Water stored in cascade reservoir i",
+              "units": "m",
+              "role": "persistent state",
+              "constraints": ""
+            }
+          ]
+        },
+        {
+          "type": "code",
+          "language": "c",
+          "code": "for (i = 0; i < N; i++) {\n    runoff_queue_m_per_timestep[i] +=\n        giuh_ordinates[i] * runoff_m;\n}\nrunoff_m_current_timestep = runoff_queue_m_per_timestep[0];\nfor (i = 1; i <= N; i++) {\n    runoff_queue_m_per_timestep[i - 1] =\n        runoff_queue_m_per_timestep[i];\n}",
+          "caption": "GIUH adds the new pulse, reads the queue head, then shifts persistent state",
+          "source_file": "src/giuh.c",
+          "line_range": "20-33",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "exact source code, whitespace simplified"
+        },
+        {
+          "type": "comparison_table",
+          "caption": "Surface and subsurface routing configuration must remain separate",
+          "headers": [
+            "Path",
+            "Selection",
+            "Required variables"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Surface GIUH"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "surface_runoff_scheme=GIUH"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "num_giuh_ordinates"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "giuh_ordinates"
+                },
+                {
+                  "type": "text",
+                  "text": ", queue state"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Surface Nash"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "surface_runoff_scheme=NASH_CASCADE"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "N_nash_surface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "K_nash_surface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "nsubsteps_nash_surface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Kinf_nash_surface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "retention_depth_nash_surface"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Lateral subsurface"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Always Nash"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "N_nash_subsurface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "K_nash_subsurface"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "nash_storage_subsurface"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "model-limitation",
+          "title": "Routing cannot fix incorrect partitioned volume",
+          "inline": [
+            {
+              "type": "text",
+              "text": "Changing GIUH ordinates or Nash parameters redistributes water in time. It cannot correct a systematic excess created by partitioning, forcing conversion, or reservoir leakage."
+            }
+          ]
+        },
+        {
+          "type": "diagnostic_example",
+          "title": "A pulse vanishes after one update",
+          "observed_behavior": "A multi-timestep GIUH response appears only in the rainfall timestep.",
+          "conditions": "Ordinates contain delayed weights, but later queue values are zero.",
+          "candidate_causes": "Queue reinitialization; malformed ordinates; wrong number of ordinates; output read before state update.",
+          "reasoning": "Delayed ordinates place water in future queue slots. If those slots vanish, persistent routing state\u2014not partitioning\u2014is the first suspect.",
+          "recommended_action": "Log the complete GIUH queue before addition, after addition, and after shifting across several dry timesteps; also verify the ordinate sum."
         }
       ],
       "concept_identifiers": [
@@ -208,19 +1579,446 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "CFE exposes a C Bmi struct populated with function pointers. Initialize validates self and the configuration path, resets current_time_step, parses configuration, converts the fixed time-step size to hours, allocates output flux pointers, initializes their values, and selects the forcing source. forcing_file=BMI means precipitation and time arrive through set_value; any other value is treated as a local forcing-file path whose lines are counted and loaded."
+          "inline": [
+            {
+              "type": "text",
+              "text": "The "
+            },
+            {
+              "type": "glossary",
+              "text": "Basic Model Interface (BMI)",
+              "glossary_identifier": "bmi",
+              "definition": "The lifecycle, timing, variable, value-access, and grid function contract exposed by CFE for framework coupling."
+            },
+            {
+              "type": "text",
+              "text": " in "
+            },
+            {
+              "type": "file",
+              "text": "src/bmi_cfe.c"
+            },
+            {
+              "type": "text",
+              "text": " owns allocation, configuration parsing, forcing selection, time advancement, metadata, and value exchange. The hydrologic calculation remains in "
+            },
+            {
+              "type": "code",
+              "text": "cfe(...)"
+            },
+            {
+              "type": "text",
+              "text": "."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Update chooses rainfall from the current local forcing record or the BMI-supplied precipitation value, converts precipitation mass per area to water depth where required, calls run_cfe, and advances current_time_step. Update_until repeatedly calls Update until the requested model time is reached and rejects incompatible target times. Finalize frees dynamically allocated arrays and state. Lifecycle tests should exercise failure as well as success, especially null inputs, bad files, repeated timing calls, and pointer state after finalization."
+          "type": "procedure",
+          "title": "Follow the lifecycle in order",
+          "steps": [
+            [
+              {
+                "type": "code",
+                "text": "Initialize"
+              },
+              {
+                "type": "text",
+                "text": ": validate pointers and configuration, allocate state, choose forcing, and establish timestep metadata."
+              }
+            ],
+            [
+              {
+                "type": "code",
+                "text": "Update"
+              },
+              {
+                "type": "text",
+                "text": ": obtain forcing, convert it where required, call "
+              },
+              {
+                "type": "code",
+                "text": "run_cfe"
+              },
+              {
+                "type": "text",
+                "text": ", and advance one timestep."
+              }
+            ],
+            [
+              {
+                "type": "code",
+                "text": "Update_until"
+              },
+              {
+                "type": "text",
+                "text": ": validate the target time and repeatedly call "
+              },
+              {
+                "type": "code",
+                "text": "Update"
+              },
+              {
+                "type": "text",
+                "text": " for compatible whole steps."
+              }
+            ],
+            [
+              {
+                "type": "code",
+                "text": "Finalize"
+              },
+              {
+                "type": "text",
+                "text": ": free dynamically allocated arrays and model state."
+              }
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "BMI variable methods map standardized names to C storage. Get_input_var_names and Get_output_var_names publish exchange contracts; Get_var_type, Get_var_units, Get_var_itemsize, and Get_var_nbytes describe representation. Get_value copies data, Get_value_ptr exposes model-owned storage, and Set_value writes inputs or parameters. Most CFE exchanges use grid 0, whose rank and size are one and whose type is scalar. Shape, spacing, coordinate, node, edge, and face methods return BMI_FAILURE because they do not apply to this scalar grid."
+          "type": "table",
+          "caption": "BMI method families and the contract each one tests",
+          "headers": [
+            "Family",
+            "Examples",
+            "Contract"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Lifecycle/time"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Initialize"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Update"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Finalize"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Valid state transitions and model clock"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Metadata"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Get_var_type"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Get_var_units"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Get_var_nbytes"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Names, representation, units, and sizes agree"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Value access"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Get_value"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Get_value_ptr"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Set_value"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Copy versus model-owned pointer semantics"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "text",
+                  "text": "Grid"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Get_grid_rank"
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "Get_grid_size"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Grid 0 is scalar; inapplicable geometry methods fail explicitly"
+                }
+              ]
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Configuration parsing is strict enough to be part of runtime behavior. The configuration reference identifies forcing mode, soil properties, reservoir parameters, partitioning and routing selections, initial fractions, optional root-zone fields, and freeze-thaw coupling. Defaults exist for selected optional fields, but required parameters and mutually dependent options must agree. An initialization failure should be traced to read_init_config_cfe and its validation branches before investigating timestep science."
+          "type": "code",
+          "language": "c",
+          "code": "if (strcmp(cfe_ptr->forcing_file, \"BMI\") == 0) {\n    cfe_ptr->is_forcing_from_bmi = TRUE;\n}\nelse {\n    cfe_ptr->is_forcing_from_bmi = FALSE;\n    /* count and load local forcing records */\n}",
+          "caption": "Forcing mode changes who owns precipitation and time inputs",
+          "source_file": "src/bmi_cfe.c",
+          "line_range": "initialization branch",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "simplified source code"
+        },
+        {
+          "type": "comparison_table",
+          "caption": "Configuration dependencies that should be checked as groups",
+          "headers": [
+            "Selection",
+            "Required companion values",
+            "Failure symptom"
+          ],
+          "rows": [
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "forcing_file=BMI"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "BMI precipitation and time supplied before update"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Zero/stale forcing if the framework does not set inputs"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "surface_water_partitioning_scheme=Schaake"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "Schaake_adjusted_magic_constant_by_soil_type"
+                },
+                {
+                  "type": "text",
+                  "text": "; ice threshold when SFT coupled"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Wrong capacity or initialization failure"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "surface_water_partitioning_scheme=Xinanjiang"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "a_Xinanjiang..."
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "b_Xinanjiang..."
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "x_Xinanjiang..."
+                },
+                {
+                  "type": "text",
+                  "text": ", "
+                },
+                {
+                  "type": "code",
+                  "text": "urban_decimal_fraction"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Invalid or unintended variable-area response"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "surface_runoff_scheme=NASH_CASCADE"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Surface N, K, storage, substeps, infiltration, and retention values"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Allocation failure or incorrect timing/return flow"
+                }
+              ]
+            ],
+            [
+              [
+                {
+                  "type": "code",
+                  "text": "aet_root_zone=1"
+                }
+              ],
+              [
+                {
+                  "type": "text",
+                  "text": "Layer depths ending exactly at total soil depth and a valid maximum root layer"
+                }
+              ],
+              [
+                {
+                  "type": "code",
+                  "text": "BMI_FAILURE"
+                },
+                {
+                  "type": "text",
+                  "text": " during initialization"
+                }
+              ]
+            ]
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "implementation-detail",
+          "title": "Pointer access changes ownership expectations",
+          "inline": [
+            {
+              "type": "text",
+              "text": "A value returned by "
+            },
+            {
+              "type": "code",
+              "text": "Get_value_ptr"
+            },
+            {
+              "type": "text",
+              "text": " aliases model-owned storage; a value returned by "
+            },
+            {
+              "type": "code",
+              "text": "Get_value"
+            },
+            {
+              "type": "text",
+              "text": " is copied. Holding or mutating the wrong one can create lifecycle bugs that resemble model-state errors."
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "debugging-tip",
+          "title": "Separate initialization from science",
+          "inline": [
+            {
+              "type": "text",
+              "text": "A bad shared-library path, invalid coupled configuration, or missing forcing file fails before hydrologic equations run. Trace "
+            },
+            {
+              "type": "code",
+              "text": "read_init_config_cfe"
+            },
+            {
+              "type": "text",
+              "text": " and BMI lifecycle return codes before changing scientific parameters."
+            }
+          ]
         }
       ],
       "concept_identifiers": [
@@ -242,19 +2040,207 @@
       "content": [
         {
           "type": "paragraph",
-          "text": "CFE requires GCC and CMake. The top-level CMake configuration expects one relevant mode such as BASE, FORCING, FORCINGPET, AETROOTZONE, NGEN, or UNITTEST. BASE and pseudo-framework modes build executables from different main programs and coupled sources. NGEN defines BMI_ACTIVE and builds the cfebmi shared library from bmi_cfe.c, cfe.c, giuh.c, conceptual_reservoir.c, and nash_cascade.c, linking the C math library and exposing bmi_cfe.h as a public header."
+          "inline": [
+            {
+              "type": "text",
+              "text": "Operational diagnosis should move from build boundary to lifecycle to water balance. CMake selects the executable or shared-library arrangement; CTest exercises BMI contracts; component outputs locate scientific errors."
+            }
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "The documented standalone sequence initializes submodules, configures from a build directory with cmake ../ -DBASE=ON, builds, then runs ./run_cfe.sh BASE. Framework examples have different executable inputs and configuration-file ordering. For NGEN, realization library_file and init_config paths must match the actual build layout. A load failure from a wrong shared-library path occurs before CFE initialization and should not be diagnosed as a hydrologic failure."
+          "type": "procedure",
+          "title": "Build and verify a standalone BASE configuration",
+          "steps": [
+            [
+              {
+                "type": "text",
+                "text": "Initialize required Git submodules for the recorded target revision."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Configure a clean build directory with "
+              },
+              {
+                "type": "code",
+                "text": "cmake .. -DBASE=ON"
+              },
+              {
+                "type": "text",
+                "text": "."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Build with "
+              },
+              {
+                "type": "code",
+                "text": "cmake --build ."
+              },
+              {
+                "type": "text",
+                "text": " and treat compiler/linker errors separately from model behavior."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Run the documented "
+              },
+              {
+                "type": "code",
+                "text": "./run_cfe.sh BASE"
+              },
+              {
+                "type": "text",
+                "text": " workflow with paths resolved from the actual build layout."
+              }
+            ],
+            [
+              {
+                "type": "text",
+                "text": "Configure a test build and run "
+              },
+              {
+                "type": "code",
+                "text": "ctest --test-dir build --output-on-failure"
+              },
+              {
+                "type": "text",
+                "text": "."
+              }
+            ]
+          ]
         },
         {
-          "type": "paragraph",
-          "text": "Tests are registered through CMake and run with the test build target or ctest --test-dir build. combined_bmi_funcs_test exercises many methods in one routine. test_bmi_model dispatches focused lifecycle, metadata, value-access, timing, and grid-method tests using a reusable fixture. New test executables must be added with add_executable, linked to cfebmi, registered with add_test, and followed by CMake reconfiguration."
+          "type": "code",
+          "language": "c",
+          "code": "add_executable(new_bmi_test new_bmi_test.c)\ntarget_link_libraries(new_bmi_test PRIVATE cfebmi)\nadd_test(NAME new_bmi_test COMMAND new_bmi_test)",
+          "caption": "A new CTest executable must be built, linked, and registered before reconfiguration",
+          "source_file": "CMakeLists.txt",
+          "line_range": "illustrative",
+          "source_revision": "f9182dfb3d81c407c66c5b782114173893c30cf2",
+          "kind": "pseudocode matching repository CMake structure"
         },
         {
-          "type": "paragraph",
-          "text": "Scientific debugging should use conservation and component outputs. Compare cumulative precipitation against ET, channel outflow, leakage, and changes in soil, groundwater, GIUH queue, and Nash stores. Then isolate whether an error begins in forcing conversion, ET, partitioning, reservoir fluxes, routing, or final aggregation. The repository's contribution guide requires tests for new code and recommends following local style. Source and tests at the recorded commit are authoritative when a curriculum statement or assumption disagrees with behavior."
+          "type": "equation",
+          "latex": "\\varepsilon = V_{in} - \\left(V_{ET}+V_{out}+V_{leak}+\\Delta V_{soil}+\\Delta V_{gw}+\\Delta V_{GIUH}+\\Delta V_{Nash}\\right)",
+          "accessible_text": "Mass balance residual epsilon equals cumulative input minus evapotranspiration, outlet, leakage, and changes in soil, groundwater, GIUH, and Nash storage",
+          "caption": "Use all enabled stores. A routing queue is stored water even though it is not a conceptual reservoir.",
+          "number": "8"
+        },
+        {
+          "type": "variable_table",
+          "caption": "Debugging evidence: compare components before the final sum",
+          "rows": [
+            {
+              "symbol": "V_{in}",
+              "accessible_symbol": "V in",
+              "identifier": "massbal.volin",
+              "meaning": "Cumulative precipitation input",
+              "units": "m",
+              "role": "diagnostic accumulator",
+              "constraints": ""
+            },
+            {
+              "symbol": "V_{ET}",
+              "accessible_symbol": "V E T",
+              "identifier": "massbal.vol_et_to_atm",
+              "meaning": "Cumulative actual ET",
+              "units": "m",
+              "role": "diagnostic accumulator",
+              "constraints": ""
+            },
+            {
+              "symbol": "V_{out}",
+              "accessible_symbol": "V out",
+              "identifier": "massbal.volout",
+              "meaning": "Cumulative modeled outputs",
+              "units": "m",
+              "role": "diagnostic accumulator",
+              "constraints": ""
+            },
+            {
+              "symbol": "Q_s",
+              "accessible_symbol": "Q surface",
+              "identifier": "direct_runoff_m",
+              "meaning": "Current routed surface contribution",
+              "units": "m per timestep",
+              "role": "output component",
+              "constraints": ""
+            },
+            {
+              "symbol": "Q_l",
+              "accessible_symbol": "Q lateral",
+              "identifier": "nash_lateral_runoff_m",
+              "meaning": "Current delayed lateral contribution",
+              "units": "m per timestep",
+              "role": "output component",
+              "constraints": ""
+            },
+            {
+              "symbol": "Q_g",
+              "accessible_symbol": "Q groundwater",
+              "identifier": "flux_from_deep_gw_to_chan_m",
+              "meaning": "Current groundwater contribution",
+              "units": "m per timestep",
+              "role": "output component",
+              "constraints": ""
+            }
+          ]
+        },
+        {
+          "type": "callout",
+          "semantic_type": "common-mistake",
+          "title": "A load failure is not a hydrologic failure",
+          "inline": [
+            {
+              "type": "text",
+              "text": "For "
+            },
+            {
+              "type": "code",
+              "text": "NGEN"
+            },
+            {
+              "type": "text",
+              "text": ", both realization "
+            },
+            {
+              "type": "code",
+              "text": "library_file"
+            },
+            {
+              "type": "text",
+              "text": " and "
+            },
+            {
+              "type": "code",
+              "text": "init_config"
+            },
+            {
+              "type": "text",
+              "text": " paths must match the build layout. If the shared library cannot load, CFE has not initialized and no partitioning or routing equation has run."
+            }
+          ]
+        },
+        {
+          "type": "diagnostic_example",
+          "title": "Mass balance closes, but the hydrograph is late",
+          "observed_behavior": "Cumulative input and output close within tolerance, yet peak runoff arrives several timesteps too late.",
+          "conditions": "Forcing conversion and total partitioned volumes match a reference run.",
+          "candidate_causes": "GIUH ordinate shift; Nash K or N mismatch; routing state carried from another run; timestamp convention mismatch.",
+          "reasoning": "Closed mass balance rules out lost or created water but not mistimed water. Because partitioned volumes agree, routing and clock alignment are more likely than infiltration parameters.",
+          "recommended_action": "Compare direct, lateral, and groundwater components by timestep; inspect GIUH queue and Nash stores; then verify BMI current-time advancement."
+        },
+        {
+          "type": "source_reference",
+          "file_path": "CONTRIBUTING.md and repository tests",
+          "symbol": "combined_bmi_funcs_test / test_bmi_model",
+          "line_range": "at resolved revision"
         }
       ],
       "concept_identifiers": [
@@ -288,7 +2274,8 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "cfe-purpose",
+        "bmi-and-configuration"
       ]
     },
     {
@@ -299,29 +2286,41 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "timestep-water-accounting",
+        "partitioning-and-et",
+        "routing-paths"
       ]
     },
     {
       "identifier": "schaake",
       "term": "Schaake Partitioning",
+      "aliases": [
+        "Schaake"
+      ],
       "definition": "CFE rainfall partitioning based on soil moisture deficit, timestep, soil properties, and optional frozen-soil limitation.",
       "concept_identifiers": [
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "timestep-water-accounting",
+        "partitioning-and-et",
+        "bmi-and-configuration"
       ]
     },
     {
       "identifier": "xinanjiang",
       "term": "Xinanjiang Partitioning",
+      "aliases": [
+        "Xinanjiang"
+      ],
       "definition": "An alternative variable-contributing-area partitioning method configured with inflection, shape, and urban-fraction parameters.",
       "concept_identifiers": [
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "timestep-water-accounting",
+        "partitioning-and-et",
+        "bmi-and-configuration"
       ]
     },
     {
@@ -332,7 +2331,10 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "cfe-purpose",
+        "conceptual-reservoirs",
+        "routing-paths",
+        "build-test-debug"
       ]
     },
     {
@@ -343,7 +2345,10 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "cfe-purpose",
+        "timestep-water-accounting",
+        "routing-paths",
+        "build-test-debug"
       ]
     },
     {
@@ -354,7 +2359,10 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "cfe-purpose",
+        "timestep-water-accounting",
+        "routing-paths",
+        "build-test-debug"
       ]
     },
     {
@@ -365,7 +2373,8 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "timestep-water-accounting",
+        "partitioning-and-et"
       ]
     },
     {
@@ -376,7 +2385,8 @@
         "cfe-purpose"
       ],
       "lesson_identifiers": [
-        "cfe-purpose"
+        "timestep-water-accounting",
+        "build-test-debug"
       ]
     }
   ],

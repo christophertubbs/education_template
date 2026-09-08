@@ -6,6 +6,7 @@ import shutil
 from pathlib import Path
 
 from .configuration import app_config_class
+from .constants import PRODUCT_VERSION
 from .context import GenerationContext
 
 
@@ -26,6 +27,7 @@ def template_tokens(
         "__REPOSITORY_URL__": configuration.repository_url,
         "__RESOLVED_COMMIT__": context.resolved_commit,
         "__RUNTIME_COMPATIBILITY__": configuration.runtime_compatibility,
+        "__PRODUCT_VERSION__": PRODUCT_VERSION,
     }
 
 

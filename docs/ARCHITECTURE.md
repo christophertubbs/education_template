@@ -1,5 +1,5 @@
 # Architecture
-environment-driven product discovery. It contains no target knowledge.
+
 ```text
 project.json + Target Repository + reviewed analysis artifacts
                            |
@@ -22,6 +22,13 @@ The runtime owns target-independent models and rendering. Products populate
 those models through deterministic data migrations. Baseline rows have a
 fingerprint and human-modification flag. Changed incoming baselines do not
 overwrite human edits; they create an `ImportConflict`.
+
+Lesson data is semantic rather than presentation-oriented HTML. Products store
+typed blocks and inline spans for equations, code, callouts, definitions,
+examples, diagnostics, tables, variables, and references. The runtime converts
+them to accessible HTML, uses MathJax for LaTeX, and exposes lesson-linked
+glossary definitions. Curriculum validation rejects unsupported, inaccessible,
+or paragraph-only technical content before promotion.
 
 Assessment definitions are data. The runtime chooses from oversized pools and
 evaluates supported items deterministically in the browser. Progress is

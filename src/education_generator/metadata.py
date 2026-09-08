@@ -9,6 +9,7 @@ from .constants import (
     CURRICULUM_SCHEMA_VERSION,
     GENERATOR_NAME,
     GENERATOR_VERSION,
+    PRODUCT_VERSION,
     RUNTIME_VERSION,
 )
 from .context import GenerationContext
@@ -31,7 +32,7 @@ def build_metadata(
         "configured_target_revision": configuration.revision,
         "resolved_target_commit": context.resolved_commit,
         "curriculum_product_name": configuration.curriculum_product_name,
-        "curriculum_product_version": "1.0.0",
+        "curriculum_product_version": PRODUCT_VERSION,
         "curriculum_schema_version": CURRICULUM_SCHEMA_VERSION,
         "compatible_education_runtime": configuration.runtime_compatibility,
         "education_runtime_version_at_generation": RUNTIME_VERSION,

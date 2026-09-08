@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "education-curriculum-system"
-version = "1.0.0"
+version = "1.1.0"
 description = "A shared Django education runtime and curriculum-product generator."
 requires-python = ">=3.11"
 dependencies = ["Django>=5.2,<5.3"]
@@ -28,4 +28,3 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B"]
-

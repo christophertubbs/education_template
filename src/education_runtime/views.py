@@ -75,7 +75,14 @@ def lesson_detail(
     return render(
         request,
         "education_runtime/lesson.html",
-        {"curriculum": curriculum, "lesson": lesson, "advance_url": advance_url},
+        {
+            "curriculum": curriculum,
+            "lesson": lesson,
+            "advance_url": advance_url,
+            "glossary_entries": curriculum.glossaryentry_set.filter(
+                lessons=lesson
+            ).distinct(),
+        },
     )
 
 

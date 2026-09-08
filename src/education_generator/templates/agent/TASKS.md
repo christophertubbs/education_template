@@ -5,6 +5,8 @@
 * Generate and validate the initial __DISPLAY_NAME__ Curriculum Product.
 * Record exact source, knowledge-map, Mastery Contract, coverage, and completion
   provenance.
+* Regenerate lessons as schema 2.1 structured content and include the 1.1
+  baseline refresh migration for existing installations.
 
 ## Ready
 

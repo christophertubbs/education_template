@@ -5,7 +5,7 @@
     "curriculum_product_name": "cfe_curriculum",
     "display_name": "CFE",
     "curriculum_source_path": "curricula/cfe",
-    "runtime_compatibility": ">=1.0,<2.0",
+    "runtime_compatibility": ">=1.1,<2.0",
     "assumed_learner_prerequisites": [
         "Professional software development",
         "Secondary-school algebra"

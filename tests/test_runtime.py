@@ -61,6 +61,21 @@ class RuntimeTests(TestCase):
         response = self.client.get(lesson_url)
         self.assertContains(response, "Mark lesson complete")
         self.assertContains(response, "Evidence")
+        self.assertContains(response, "Definitions in this lesson")
+        self.assertContains(response, 'class="variable-table"')
+        self.assertContains(response, "mathjax@4/tex-chtml.js")
+
+    def test_partitioning_lesson_renders_semantic_content(self) -> None:
+        url = reverse(
+            "education_runtime:lesson",
+            args=("cfe-curriculum", "partitioning-and-et"),
+        )
+        response = self.client.get(url)
+        self.assertContains(response, "Schaake Partitioning")
+        self.assertContains(response, 'class="glossary-term"')
+        self.assertContains(response, 'class="equation"', count=2)
+        self.assertContains(response, "Schaake variables")
+        self.assertContains(response, 'class="worked-example"')
 
     def test_assessment_renders_exact_selection_count(self) -> None:
         url = reverse(

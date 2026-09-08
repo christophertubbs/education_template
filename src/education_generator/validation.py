@@ -26,6 +26,52 @@ REQUIRED_COVERAGE_DIMENSIONS = {
 }
 ASSESSMENT_MINIMUMS = {"section": 10, "midterm": 30, "final": 50}
 REQUIRED_ASSESSMENT_KINDS = {"pop", "section", "midterm", "final"}
+SUPPORTED_BLOCK_TYPES = {
+    "paragraph",
+    "heading",
+    "equation",
+    "code",
+    "callout",
+    "worked_example",
+    "diagnostic_example",
+    "warning",
+    "note",
+    "definition",
+    "theorem",
+    "rule",
+    "principle",
+    "ordered_list",
+    "unordered_list",
+    "table",
+    "comparison_table",
+    "quote",
+    "procedure",
+    "source_reference",
+    "variable_table",
+}
+SUPPORTED_INLINE_TYPES = {
+    "text",
+    "code",
+    "math",
+    "glossary",
+    "emphasis",
+    "strong",
+    "file",
+    "command",
+    "citation",
+}
+CALLOUT_TYPES = {
+    "note",
+    "important",
+    "warning",
+    "implementation-detail",
+    "scientific-assumption",
+    "common-mistake",
+    "performance-concern",
+    "debugging-tip",
+    "source-discrepancy",
+    "model-limitation",
+}
 
 
 @dataclass
@@ -88,6 +134,11 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
     concept_ids = _identifiers(concepts)
     contract_ids = _identifiers(contracts)
     lesson_ids = _identifiers(curriculum["lessons"])
+    glossary_entries = {
+        item["identifier"]: item
+        for item in curriculum["glossary"]
+        if isinstance(item.get("identifier"), str)
+    }
     question_ids = _identifiers(curriculum["questions"])
     major_concepts = {
         item["identifier"] for item in concepts if item.get("importance") == "major"
@@ -152,6 +203,7 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
             bool(lesson.get("content")),
             f"lesson {lesson.get('identifier')} has no content",
         )
+        _validate_lesson_content(report, lesson, glossary_entries)
 
     assessment_kinds = {item.get("kind") for item in curriculum["assessments"]}
     report.require(
@@ -262,6 +314,178 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
         "the final examination does not assess every major Mastery Contract",
     )
     return report
+
+
+def _validate_lesson_content(
+    report: ValidationReport,
+    lesson: dict[str, Any],
+    glossary_entries: dict[str, dict[str, Any]],
+) -> None:
+    """Validate structured lesson blocks and their semantic inline content."""
+
+    lesson_id = lesson.get("identifier")
+    blocks = lesson.get("content", [])
+    serialized_content = str(blocks).casefold()
+    for glossary_id, entry in glossary_entries.items():
+        recognized_terms = [entry.get("term", ""), *entry.get("aliases", [])]
+        if any(
+            isinstance(value, str) and value and value.casefold() in serialized_content
+            for value in recognized_terms
+        ):
+            report.require(
+                lesson_id in entry.get("lesson_identifiers", []),
+                f"lesson {lesson_id} mentions glossary entry {glossary_id} "
+                "without a visible lesson definition",
+            )
+    block_types = {block.get("type") for block in blocks if isinstance(block, dict)}
+    report.require(
+        all(isinstance(block, dict) for block in blocks),
+        f"lesson {lesson_id} contains a non-object content block",
+    )
+    report.require(
+        block_types <= SUPPORTED_BLOCK_TYPES,
+        f"lesson {lesson_id} contains unsupported block types: "
+        f"{sorted(str(value) for value in block_types - SUPPORTED_BLOCK_TYPES)}",
+    )
+    report.require(
+        block_types != {"paragraph"},
+        f"lesson {lesson_id} flattens all content into paragraphs",
+    )
+    for index, block in enumerate(blocks):
+        if not isinstance(block, dict):
+            continue
+        block_type = block.get("type")
+        location = f"lesson {lesson_id} block {index + 1}"
+        if block_type in {
+            "paragraph",
+            "callout",
+            "warning",
+            "note",
+            "definition",
+            "theorem",
+            "rule",
+            "principle",
+        }:
+            _validate_inline(report, block.get("inline"), location, glossary_entries)
+        if block_type == "equation":
+            report.require(bool(block.get("latex")), f"{location} lacks LaTeX")
+            report.require(
+                bool(block.get("accessible_text")),
+                f"{location} lacks accessible equation text",
+            )
+            report.require(
+                _balanced_braces(block.get("latex", "")),
+                f"{location} has malformed mathematical markup",
+            )
+        elif block_type == "code":
+            report.require(bool(block.get("code")), f"{location} has no code")
+            report.require(
+                bool(block.get("language")), f"{location} lacks code language metadata"
+            )
+            report.require(bool(block.get("kind")), f"{location} lacks code kind")
+        elif block_type in {"callout", "warning", "note"}:
+            semantic_type = block.get("semantic_type", block_type)
+            report.require(
+                semantic_type in CALLOUT_TYPES,
+                f"{location} has unsupported callout type {semantic_type}",
+            )
+            report.require(bool(block.get("title")), f"{location} lacks a title")
+        elif block_type == "variable_table":
+            rows = block.get("rows", [])
+            report.require(bool(block.get("caption")), f"{location} lacks a caption")
+            report.require(bool(rows), f"{location} has no variable rows")
+            for row in rows:
+                required = {
+                    "symbol",
+                    "accessible_symbol",
+                    "identifier",
+                    "meaning",
+                    "units",
+                    "role",
+                }
+                report.require(
+                    isinstance(row, dict) and required <= row.keys(),
+                    f"{location} has an incomplete variable definition",
+                )
+        elif block_type in {"table", "comparison_table"}:
+            headers = block.get("headers", [])
+            rows = block.get("rows", [])
+            report.require(bool(block.get("caption")), f"{location} lacks a caption")
+            report.require(
+                bool(headers) and bool(rows), f"{location} has an empty table"
+            )
+            for row in rows:
+                report.require(
+                    len(row) == len(headers),
+                    f"{location} has a row with the wrong number of cells",
+                )
+                for cell in row:
+                    _validate_inline(report, cell, location, glossary_entries)
+        elif block_type in {"ordered_list", "unordered_list"}:
+            report.require(bool(block.get("items")), f"{location} has no list items")
+            for item in block.get("items", []):
+                _validate_inline(report, item, location, glossary_entries)
+        elif block_type in {"worked_example", "diagnostic_example", "procedure"}:
+            report.require(bool(block.get("title")), f"{location} lacks a title")
+            if block_type in {"worked_example", "procedure"}:
+                report.require(bool(block.get("steps")), f"{location} has no steps")
+                for step in block.get("steps", []):
+                    _validate_inline(report, step, location, glossary_entries)
+
+
+def _validate_inline(
+    report: ValidationReport,
+    inline: Any,
+    location: str,
+    glossary_entries: dict[str, dict[str, Any]],
+) -> None:
+    report.require(
+        isinstance(inline, list) and bool(inline),
+        f"{location} lacks structured inline content",
+    )
+    if not isinstance(inline, list):
+        return
+    for item in inline:
+        item_type = item.get("type") if isinstance(item, dict) else None
+        report.require(
+            item_type in SUPPORTED_INLINE_TYPES,
+            f"{location} has unsupported inline type {item_type}",
+        )
+        if not isinstance(item, dict) or item_type not in SUPPORTED_INLINE_TYPES:
+            continue
+        report.require(bool(item.get("text")), f"{location} has empty inline content")
+        if item_type == "math":
+            report.require(
+                bool(item.get("latex")), f"{location} inline math lacks LaTeX"
+            )
+            report.require(
+                bool(item.get("accessible_text")),
+                f"{location} inline math lacks accessible text",
+            )
+        elif item_type == "glossary":
+            glossary_id = item.get("glossary_identifier")
+            report.require(
+                glossary_id in glossary_entries,
+                f"{location} references unknown glossary entry {glossary_id}",
+            )
+            report.require(
+                bool(item.get("definition")),
+                f"{location} glossary reference lacks a definition",
+            )
+
+
+def _balanced_braces(value: str) -> bool:
+    """Perform a conservative structural check for generated LaTeX."""
+
+    depth = 0
+    for character in value:
+        if character == "{":
+            depth += 1
+        elif character == "}":
+            depth -= 1
+            if depth < 0:
+                return False
+    return depth == 0
 
 
 def _validate_question(report: ValidationReport, question: dict[str, Any]) -> None:
