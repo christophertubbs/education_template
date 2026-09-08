@@ -1,0 +1,82 @@
+{
+  "schema_version": "2.0",
+  "mastery_contracts": [
+    {
+      "identifier": "master-cfe-purpose",
+      "concept_identifier": "cfe-purpose",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-timestep-water-accounting",
+      "concept_identifier": "timestep-water-accounting",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-partitioning-and-et",
+      "concept_identifier": "partitioning-and-et",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-conceptual-reservoirs",
+      "concept_identifier": "conceptual-reservoirs",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-routing-paths",
+      "concept_identifier": "routing-paths",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-bmi-and-configuration",
+      "concept_identifier": "bmi-and-configuration",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    },
+    {
+      "identifier": "master-build-test-debug",
+      "concept_identifier": "build-test-debug",
+      "competencies": [
+        "explain the concept and why the repository uses it",
+        "trace the concept to relevant source and runtime data flow",
+        "diagnose a plausible failure involving the concept",
+        "identify assumptions, limitations, and inappropriate interpretations",
+        "compare the implemented approach with a reasonable alternative"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{% extends "education_runtime/base.html" %}{% block title %}{{ curriculum.title }} sources{% endblock %}{% block content %}<h1>Source references</h1><ul>{% for source in sources %}<li><strong>{{ source.get_evidence_kind_display|default:source.evidence_kind }}</strong>: {% if source.url %}<a href="{{ source.url }}">{{ source.citation }}</a>{% else %}{{ source.citation }}{% endif %}{% if source.file_path %} — <code>{{ source.file_path }}</code>{% endif %}</li>{% endfor %}</ul>{% endblock %}
+

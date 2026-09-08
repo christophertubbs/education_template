@@ -1,0 +1,2 @@
+{% extends "education_runtime/base.html" %}{% block title %}{{ curriculum.title }} glossary{% endblock %}{% block content %}<h1>Glossary</h1><dl>{% for entry in entries %}<dt id="{{ entry.identifier }}">{{ entry.term }}</dt><dd>{{ entry.definition }}</dd>{% endfor %}</dl>{% endblock %}
+

@@ -1,7 +1,23 @@
 {
-    "repository_url": "https://github.com/NOAA-OWP/cfe.git",
     "name": "cfe",
+    "repository_url": "https://github.com/NOAA-OWP/cfe.git",
     "revision": "master",
-    "curriculum_app_name": "cfe",
-    "display_name": "cfe"
+    "curriculum_product_name": "cfe_curriculum",
+    "display_name": "CFE",
+    "curriculum_source_path": "curricula/cfe",
+    "runtime_compatibility": ">=1.0,<2.0",
+    "assumed_learner_prerequisites": [
+        "Professional software development",
+        "Secondary-school algebra"
+    ],
+    "required_topics": [
+        "hydrologic mass balance",
+        "rainfall partitioning",
+        "conceptual reservoirs",
+        "GIUH and Nash routing",
+        "BMI lifecycle",
+        "build, test, and diagnosis"
+    ],
+    "initial_branch": "main",
+    "automated_commit": true
 }

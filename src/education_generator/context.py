@@ -16,6 +16,7 @@ class GenerationContext:
     configuration: ProjectConfiguration
     target_repository_path: Path
     resolved_commit: str
-    generated_root: Path
-    curriculum_repository_path: Path
+    workspace_path: Path
+    product_repository_path: Path
     generated_at: str
+    prior_source_commit: str | None = None

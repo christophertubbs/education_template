@@ -1,98 +1,72 @@
-"""Create host and curriculum repositories from reusable scaffold assets."""
+"""Assemble an installable Curriculum Product from validated artifacts."""
 
 from __future__ import annotations
 
-import os
+import json
 import shutil
-import sys
 from pathlib import Path
 
-from .constants import PACKAGE_ROOT, TEMPLATE_ROOT
+from .artifacts import CurriculumArtifacts
+from .constants import TEMPLATE_ROOT
 from .context import GenerationContext
-from .curriculum import package_curriculum
-from .metadata import write_metadata
-from .processes import run_process
+from .metadata import build_metadata
 from .rendering import copy_agent_documents, render_tree, template_tokens
 
 
-def recreate_generated_root(path: Path) -> None:
-    """Recreate the configured generated-output directory."""
+def assemble_product(
+    context: GenerationContext,
+    artifacts: CurriculumArtifacts,
+    destination: Path,
+) -> None:
+    """Render product packaging and persist content plus provenance."""
 
-    if path.exists():
-        shutil.rmtree(path)
-    path.mkdir(parents=True)
-
-
-def create_host_project(context: GenerationContext) -> None:
-    """Create a Django host, leaving ``manage.py`` owned by Django."""
-
-    run_process(
-        [
-            sys.executable,
-            "-m",
-            "django",
-            "startproject",
-            "standalone",
-            str(context.generated_root),
-        ]
-    )
-    tokens = template_tokens(context, "Generated Host Project")
-    render_tree(TEMPLATE_ROOT / "host", context.generated_root, tokens)
-    shutil.copy2(PACKAGE_ROOT / "launch.sh", context.generated_root / "launch.sh")
-    write_metadata(
-        context.generated_root / "generation_metadata.json",
-        context,
-        "host",
+    package_name = context.configuration.curriculum_product_name
+    package_root = destination / "src" / package_name
+    render_tree(
+        TEMPLATE_ROOT / "product",
+        destination,
+        template_tokens(context, "Curriculum Product"),
     )
     copy_agent_documents(
         context.repository_root,
-        context.generated_root,
+        destination,
         TEMPLATE_ROOT / "agent",
-        tokens,
+        template_tokens(context, "Curriculum Product"),
     )
+    product_payload = artifacts.as_product_payload()
+    product_payload["metadata"] = build_metadata(context)
+    data_path = package_root / "data" / "curriculum.json"
+    data_path.parent.mkdir(parents=True, exist_ok=True)
+    data_path.write_text(json.dumps(product_payload, indent=2) + "\n", encoding="utf-8")
+    provenance_path = destination / "provenance"
+    provenance_path.mkdir(parents=True, exist_ok=True)
+    _write_json(provenance_path / "generation.json", build_metadata(context))
+    _write_json(provenance_path / "knowledge-map.json", artifacts.knowledge_map)
+    _write_json(provenance_path / "mastery-contracts.json", artifacts.mastery_contracts)
+    _write_json(provenance_path / "coverage.json", artifacts.coverage)
+    _write_json(provenance_path / "completion.json", artifacts.completion)
+    impact_path = context.workspace_path / "regeneration-impact.json"
+    if impact_path.is_file():
+        shutil.copy2(impact_path, provenance_path / "regeneration-impact.json")
 
 
-def create_curriculum_app(context: GenerationContext) -> None:
-    """Render the reusable, installable curriculum app scaffold."""
+def promote_staged_product(staging_path: Path, destination: Path) -> None:
+    """Atomically promote staged files while preserving an existing Git directory."""
 
-    app_name = context.configuration.curriculum_app_name
-    app_root = context.curriculum_repository_path
-    package_root = app_root / "src" / app_name
-    package_root.mkdir(parents=True)
-
-    tokens = template_tokens(context, "Curriculum App")
-    render_tree(TEMPLATE_ROOT / "curriculum", app_root, tokens)
-    package_curriculum(context, package_root)
-    write_metadata(app_root / "generation_metadata.json", context, "curriculum_app")
-    copy_agent_documents(
-        context.repository_root,
-        app_root,
-        TEMPLATE_ROOT / "agent",
-        tokens,
-    )
+    if not destination.exists():
+        staging_path.replace(destination)
+        return
+    for path in destination.iterdir():
+        if path.name == ".git":
+            continue
+        if path.is_dir():
+            shutil.rmtree(path)
+        else:
+            path.unlink()
+    for path in staging_path.iterdir():
+        shutil.move(str(path), destination / path.name)
+    staging_path.rmdir()
 
 
-def generate_migrations(context: GenerationContext) -> None:
-    """Ask Django to derive migration files from the rendered models."""
-
-    source_root = context.curriculum_repository_path / "src"
-    existing_python_path = os.environ.get("PYTHONPATH")
-    python_path_entries = [str(source_root), str(PACKAGE_ROOT.parent)]
-    if existing_python_path:
-        python_path_entries.append(existing_python_path)
-    python_path = os.pathsep.join(python_path_entries)
-    run_process(
-        [
-            sys.executable,
-            "-m",
-            "django",
-            "makemigrations",
-            context.configuration.curriculum_app_name,
-            "--settings=education_generator.migration_settings",
-        ],
-        extra_environment={
-            "EDUCATION_CURRICULUM_APP": context.configuration.curriculum_app_name,
-            "PYTHONPATH": python_path,
-        },
-        working_directory=context.repository_root,
-    )
+def _write_json(path: Path, value: object) -> None:
+    path.write_text(json.dumps(value, indent=2) + "\n", encoding="utf-8")

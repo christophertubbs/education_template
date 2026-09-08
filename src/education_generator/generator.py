@@ -1,24 +1,19 @@
-"""Compatibility imports for the modular education generator API."""
+"""Stable public API for generator integrations."""
 
-from .cli import main
-from .configuration import (
-    ProjectConfiguration,
-    app_config_class,
-    load_project_configuration,
-)
+from .artifacts import CurriculumArtifacts, load_artifacts
+from .configuration import ProjectConfiguration, load_project_configuration
 from .context import GenerationContext
-from .curriculum import load_curriculum_content
-from .scaffold import create_curriculum_app, create_host_project, generate_migrations
-
+from .pipeline import PipelineState, run_pipeline
+from .validation import ValidationReport, validate_artifacts
 
 __all__ = [
+    "CurriculumArtifacts",
     "GenerationContext",
+    "PipelineState",
     "ProjectConfiguration",
-    "app_config_class",
-    "create_curriculum_app",
-    "create_host_project",
-    "generate_migrations",
-    "load_curriculum_content",
+    "ValidationReport",
+    "load_artifacts",
     "load_project_configuration",
-    "main",
+    "run_pipeline",
+    "validate_artifacts",
 ]

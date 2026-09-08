@@ -1,0 +1,18 @@
+{% extends "education_runtime/base.html" %}{% load static %}
+{% block title %}{{ assessment.title }}{% endblock %}
+{% block content %}
+<h1>{{ assessment.title }}</h1>
+{% if assessment.time_limit_seconds %}<p>Default time: {{ assessment.time_limit_seconds }} seconds. <label><input type="checkbox" data-disable-timer> Disable timer</label></p><p role="timer" data-timer></p>{% endif %}
+<form data-assessment-id="{{ assessment.identifier }}" data-time-limit="{{ assessment.time_limit_seconds|default:0 }}">
+{% for question in questions %}<fieldset data-question-id="{{ question.identifier }}"><legend>{{ forloop.counter }}. {{ question.prompt }}</legend>
+  {% if question.question_type == "single_choice" or question.question_type == "true_false" %}
+    {% for option in question.display_scoring.options %}<label><input type="radio" name="{{ question.identifier }}" value="{{ option.identifier }}"> {{ option.text }}</label>{% endfor %}
+  {% elif question.question_type == "multiple_select" %}
+    {% for option in question.display_scoring.options %}<label><input type="checkbox" name="{{ question.identifier }}" value="{{ option.identifier }}"> {{ option.text }}</label>{% endfor %}
+  {% elif question.question_type == "numeric" %}<label>Answer <input type="number" step="any" name="{{ question.identifier }}"></label>
+  {% else %}<label>Answer <input type="text" name="{{ question.identifier }}"></label>{% endif %}
+  <p role="status" data-feedback></p></fieldset>{% endfor %}
+<button type="submit">Score assessment</button><p role="status" data-score></p><p hidden data-next-container><a href="{{ next_url }}">Continue</a></p></form>
+{{ question_payload|json_script:"assessment-data" }}
+{% endblock %}
+{% block scripts %}<script src="{% static 'education_runtime/assessment.js' %}" defer></script>{% endblock %}

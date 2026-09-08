@@ -1,0 +1,16 @@
+{% extends "education_runtime/base.html" %}
+{% block title %}{{ lesson.title }}{% endblock %}
+{% block content %}
+<article data-lesson-id="{{ lesson.identifier }}"><p class="eyebrow">{{ lesson.section.title }}</p><h1>{{ lesson.title }}</h1><p>{{ lesson.summary }}</p>
+{% for block in lesson.content %}
+  {% if block.type == "heading" %}<h2>{{ block.text }}</h2>
+  {% elif block.type == "equation" %}<figure><pre aria-label="Equation: {{ block.accessible_text }}">{{ block.text }}</pre><figcaption>{{ block.accessible_text }}</figcaption></figure>
+  {% elif block.type == "code" %}<pre><code>{{ block.text }}</code></pre>
+  {% elif block.type == "callout" %}<aside><strong>{{ block.title }}</strong><p>{{ block.text }}</p></aside>
+  {% else %}<p>{{ block.text }}</p>{% endif %}
+{% endfor %}
+<button type="button" data-complete-lesson>Mark lesson complete</button><p role="status" data-completion-status></p>
+{% if advance_url %}<p><a data-learning-navigation href="{{ advance_url }}">Continue</a></p>{% endif %}
+<h2>Evidence</h2><ul>{% for source in lesson.sources.all %}<li>{% if source.url %}<a href="{{ source.url }}">{{ source.citation }}</a>{% else %}{{ source.citation }}{% endif %}</li>{% endfor %}</ul>
+</article>
+{% endblock %}
