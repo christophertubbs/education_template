@@ -1,0 +1,12 @@
+{% extends "education_runtime/base.html" %}
+{% block title %}{{ curriculum.title }}{% endblock %}
+{% block content %}
+<h1>{{ curriculum.title }}</h1><p>{{ curriculum.description }}</p>
+{% for section in sections %}
+<section><h2>{{ section.title }}</h2><p>{{ section.summary }}</p><ol>
+{% for lesson in section.lesson_set.all %}<li><a data-learning-navigation href="{{ lesson.get_absolute_url }}">{{ lesson.title }}</a></li>{% endfor %}
+</ol></section>
+{% endfor %}
+<h2>Assessments</h2><ul>{% for item in assessments %}<li><a href="{% url 'education_runtime:assessment' curriculum.identifier item.identifier %}">{{ item.title }}</a></li>{% endfor %}</ul>
+{% endblock %}
+

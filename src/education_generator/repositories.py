@@ -1,4 +1,4 @@
-"""Acquire target repositories and initialize generated repositories."""
+"""Acquire source repositories and manage independent generated repositories."""
 
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ def acquire_target_repository(
     target_path = repository_directory / configuration.name
     if target_path.exists():
         ensure_clean_repository(target_path)
-        run_process(["git", "-C", str(target_path), "fetch", "--all"])
+        run_process(["git", "-C", str(target_path), "fetch", "--all", "--prune"])
         return target_path
 
     run_process(["git", "clone", configuration.repository_url, str(target_path)])
@@ -42,25 +42,62 @@ def ensure_clean_repository(repository_path: Path) -> None:
 def resolve_revision(repository_path: Path, revision: str) -> str:
     """Resolve a configured revision to an exact commit hash."""
 
+    remote_branch = run_process(
+        [
+            "git",
+            "-C",
+            str(repository_path),
+            "branch",
+            "--remotes",
+            "--list",
+            f"origin/{revision}",
+        ],
+        capture_output=True,
+    )
+    revision_expression = (
+        f"origin/{revision}" if remote_branch.stdout.strip() else revision
+    )
     result = run_process(
-        ["git", "-C", str(repository_path), "rev-parse", revision],
+        [
+            "git",
+            "-C",
+            str(repository_path),
+            "rev-parse",
+            "--verify",
+            f"{revision_expression}^{{commit}}",
+        ],
         capture_output=True,
     )
     return result.stdout.strip()
 
 
-def initialize_generated_repository(repository_path: Path, message: str) -> None:
+def checkout_resolved_revision(repository_path: Path, resolved_commit: str) -> None:
+    """Put a clean Target Repository at the exact revision being analyzed."""
+
+    ensure_clean_repository(repository_path)
+    run_process(
+        ["git", "-C", str(repository_path), "checkout", "--detach", resolved_commit]
+    )
+
+
+def initialize_generated_repository(
+    repository_path: Path,
+    message: str,
+    branch: str = "main",
+) -> None:
     """Initialize and commit a generated repository."""
 
-    run_process(["git", "-C", str(repository_path), "init", "-b", "main"])
-    run_process([
-        "git",
-        "-C",
-        str(repository_path),
-        "config",
-        "user.name",
-        "Education Generator",
-    ])
+    run_process(["git", "-C", str(repository_path), "init", "-b", branch])
+    run_process(
+        [
+            "git",
+            "-C",
+            str(repository_path),
+            "config",
+            "user.name",
+            "Education Generator",
+        ]
+    )
     run_process(
         [
             "git",
@@ -75,18 +112,14 @@ def initialize_generated_repository(repository_path: Path, message: str) -> None
     run_process(["git", "-C", str(repository_path), "commit", "-m", message])
 
 
-def ignore_nested_curriculum_repository(
-    host_repository_path: Path,
-    curriculum_directory_name: str,
-) -> None:
-    """Locally exclude a new nested app without changing tracked host files."""
+def commit_generated_update(repository_path: Path, message: str) -> None:
+    """Commit a validated update using repository-local identity."""
 
-    exclude_path = host_repository_path / ".git" / "info" / "exclude"
-    exclusion = f"/{curriculum_directory_name}/"
-    existing_lines = exclude_path.read_text(encoding="utf-8").splitlines()
-    if exclusion in existing_lines:
+    status = run_process(
+        ["git", "-C", str(repository_path), "status", "--short"],
+        capture_output=True,
+    )
+    if not status.stdout.strip():
         return
-    with exclude_path.open("a", encoding="utf-8") as exclude_file:
-        if existing_lines and existing_lines[-1]:
-            exclude_file.write("\n")
-        exclude_file.write(f"{exclusion}\n")
+    run_process(["git", "-C", str(repository_path), "add", "."])
+    run_process(["git", "-C", str(repository_path), "commit", "-m", message])

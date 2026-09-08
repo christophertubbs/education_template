@@ -1,8 +1,13 @@
 # TASKS
 
+## Complete
+
+* Generate and validate the initial __DISPLAY_NAME__ Curriculum Product.
+* Record exact source, knowledge-map, Mastery Contract, coverage, and completion
+  provenance.
+
 ## Ready
 
-* Review generated curriculum for technical accuracy against recorded source
-  references.
-* Add more lessons and assessment questions where maintainers need deeper
-  coverage.
+* Re-audit affected concepts when the Target Repository revision changes.
+* Preserve stable identifiers and review administrative conflicts during an
+  update.

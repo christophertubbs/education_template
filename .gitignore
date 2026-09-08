@@ -71,6 +71,7 @@ generated/*
 
 # Temporary project-generation workspace
 generated/.tmp/
+.work/
 
 # Target repository checkouts are source material, not generator source.
 repository/*

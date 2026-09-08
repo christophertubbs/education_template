@@ -1,2 +1,3 @@
-"""Generate educational Django applications from a target repository."""
+"""Generate independently installable Curriculum Products."""
 
+from .generator import *  # noqa: F403

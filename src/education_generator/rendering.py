@@ -17,14 +17,15 @@ def template_tokens(
 
     configuration = context.configuration
     return {
-        "__APP_CONFIG_CLASS__": app_config_class(configuration.curriculum_app_name),
-        "__APP_NAME__": configuration.curriculum_app_name,
+        "__APP_CONFIG_CLASS__": app_config_class(configuration.curriculum_product_name),
+        "__APP_NAME__": configuration.curriculum_product_name,
         "__CONFIGURED_REVISION__": configuration.revision,
         "__DISPLAY_NAME__": configuration.display_name,
         "__REPOSITORY_LABEL__": repository_label,
         "__REPOSITORY_NAME__": configuration.name,
         "__REPOSITORY_URL__": configuration.repository_url,
         "__RESOLVED_COMMIT__": context.resolved_commit,
+        "__RUNTIME_COMPATIBILITY__": configuration.runtime_compatibility,
     }
 
 

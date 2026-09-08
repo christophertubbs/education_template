@@ -1,0 +1,2 @@
+{% extends "education_runtime/base.html" %}{% block title %}{{ curriculum.title }} progress{% endblock %}{% block content %}<h1>Progress</h1><div data-progress-summary aria-live="polite">Loading local progress…</div><p><button type="button" data-export-progress>Export progress</button> <label class="button">Import progress <input type="file" accept="application/json" data-import-progress></label></p><button type="button" data-reset-progress>Reset progress</button><p role="status" data-progress-status></p>{% endblock %}
+

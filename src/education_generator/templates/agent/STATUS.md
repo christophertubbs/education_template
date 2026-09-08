@@ -1,7 +1,11 @@
 # STATUS
 
-Current objective: maintain the generated __REPOSITORY_LABEL__.
+Current objective: maintain the independently installable __DISPLAY_NAME__
+Curriculum Product against the shared Education Runtime.
 
-The repository was generated from the parent generator state. Use local
-`generation_metadata.json` and packaged curriculum data as the source of
-generation provenance.
+Target source: `__REPOSITORY_URL__` at `__RESOLVED_COMMIT__` (configured as
+`__CONFIGURED_REVISION__`).
+
+Current state: all generator validation and audit fields were complete when
+this product was promoted. Canonical baseline data is packaged under
+`src/__APP_NAME__/data/`; evidence and audits are under `provenance/`.

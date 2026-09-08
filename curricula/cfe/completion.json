@@ -1,0 +1,37 @@
+{
+  "schema_version": "2.0",
+  "status": "complete",
+  "passes": {
+    "knowledge": "complete",
+    "prerequisite": "complete",
+    "mastery": "complete",
+    "structure": "complete",
+    "content": "complete",
+    "assessment": "complete",
+    "adversarial": "complete",
+    "gap_review": "complete",
+    "remediation": "complete",
+    "competency_audit": "complete"
+  },
+  "terminal_learning_outcomes": {
+    "TLO-01": "covered",
+    "TLO-02": "covered",
+    "TLO-03": "covered",
+    "TLO-04": "covered",
+    "TLO-05": "covered",
+    "TLO-06": "covered",
+    "TLO-07": "covered",
+    "TLO-08": "covered",
+    "TLO-09": "covered",
+    "TLO-10": "covered",
+    "TLO-11": "covered",
+    "TLO-12": "covered",
+    "TLO-13": "covered",
+    "TLO-14": "covered",
+    "TLO-15": "covered",
+    "TLO-16": "covered",
+    "TLO-17": "covered",
+    "TLO-18": "covered"
+  },
+  "unresolved_required_items": []
+}

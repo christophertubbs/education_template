@@ -1,7 +1,8 @@
 # DECISIONS
 
-## Generated Repository Boundaries
+## Shared runtime boundary
 
-This generated repository is intended to be maintained independently from the
-generator after creation. Preserve generation metadata and source provenance
-when making curriculum changes.
+This repository is independently versioned and contains target-specific
+knowledge only. Generic models, presentation, deterministic scoring, progress,
+and administration belong to the Education Runtime. The product depends on the
+runtime; the runtime does not depend on this product.

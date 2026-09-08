@@ -1,11 +1,12 @@
-"""Load and validate generator configuration."""
+"""Load and validate untrusted generator configuration."""
 
 from __future__ import annotations
 
 import json
 import re
-from dataclasses import dataclass, replace
+from dataclasses import dataclass
 from pathlib import Path
+from urllib.parse import urlparse
 
 
 @dataclass(frozen=True)
@@ -15,9 +16,14 @@ class ProjectConfiguration:
     repository_url: str
     name: str
     revision: str
-    curriculum_app_name: str
+    curriculum_product_name: str
     display_name: str
-    curriculum_content_path: Path
+    curriculum_source_path: Path
+    runtime_compatibility: str
+    assumed_learner_prerequisites: tuple[str, ...]
+    required_topics: tuple[str, ...]
+    initial_branch: str
+    automated_commit: bool
 
 
 def load_project_configuration(configuration_path: Path) -> ProjectConfiguration:
@@ -28,7 +34,7 @@ def load_project_configuration(configuration_path: Path) -> ProjectConfiguration
         "repository_url",
         "name",
         "revision",
-        "curriculum_app_name",
+        "curriculum_product_name",
         "display_name",
     )
     missing_fields = [
@@ -38,51 +44,57 @@ def load_project_configuration(configuration_path: Path) -> ProjectConfiguration
         raise ValueError(f"Missing required project fields: {missing_fields}")
 
     name = str(raw_configuration["name"])
-    app_name = str(raw_configuration["curriculum_app_name"])
+    product_name = str(raw_configuration["curriculum_product_name"])
     display_name = str(raw_configuration["display_name"])
     if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", name):
         raise ValueError(f"Unsafe repository name: {name!r}")
-    if not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", app_name):
-        raise ValueError(f"Invalid Python package name: {app_name!r}")
+    if not re.fullmatch(r"[a-z][a-z0-9_]*", product_name):
+        raise ValueError(f"Invalid Curriculum Product package: {product_name!r}")
     if any(character in display_name for character in ('"', "\n", "\r")):
         raise ValueError("display_name cannot contain quotes or line breaks")
 
-    raw_content_path = raw_configuration.get(
-        "curriculum_content_path",
-        f"curricula/{name}/curriculum.json",
+    repository_url = str(raw_configuration["repository_url"])
+    parsed_url = urlparse(repository_url)
+    if parsed_url.scheme not in {"https", "ssh", "git", "file"}:
+        raise ValueError("repository_url must use https, ssh, git, or file")
+
+    source_path = _resolve_local_path(
+        configuration_path.parent,
+        raw_configuration.get("curriculum_source_path", f"curricula/{name}"),
+        "curriculum_source_path",
     )
-    content_path = _resolve_content_path(configuration_path.parent, raw_content_path)
+    prerequisites = _string_tuple(raw_configuration, "assumed_learner_prerequisites")
+    required_topics = _string_tuple(raw_configuration, "required_topics")
+    initial_branch = str(raw_configuration.get("initial_branch", "main"))
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._/-]*", initial_branch):
+        raise ValueError(f"Invalid initial branch: {initial_branch!r}")
     return ProjectConfiguration(
-        repository_url=str(raw_configuration["repository_url"]),
+        repository_url=repository_url,
         name=name,
         revision=str(raw_configuration["revision"]),
-        curriculum_app_name=app_name,
+        curriculum_product_name=product_name,
         display_name=display_name,
-        curriculum_content_path=content_path,
+        curriculum_source_path=source_path,
+        runtime_compatibility=str(
+            raw_configuration.get("runtime_compatibility", ">=1.0,<2.0")
+        ),
+        assumed_learner_prerequisites=prerequisites,
+        required_topics=required_topics,
+        initial_branch=initial_branch,
+        automated_commit=bool(raw_configuration.get("automated_commit", True)),
     )
 
 
-def with_content_override(
-    configuration: ProjectConfiguration,
-    content_path: Path | None,
-) -> ProjectConfiguration:
-    """Return configuration using an optional command-line content upload."""
-
-    if content_path is None:
-        return configuration
-    resolved_path = content_path.resolve()
-    if not resolved_path.is_file():
-        raise ValueError(f"Curriculum content file does not exist: {resolved_path}")
-    return replace(configuration, curriculum_content_path=resolved_path)
-
-
-def _resolve_content_path(base_path: Path, raw_path: object) -> Path:
-    """Resolve and verify a configured curriculum content path."""
+def _resolve_local_path(base_path: Path, raw_path: object, field_name: str) -> Path:
+    """Resolve a configured path while preventing traversal outside the project."""
 
     if not isinstance(raw_path, str):
-        raise ValueError("curriculum_content_path must be a string")
-    content_path = (base_path / raw_path).resolve()
-    return content_path
+        raise ValueError(f"{field_name} must be a string")
+    resolved_base = base_path.resolve()
+    resolved_path = (resolved_base / raw_path).resolve()
+    if not resolved_path.is_relative_to(resolved_base):
+        raise ValueError(f"{field_name} must stay inside the repository")
+    return resolved_path
 
 
 def app_config_class(app_name: str) -> str:
@@ -90,3 +102,14 @@ def app_config_class(app_name: str) -> str:
 
     words = [word for word in app_name.split("_") if word]
     return "".join(word.capitalize() for word in words) + "Config"
+
+
+def _string_tuple(configuration: dict[str, object], field_name: str) -> tuple[str, ...]:
+    """Validate an optional JSON array containing non-empty strings."""
+
+    raw_values = configuration.get(field_name, [])
+    if not isinstance(raw_values, list) or not all(
+        isinstance(value, str) and value.strip() for value in raw_values
+    ):
+        raise ValueError(f"{field_name} must be an array of non-empty strings")
+    return tuple(raw_values)

@@ -1,0 +1,86 @@
+{
+  "schema_version": "2.0",
+  "concepts": [
+    {
+      "identifier": "cfe-purpose",
+      "title": "Purpose, Scope, and Repository Map",
+      "description": "CFE is a deliberately simplified conceptual hydrologic model designed to reproduce key National Water Model runoff behaviors behind a BMI interface.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "timestep-water-accounting",
+      "title": "Timestep Data Flow and Water Accounting",
+      "description": "The cfe function advances one catchment timestep while explicitly tracking precipitation, evapotranspiration, storage transfers, routed runoff, and mass balance.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "partitioning-and-et",
+      "title": "Rainfall Partitioning, Ice, and Evapotranspiration",
+      "description": "CFE can partition rainfall with Schaake or Xinanjiang logic and can remove atmospheric demand from rainfall, retention storage, and soil.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "conceptual-reservoirs",
+      "title": "Soil and Groundwater Reservoirs",
+      "description": "A shared conceptual-reservoir structure represents soil and groundwater stores with thresholded, potentially nonlinear outlets.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "routing-paths",
+      "title": "GIUH and Nash Cascade Routing",
+      "description": "CFE delays surface and lateral runoff with explicit queues and reservoir cascades before combining them with groundwater discharge.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "bmi-and-configuration",
+      "title": "BMI Lifecycle and Configuration Contracts",
+      "description": "bmi_cfe.c owns allocation, configuration parsing, forcing selection, lifecycle methods, variable metadata, and scalar-grid exchange.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "build-test-debug",
+      "title": "Build, Test, Debug, and Contribute",
+      "description": "CMake options select CFE integration modes, CTest exercises BMI behavior, and mass-balance evidence anchors scientific debugging.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "timestep-water-accounting",
+      "target": "cfe-purpose",
+      "type": "prerequisite"
+    },
+    {
+      "source": "partitioning-and-et",
+      "target": "timestep-water-accounting",
+      "type": "prerequisite"
+    },
+    {
+      "source": "conceptual-reservoirs",
+      "target": "partitioning-and-et",
+      "type": "prerequisite"
+    },
+    {
+      "source": "routing-paths",
+      "target": "conceptual-reservoirs",
+      "type": "prerequisite"
+    },
+    {
+      "source": "bmi-and-configuration",
+      "target": "routing-paths",
+      "type": "prerequisite"
+    },
+    {
+      "source": "build-test-debug",
+      "target": "bmi-and-configuration",
+      "type": "prerequisite"
+    }
+  ]
+}

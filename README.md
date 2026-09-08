@@ -1,27 +1,35 @@
-# Education Template
+# Education Curriculum System
 
-The education template generates a standalone Django host and an independently
-installable Curriculum App for the repository configured in `project.json`.
+This repository implements a shared Django Education Runtime, a thin optional
+runner, and a staged generator that produces independently installable
+Curriculum Products instead of duplicated websites.
 
-Repository-specific lessons, glossary entries, assessments, questions, and
-coverage mappings are JSON data under `curricula/`. Reusable generated files
-are editable in their natural formats under
-`src/education_generator/templates/`. The Python modules in
-`src/education_generator/` orchestrate configuration, repository acquisition,
-rendering, metadata, Django scaffolding, and Git initialization.
+Install, migrate, test, and launch the runtime:
 
-Generate the configured project with:
+```bash
+python -m pip install -e .
+python manage.py migrate
+python manage.py test
+python manage.py runserver
+```
+
+Generate the product configured by `project.json`:
 
 ```bash
 PYTHONPATH=src python -m education_generator
 ```
 
-`curriculum_content_path` in `project.json` selects the canonical curriculum
-data. When omitted, it defaults to
-`curricula/<repository-name>/curriculum.json`. Use `--curriculum-content PATH`
-to upload a different curriculum JSON for one run. See
-`src/education_generator/CONTENT_SCHEMA.md` for the data shape.
+The generator resolves an exact Target Repository commit, inventories source
+without executing it, validates the artifacts under `curricula/<target>/`,
+assembles in `.work/`, and promotes only passing output to `generated/`.
 
-Django creates the generated host's `manage.py` through `startproject` and
-derives Curriculum App migrations through `makemigrations`. New standalone
-hosts also receive an executable `launch.sh` from the reusable host scaffold.
+Install a generated product and enable it without modifying runner source:
+
+```bash
+python -m pip install -e generated/cfe-curriculum
+EDUCATION_PRODUCTS=cfe_curriculum python manage.py migrate
+EDUCATION_PRODUCTS=cfe_curriculum python manage.py runserver
+```
+
+See `docs/ARCHITECTURE.md`,
+`src/education_generator/CONTENT_SCHEMA.md`, and `docs/agent/STATUS.md`.
