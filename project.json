@@ -1,20 +1,20 @@
 {
-    "name": "cfe",
-    "repository_url": "https://github.com/NOAA-OWP/cfe.git",
+    "name": "sac-sma",
+    "repository_url": "https://github.com/NOAA-OWP/sac-sma.git",
     "revision": "master",
-    "curriculum_product_name": "cfe_curriculum",
-    "display_name": "CFE",
-    "curriculum_source_path": "curricula/cfe",
+    "curriculum_product_name": "sacsma_curriculum",
+    "display_name": "SAC-SMA",
+    "curriculum_source_path": "curricula/sac-sma",
     "runtime_compatibility": ">=1.1,<2.0",
     "assumed_learner_prerequisites": [
         "Professional software development",
         "Secondary-school algebra"
     ],
     "required_topics": [
-        "hydrologic mass balance",
-        "rainfall partitioning",
-        "conceptual reservoirs",
-        "GIUH and Nash routing",
+        "Burnash, R.J.C., R.L. Ferral, R.A. McGuire. (1973). A generalized streamflow simulation system: Conceptual modeling for digital computers",
+        "Sacramento Soil Moisture Accounting",
+        "Hydrologic Response Units",
+        "Fortran 90",
         "BMI lifecycle",
         "build, test, and diagnosis"
     ],

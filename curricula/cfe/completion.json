@@ -1,5 +1,5 @@
 {
-  "schema_version": "2.0",
+  "schema_version": "2.2",
   "status": "complete",
   "passes": {
     "knowledge": "complete",
@@ -11,7 +11,9 @@
     "adversarial": "complete",
     "gap_review": "complete",
     "remediation": "complete",
-    "competency_audit": "complete"
+    "competency_audit": "complete",
+    "terminology_closure": "complete",
+    "readability_review": "complete"
   },
   "terminal_learning_outcomes": {
     "TLO-01": "covered",
@@ -33,5 +35,36 @@
     "TLO-17": "covered",
     "TLO-18": "covered"
   },
-  "unresolved_required_items": []
+  "unresolved_required_items": [],
+  "audit_evidence": {
+    "terminology_closure": {
+      "status": "complete",
+      "method": "Contextual first-use review plus deterministic inventory, equation-order, source-mapping, and assessment-vocabulary validation.",
+      "reviewed_lesson_identifiers": [
+        "cfe-purpose",
+        "timestep-water-accounting",
+        "partitioning-and-et",
+        "conceptual-reservoirs",
+        "routing-paths",
+        "bmi-and-configuration",
+        "build-test-debug"
+      ],
+      "unresolved_items": []
+    },
+    "readability_review": {
+      "status": "complete",
+      "method": "Contextual review of lesson prose, definitions, examples, equations, and source identifiers for a professional developer new to the domain. Sentence-length measurements were supporting diagnostics only.",
+      "manual_contextual_review": true,
+      "reviewed_lesson_identifiers": [
+        "cfe-purpose",
+        "timestep-water-accounting",
+        "partitioning-and-et",
+        "conceptual-reservoirs",
+        "routing-paths",
+        "bmi-and-configuration",
+        "build-test-debug"
+      ],
+      "unresolved_items": []
+    }
+  }
 }

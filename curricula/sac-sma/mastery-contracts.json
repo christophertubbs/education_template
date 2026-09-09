@@ -1,0 +1,101 @@
+{
+  "schema_version": "2.0",
+  "mastery_contracts": [
+    {
+      "identifier": "master-sacsma-foundations",
+      "concept_identifier": "sacsma-foundations",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-stores-and-et",
+      "concept_identifier": "stores-and-et",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-runoff-and-percolation",
+      "concept_identifier": "runoff-and-percolation",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-substeps-and-balance",
+      "concept_identifier": "substeps-and-balance",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-hru-execution",
+      "concept_identifier": "hru-execution",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-fortran-translation",
+      "concept_identifier": "fortran-translation",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-bmi-driver",
+      "concept_identifier": "bmi-driver",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    },
+    {
+      "identifier": "master-build-test-debug",
+      "concept_identifier": "build-test-debug",
+      "competencies": [
+        "explain the concept in language familiar to a C++, C, or Python developer",
+        "derive or justify its governing equations and preserve units",
+        "trace it to the pinned Fortran source and runtime data flow",
+        "translate relevant Fortran semantics without changing behavior",
+        "diagnose failures and distinguish numerical, interface, input, parameter, and structural causes",
+        "identify assumptions, validity limits, bias directions, and reasonable alternatives"
+      ]
+    }
+  ]
+}

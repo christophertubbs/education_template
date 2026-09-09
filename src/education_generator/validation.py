@@ -23,7 +23,38 @@ REQUIRED_COVERAGE_DIMENSIONS = {
     "worked_examples",
     "diagnostic_exercises",
     "assessment_coverage",
+    "terminology_closure",
+    "readability_review",
 }
+REQUIRED_TERMINOLOGY_FIELDS = {
+    "identifier",
+    "term",
+    "full_name",
+    "decomposition",
+    "definition",
+    "purpose",
+    "role",
+    "units",
+    "dimensionality",
+    "valid_range",
+    "behavior",
+    "related_terms",
+    "equation_relationships",
+    "source_mappings",
+    "example",
+    "misconception",
+    "lesson_identifiers",
+}
+TERMINOLOGY_ROLES = {
+    "input",
+    "parameter",
+    "state",
+    "flux",
+    "intermediate",
+    "configuration",
+    "output",
+}
+REQUIRED_BEHAVIOR_FIELDS = {"zero", "smaller", "larger", "limits"}
 ASSESSMENT_MINIMUMS = {"section": 10, "midterm": 30, "final": 50}
 REQUIRED_ASSESSMENT_KINDS = {"pop", "section", "midterm", "final"}
 SUPPORTED_BLOCK_TYPES = {
@@ -112,6 +143,7 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
         "sources",
         "assessments",
         "questions",
+        "terminology",
     )
     report.require(isinstance(curriculum.get("curriculum"), dict), "missing curriculum")
     for field_name in required_lists:
@@ -140,9 +172,19 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
         if isinstance(item.get("identifier"), str)
     }
     question_ids = _identifiers(curriculum["questions"])
+    terminology = curriculum["terminology"]
+    terminology_ids = _identifiers(terminology)
+    source_ids = _identifiers(curriculum["sources"])
     major_concepts = {
         item["identifier"] for item in concepts if item.get("importance") == "major"
     }
+    _require_unique_identifiers(report, "terminology", terminology)
+    _validate_terminology(
+        report,
+        terminology,
+        lesson_ids=lesson_ids,
+        source_ids=source_ids,
+    )
 
     prerequisites = {
         relationship.get("target")
@@ -194,7 +236,19 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
             f"{concept_id} has incomplete coverage: {sorted(incomplete)}",
         )
 
-    for lesson in curriculum["lessons"]:
+    taught_terminology: set[str] = set()
+    section_sequence = {
+        section.get("identifier"): section.get("sequence", 0)
+        for section in curriculum["sections"]
+    }
+    ordered_lessons = sorted(
+        curriculum["lessons"],
+        key=lambda item: (
+            section_sequence.get(item.get("section_identifier"), 0),
+            item.get("sequence", 0),
+        ),
+    )
+    for lesson in ordered_lessons:
         report.require(
             set(lesson.get("concept_identifiers", [])) <= concept_ids,
             f"lesson {lesson.get('identifier')} references unknown concepts",
@@ -203,7 +257,20 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
             bool(lesson.get("content")),
             f"lesson {lesson.get('identifier')} has no content",
         )
-        _validate_lesson_content(report, lesson, glossary_entries)
+        introduced = set(lesson.get("introduced_terminology_identifiers", []))
+        report.require(
+            introduced <= terminology_ids,
+            f"lesson {lesson.get('identifier')} introduces unknown terminology",
+        )
+        _validate_lesson_content(
+            report,
+            lesson,
+            glossary_entries,
+            terminology_ids,
+            taught_terminology,
+            introduced,
+        )
+        taught_terminology.update(introduced)
 
     assessment_kinds = {item.get("kind") for item in curriculum["assessments"]}
     report.require(
@@ -219,6 +286,26 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
         report.require(
             set(question.get("concept_identifiers", [])) <= concept_ids,
             f"question {question.get('identifier')} references unknown concepts",
+        )
+        question_terms = set(question.get("terminology_identifiers", []))
+        report.require(
+            bool(question_terms),
+            f"question {question.get('identifier')} lacks terminology mapping",
+        )
+        report.require(
+            question_terms <= terminology_ids,
+            f"question {question.get('identifier')} references unknown terminology",
+        )
+        review_lesson = question.get("review_lesson_identifier")
+        taught_for_review = {
+            item["identifier"]
+            for item in terminology
+            if review_lesson in item.get("lesson_identifiers", [])
+        }
+        report.require(
+            question_terms <= taught_for_review,
+            f"question {question.get('identifier')} uses terminology not taught "
+            "in its review lesson",
         )
         report.require(
             set(question.get("mastery_contract_identifiers", [])) <= contract_ids,
@@ -268,11 +355,28 @@ def validate_artifacts(artifacts: CurriculumArtifacts) -> ValidationReport:
         "gap_review",
         "remediation",
         "competency_audit",
+        "terminology_closure",
+        "readability_review",
     }
     passes = completion.get("passes", {})
     report.require(
         all(passes.get(pass_name) == "complete" for pass_name in required_passes),
         "all generation and audit passes must be complete",
+    )
+    audits = completion.get("audit_evidence", {})
+    for audit_name in ("terminology_closure", "readability_review"):
+        audit = audits.get(audit_name, {})
+        report.require(
+            audit.get("status") == "complete"
+            and bool(audit.get("method"))
+            and bool(audit.get("reviewed_lesson_identifiers"))
+            and not audit.get("unresolved_items"),
+            f"{audit_name} audit evidence is incomplete",
+        )
+    readability = audits.get("readability_review", {})
+    report.require(
+        readability.get("manual_contextual_review") is True,
+        "readability review cannot rely only on an automated score",
     )
     outcomes = completion.get("terminal_learning_outcomes", {})
     report.require(bool(outcomes), "terminal learning outcome audit is missing")
@@ -320,11 +424,30 @@ def _validate_lesson_content(
     report: ValidationReport,
     lesson: dict[str, Any],
     glossary_entries: dict[str, dict[str, Any]],
+    terminology_ids: set[str],
+    taught_terminology: set[str],
+    introduced_terminology: set[str],
 ) -> None:
     """Validate structured lesson blocks and their semantic inline content."""
 
     lesson_id = lesson.get("identifier")
     blocks = lesson.get("content", [])
+    declared_terms = set(lesson.get("terminology_identifiers", []))
+    report.require(
+        bool(declared_terms), f"lesson {lesson_id} lacks a terminology inventory"
+    )
+    report.require(
+        declared_terms <= terminology_ids,
+        f"lesson {lesson_id} references unknown terminology",
+    )
+    report.require(
+        introduced_terminology <= declared_terms,
+        f"lesson {lesson_id} introduces terminology it does not declare",
+    )
+    report.require(
+        declared_terms <= taught_terminology | introduced_terminology,
+        f"lesson {lesson_id} uses terminology before it is taught",
+    )
     serialized_content = str(blocks).casefold()
     for glossary_id, entry in glossary_entries.items():
         recognized_terms = [entry.get("term", ""), *entry.get("aliases", [])]
@@ -351,6 +474,7 @@ def _validate_lesson_content(
         block_types != {"paragraph"},
         f"lesson {lesson_id} flattens all content into paragraphs",
     )
+    defined_variables: set[str] = set()
     for index, block in enumerate(blocks):
         if not isinstance(block, dict):
             continue
@@ -372,6 +496,19 @@ def _validate_lesson_content(
             report.require(
                 bool(block.get("accessible_text")),
                 f"{location} lacks accessible equation text",
+            )
+            equation_variables = set(block.get("variable_identifiers", []))
+            report.require(
+                bool(equation_variables),
+                f"{location} lacks explicit variable mappings",
+            )
+            report.require(
+                equation_variables <= terminology_ids,
+                f"{location} references unknown equation variables",
+            )
+            report.require(
+                equation_variables <= defined_variables,
+                f"{location} uses variables before their variable-table definitions",
             )
             report.require(
                 _balanced_braces(block.get("latex", "")),
@@ -407,6 +544,13 @@ def _validate_lesson_content(
                     isinstance(row, dict) and required <= row.keys(),
                     f"{location} has an incomplete variable definition",
                 )
+                terminology_identifier = row.get("terminology_identifier")
+                report.require(
+                    terminology_identifier in terminology_ids,
+                    f"{location} has a variable missing from the terminology inventory",
+                )
+                if terminology_identifier in terminology_ids:
+                    defined_variables.add(terminology_identifier)
         elif block_type in {"table", "comparison_table"}:
             headers = block.get("headers", [])
             rows = block.get("rows", [])
@@ -431,6 +575,91 @@ def _validate_lesson_content(
                 report.require(bool(block.get("steps")), f"{location} has no steps")
                 for step in block.get("steps", []):
                     _validate_inline(report, step, location, glossary_entries)
+
+
+def _validate_terminology(
+    report: ValidationReport,
+    records: list[dict[str, Any]],
+    *,
+    lesson_ids: set[str],
+    source_ids: set[str],
+) -> None:
+    """Validate the machine-readable terminology contract."""
+
+    for record in records:
+        identifier = record.get("identifier", "<missing>")
+        report.require(
+            REQUIRED_TERMINOLOGY_FIELDS <= record.keys(),
+            f"terminology {identifier} has incomplete contract fields",
+        )
+        for field_name in REQUIRED_TERMINOLOGY_FIELDS - {
+            "identifier",
+            "behavior",
+            "related_terms",
+            "equation_relationships",
+            "source_mappings",
+            "lesson_identifiers",
+        }:
+            report.require(
+                isinstance(record.get(field_name), str)
+                and bool(record.get(field_name, "").strip()),
+                f"terminology {identifier} has empty {field_name}",
+            )
+        report.require(
+            record.get("role") in TERMINOLOGY_ROLES,
+            f"terminology {identifier} has unsupported semantic role",
+        )
+        behavior = record.get("behavior", {})
+        report.require(
+            isinstance(behavior, dict)
+            and REQUIRED_BEHAVIOR_FIELDS <= behavior.keys()
+            and all(
+                isinstance(behavior.get(name), str) and behavior[name].strip()
+                for name in REQUIRED_BEHAVIOR_FIELDS
+            ),
+            f"terminology {identifier} has incomplete behavior semantics",
+        )
+        definition = record.get("definition", "").strip().casefold()
+        term = record.get("term", "").strip().casefold()
+        full_name = record.get("full_name", "").strip().casefold()
+        report.require(
+            definition not in {term, full_name},
+            f"terminology {identifier} has a circular or restated definition",
+        )
+        related = record.get("related_terms")
+        report.require(
+            isinstance(related, list),
+            f"terminology {identifier} has invalid related-term distinctions",
+        )
+        if isinstance(related, list):
+            for comparison in related:
+                report.require(
+                    isinstance(comparison, dict)
+                    and bool(comparison.get("identifier"))
+                    and bool(comparison.get("distinction")),
+                    f"terminology {identifier} has an incomplete "
+                    "related-term distinction",
+                )
+        source_mappings = record.get("source_mappings")
+        report.require(
+            isinstance(source_mappings, list) and bool(source_mappings),
+            f"terminology {identifier} lacks source mappings",
+        )
+        if isinstance(source_mappings, list):
+            for mapping in source_mappings:
+                report.require(
+                    isinstance(mapping, dict)
+                    and bool(mapping.get("code_identifier"))
+                    and mapping.get("source_identifier") in source_ids,
+                    f"terminology {identifier} has an invalid source mapping",
+                )
+        taught_lessons = record.get("lesson_identifiers", [])
+        report.require(
+            isinstance(taught_lessons, list)
+            and bool(taught_lessons)
+            and set(taught_lessons) <= lesson_ids,
+            f"terminology {identifier} has invalid teaching lessons",
+        )
 
 
 def _validate_inline(

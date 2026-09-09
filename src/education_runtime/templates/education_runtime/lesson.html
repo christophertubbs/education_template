@@ -10,6 +10,10 @@
   <h1>{{ lesson.title }}</h1>
   <p class="lesson-summary">{{ lesson.summary }}</p>
 
+  {% for block in lesson.content %}
+    {% include "education_runtime/content_block.html" with block=block %}
+  {% endfor %}
+
   {% if glossary_entries %}
   <aside class="lesson-definitions" aria-labelledby="lesson-definitions-title">
     <h2 id="lesson-definitions-title">Definitions in this lesson</h2>
@@ -20,10 +24,6 @@
     </dl>
   </aside>
   {% endif %}
-
-  {% for block in lesson.content %}
-    {% include "education_runtime/content_block.html" with block=block %}
-  {% endfor %}
 
   <div class="lesson-actions">
     <button type="button" data-complete-lesson>Mark lesson complete</button>

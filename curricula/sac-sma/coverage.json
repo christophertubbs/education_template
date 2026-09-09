@@ -1,0 +1,277 @@
+{
+  "schema_version": "2.0",
+  "concepts": [
+    {
+      "concept_identifier": "sacsma-foundations",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "sacsma-foundations"
+      ],
+      "question_identifiers": [
+        "q-sacsma-foundations-01",
+        "q-sacsma-foundations-02",
+        "q-sacsma-foundations-03",
+        "q-sacsma-foundations-04",
+        "q-sacsma-foundations-05",
+        "q-sacsma-foundations-06",
+        "q-sacsma-foundations-07",
+        "q-sacsma-foundations-08"
+      ]
+    },
+    {
+      "concept_identifier": "stores-and-et",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "stores-and-et"
+      ],
+      "question_identifiers": [
+        "q-stores-and-et-01",
+        "q-stores-and-et-02",
+        "q-stores-and-et-03",
+        "q-stores-and-et-04",
+        "q-stores-and-et-05",
+        "q-stores-and-et-06",
+        "q-stores-and-et-07",
+        "q-stores-and-et-08"
+      ]
+    },
+    {
+      "concept_identifier": "runoff-and-percolation",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "runoff-and-percolation"
+      ],
+      "question_identifiers": [
+        "q-runoff-and-percolation-01",
+        "q-runoff-and-percolation-02",
+        "q-runoff-and-percolation-03",
+        "q-runoff-and-percolation-04",
+        "q-runoff-and-percolation-05",
+        "q-runoff-and-percolation-06",
+        "q-runoff-and-percolation-07",
+        "q-runoff-and-percolation-08"
+      ]
+    },
+    {
+      "concept_identifier": "substeps-and-balance",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "substeps-and-balance"
+      ],
+      "question_identifiers": [
+        "q-substeps-and-balance-01",
+        "q-substeps-and-balance-02",
+        "q-substeps-and-balance-03",
+        "q-substeps-and-balance-04",
+        "q-substeps-and-balance-05",
+        "q-substeps-and-balance-06",
+        "q-substeps-and-balance-07",
+        "q-substeps-and-balance-08"
+      ]
+    },
+    {
+      "concept_identifier": "hru-execution",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "hru-execution"
+      ],
+      "question_identifiers": [
+        "q-hru-execution-01",
+        "q-hru-execution-02",
+        "q-hru-execution-03",
+        "q-hru-execution-04",
+        "q-hru-execution-05",
+        "q-hru-execution-06",
+        "q-hru-execution-07",
+        "q-hru-execution-08"
+      ]
+    },
+    {
+      "concept_identifier": "fortran-translation",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "fortran-translation"
+      ],
+      "question_identifiers": [
+        "q-fortran-translation-01",
+        "q-fortran-translation-02",
+        "q-fortran-translation-03",
+        "q-fortran-translation-04",
+        "q-fortran-translation-05",
+        "q-fortran-translation-06",
+        "q-fortran-translation-07",
+        "q-fortran-translation-08"
+      ]
+    },
+    {
+      "concept_identifier": "bmi-driver",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "bmi-driver"
+      ],
+      "question_identifiers": [
+        "q-bmi-driver-01",
+        "q-bmi-driver-02",
+        "q-bmi-driver-03",
+        "q-bmi-driver-04",
+        "q-bmi-driver-05",
+        "q-bmi-driver-06",
+        "q-bmi-driver-07",
+        "q-bmi-driver-08"
+      ]
+    },
+    {
+      "concept_identifier": "build-test-debug",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "build-test-debug"
+      ],
+      "question_identifiers": [
+        "q-build-test-debug-01",
+        "q-build-test-debug-02",
+        "q-build-test-debug-03",
+        "q-build-test-debug-04",
+        "q-build-test-debug-05",
+        "q-build-test-debug-06",
+        "q-build-test-debug-07",
+        "q-build-test-debug-08"
+      ]
+    }
+  ]
+}

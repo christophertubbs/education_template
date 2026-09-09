@@ -1,7 +1,7 @@
 # STATUS
 
-Current objective: maintain structured, accessible technical lesson rendering
-in the shared Education Runtime and independent Curriculum Products.
+Current objective: automatically discover every available installed Curriculum
+Product for migration and runtime use.
 
 Requirements: `SPEC.md` sections 3-46, especially generation architecture,
 completion state, product/runtime boundaries, assessment constraints, progress,
@@ -10,41 +10,91 @@ validation, and completion.
 Implemented: shared runtime models/import/views/templates/admin/scoring/progress;
 thin environment-configured runner; staged generator with v2 artifacts, source
 integrity, durable phase state, regeneration impact, staging and promotion;
-migrated CFE artifacts; updated packaging, documentation, agent policy, and
-tests. Lesson schema 2.1 supports semantic inline content, MathJax equations,
-source-aware code, callouts, definitions, variable/comparison tables, worked and
-diagnostic examples, procedures, and glossary-linked terms. The CFE 1.1 lessons
-were regenerated with these structures, including explicit and visually
-prominent Schaake/Xinanjiang parameter contracts. The obsolete nested generated
-host, LSTM app, and CFE app repositories
-were removed and replaced by the independent `generated/cfe-curriculum`; the
-obsolete ignored LSTM Target Repository checkout was also removed.
+independent CFE and SAC-SMA Curriculum Products; structured semantic lessons;
+accessible MathJax equations; source-aware code; callouts; definitions;
+variable/comparison tables; worked and diagnostic examples; procedures; and
+glossary-linked terms.
 
-Expected uncommitted state: structured-rendering and regenerated-lesson changes
-on `project-pivot`. Generated output remains ignored by the root and is clean at
-independent commit `eeceb90af9ad46631a663881f196999be55b1460`.
+Curriculum Products now publish an `education_curriculum.products` package entry
+point containing their Django application configuration. The standalone runner
+discovers, validates, deduplicates, and deterministically orders all advertised
+products before Django builds `INSTALLED_APPS`. `EDUCATION_PRODUCTS` is no longer
+needed for migration or server startup; it remains an additive legacy-package
+compatibility mechanism.
 
-Validation completed on 2026-09-08:
+Schema 2.2 requires a stable machine-readable terminology contract for every
+declared specialized item. Variable tables map to contracts, equations declare
+variables and follow their definitions, lessons declare used and newly
+introduced terms, and assessments map vocabulary to review lessons.
+`terminology_closure` and `readability_review` are required coverage dimensions,
+completion passes, and evidence-bearing audits. Supplemental glossary summaries
+follow lesson content rather than front-loading jargon.
 
-* Ruff formatting and lint checks passed for `src`, `tests`, `tools`, and
-  `manage.py`.
-* All 13 Django/unit tests passed; Django reported no system issues.
-* `makemigrations --check --dry-run` reported no changes.
-* Generation resolved and detached CFE at exact commit
-  `f9182dfb3d81c407c66c5b782114173893c30cf2`; every pipeline phase completed
-  with no unresolved items.
-* The generated product installed in editable form and built wheel
-  `cfe_curriculum-1.1.0-py3-none-any.whl`.
-* Runtime and product migrations applied to a new SQLite database. The result
-  contained 1 curriculum, 7 concepts, 7 lessons, 7 assessments, and 64
-  questions.
-* An upgrade test stopped at product migration 0001, installed a stale generated
-  baseline, then verified migration 0002 replaced it with structured content.
-* Curriculum list/detail, lesson, final assessment, glossary, source, and
-  progress routes all returned HTTP 200 with the product enabled.
-* Generated product tests passed, both Target Repository and product Git trees
-  were clean, and only `generated/cfe-curriculum/.git` exists under generated
-  output.
+SAC-SMA content now includes reviewed PCTIM/ADIMP/ADIMC/PAREA distinctions,
+their name decomposition, units and invariants, dry/intermediate/wet behavior,
+an area-weighted numerical example, capacities, ET terms, recession parameters,
+and principal runoff/baseflow components. CFE partitioning begins with a
+plain-language, bounded soil-sponge analogy before technical names and equations.
+
+Expected uncommitted root state on `project-pivot`: the user-modified
+`project.json`, user-provided `cfe.project.json` and `prompt.md`, reviewed
+`curricula/sac-sma/`, schema 2.2 artifacts and validation changes, runtime lesson
+ordering, tests, the terminology maintenance tool, and these durable state
+updates. Generated output and target checkouts remain outside root tracking.
+
+Generation and validation completed on 2026-09-09:
+
+* Ruff formatting and lint passed for `src`, `tests`, `tools`, and `manage.py`.
+* All 17 Django/unit tests passed with `manage.py test`; Django system checks
+  passed and `makemigrations --check --dry-run` reported no changes.
+* Raw `unittest discover` was attempted and failed because it does not initialize
+  Django settings. This was an invocation failure; the project test runner
+  loaded and passed the same generator and runtime tests.
+* CFE resolved and detached target commit
+  `f9182dfb3d81c407c66c5b782114173893c30cf2`. All generation phases, artifact
+  checks, terminology checks, and source-reference validation passed. The clean
+  generated product is commit
+  `c6431330dd5e6330f539f869373ec0606ee4b1a8`.
+* SAC-SMA resolved and detached target commit
+  `975902e3d44785f3b3503f29adfb5755120f5bf5`. All generation phases, artifact
+  checks, terminology checks, and source-reference validation passed. The clean
+  generated product is commit
+  `25cf18748f3906334f984098b7ee100f7ea481b7`.
+* Both products built `py3-none-any` wheels. Wheel installation with `--no-deps`
+  and both generated-product provenance tests passed. The first isolated build
+  failed because the restricted sandbox could not resolve `setuptools>=77`; an
+  approved-network retry passed, as did final no-isolation builds.
+* Product and runtime migrations applied to separate clean SQLite databases.
+  CFE loaded 1 curriculum, 7 lessons, 7 assessments, and 64 questions. SAC-SMA
+  loaded 1 curriculum, 8 lessons, 7 assessments, and 64 questions.
+* Representative curriculum, terminology-focused lesson, BMI-driver lesson,
+  glossary, source, final-assessment, and progress routes returned HTTP 200.
+  Rendered CFE partitioning and SAC-SMA runoff lessons were contextually reviewed
+  for ordinary-language first use, bounded examples, defined equation variables,
+  units, and source-facing identifiers.
+* The first rendered-text inspection attempted to import unavailable Beautiful
+  Soup. A standard-library HTML-to-text fallback worked. An initial order
+  assertion also looked for non-visible equation accessibility metadata; the
+  corrected assertion used the rendered equation caption and passed.
+* Both Target Repository and generated-product Git trees were clean after final
+  promotion.
+
+Automatic product discovery validation completed on 2026-09-09:
+
+* Ruff formatting and lint passed. All 22 Django/unit tests passed. Django system
+  checks and migration-drift checks passed.
+* Both products were regenerated with entry-point metadata. The clean CFE
+  product is `6ea878e9bde20f3fc0257edb1a501593cc38a27b`; the clean SAC-SMA product is
+  `43143a0bb892ba1f14c63fb632f51d61d7961dc1`.
+* Both wheels built and installed together into an isolated target directory.
+  Each generated package's two provenance/entry-point tests passed.
+* With `EDUCATION_PRODUCTS` explicitly unset, a new SQLite database discovered
+  both products, applied both migration sets, and loaded `cfe-curriculum` and
+  `sac-sma-curriculum`. Both curriculum detail routes returned HTTP 200.
+* A real development server started with `EDUCATION_PRODUCTS` unset. A localhost
+  request to its curriculum list rendered both CFE and SAC-SMA. The first server
+  start inside the restricted sandbox could not bind a socket; the approved
+  local-server retry passed.
 
 Next action: add browser-level WCAG 2.2 AA checks for MathJax output, responsive
 tables, definition navigation, and pop-quiz navigation.

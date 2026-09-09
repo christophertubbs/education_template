@@ -9,6 +9,9 @@ description = "Curriculum Product for __DISPLAY_NAME__."
 requires-python = ">=3.11"
 dependencies = ["education-curriculum-system__RUNTIME_COMPATIBILITY__"]
 
+[project.entry-points."education_curriculum.products"]
+__APP_NAME__ = "__APP_NAME__.apps:__APP_CONFIG_CLASS__"
+
 [tool.setuptools.packages.find]
 where = ["src"]
 

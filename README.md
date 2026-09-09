@@ -23,13 +23,17 @@ The generator resolves an exact Target Repository commit, inventories source
 without executing it, validates the artifacts under `curricula/<target>/`,
 assembles in `.work/`, and promotes only passing output to `generated/`.
 
-Install a generated product and enable it without modifying runner source:
+Install a generated product. The runner discovers every installed Curriculum
+Product automatically:
 
 ```bash
 python -m pip install -e generated/cfe-curriculum
-EDUCATION_PRODUCTS=cfe_curriculum python manage.py migrate
-EDUCATION_PRODUCTS=cfe_curriculum python manage.py runserver
+python manage.py migrate
+python manage.py runserver
 ```
+
+`EDUCATION_PRODUCTS` remains an optional comma-separated compatibility setting
+for legacy product packages that do not yet advertise the standard entry point.
 
 See `docs/ARCHITECTURE.md`,
 `src/education_generator/CONTENT_SCHEMA.md`, and `docs/agent/STATUS.md`.

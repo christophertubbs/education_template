@@ -1,0 +1,98 @@
+{
+  "schema_version": "2.0",
+  "concepts": [
+    {
+      "identifier": "sacsma-foundations",
+      "title": "SAC-SMA Purpose and Conceptual Model",
+      "description": "The Burnash conceptual rainfall-runoff model represents catchment-average water stores and fluxes rather than resolving soil physics point by point.",
+      "importance": "major",
+      "category": "repository-and-domain"
+    },
+    {
+      "identifier": "stores-and-et",
+      "title": "Soil-Moisture Stores and Evapotranspiration",
+      "description": "Upper and lower tension/free-water stores encode distinct access and drainage behavior, with ordered evapotranspiration withdrawals.",
+      "importance": "major",
+      "category": "science-and-mathematics"
+    },
+    {
+      "identifier": "runoff-and-percolation",
+      "title": "Runoff, Percolation, Interflow, and Baseflow",
+      "description": "Area fractions, lower-zone deficit, percolation, and recession laws divide water among fast and slow response paths.",
+      "importance": "major",
+      "category": "science-and-mathematics"
+    },
+    {
+      "identifier": "substeps-and-balance",
+      "title": "Numerical Substeps and Water Balance",
+      "description": "Adaptive within-step increments and cumulative water accounting connect daily coefficients to arbitrary driver timesteps and expose numerical defects.",
+      "importance": "major",
+      "category": "numerics"
+    },
+    {
+      "identifier": "hru-execution",
+      "title": "Multiple HRUs and Basin Aggregation",
+      "description": "The implementation advances independent parameter/state arrays by HRU and combines outputs with area weights.",
+      "importance": "major",
+      "category": "architecture"
+    },
+    {
+      "identifier": "fortran-translation",
+      "title": "Reading Fortran as C, C++, or Python",
+      "description": "Modules, derived types, allocatable arrays, INTENT, ASSOCIATE, and one-based loops map to familiar object, ownership, and mutation concepts.",
+      "importance": "major",
+      "category": "implementation"
+    },
+    {
+      "identifier": "bmi-driver",
+      "title": "BMI Driver and C/C++ Interoperability",
+      "description": "The driver supplies lifecycle control while the Fortran BMI implementation exposes model state through a stable framework-facing contract and an ISO C registration shim.",
+      "importance": "major",
+      "category": "interface"
+    },
+    {
+      "identifier": "build-test-debug",
+      "title": "Build, Test, Diagnose, and Critique",
+      "description": "CMake targets, example data, mass-balance evidence, interface contracts, and known source discrepancies support disciplined verification.",
+      "importance": "major",
+      "category": "operations"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "stores-and-et",
+      "target": "sacsma-foundations",
+      "type": "prerequisite"
+    },
+    {
+      "source": "runoff-and-percolation",
+      "target": "stores-and-et",
+      "type": "prerequisite"
+    },
+    {
+      "source": "substeps-and-balance",
+      "target": "runoff-and-percolation",
+      "type": "prerequisite"
+    },
+    {
+      "source": "hru-execution",
+      "target": "substeps-and-balance",
+      "type": "prerequisite"
+    },
+    {
+      "source": "fortran-translation",
+      "target": "hru-execution",
+      "type": "prerequisite"
+    },
+    {
+      "source": "bmi-driver",
+      "target": "fortran-translation",
+      "type": "prerequisite"
+    },
+    {
+      "source": "build-test-debug",
+      "target": "bmi-driver",
+      "type": "prerequisite"
+    }
+  ]
+}
