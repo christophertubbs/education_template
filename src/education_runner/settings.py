@@ -3,10 +3,8 @@
 from __future__ import annotations
 
 import os
-from pathlib import Path
 import socket
-
-from django.conf.global_settings import STORAGES
+from pathlib import Path
 
 from .product_discovery import discover_product_apps
 
@@ -15,14 +13,16 @@ SECRET_KEY = os.environ.get("EDUCATION_SECRET_KEY", "unsafe-development-key")
 DEBUG = os.environ.get("EDUCATION_DEBUG", "true").lower() == "true"
 ALLOWED_HOSTS = [
     value.strip()
-    for value in os.environ.get("EDUCATION_ALLOWED_HOSTS", f"localhost,127.0.0.1,{socket.gethostname()}").split(
-        ","
-    )
+    for value in os.environ.get(
+        "EDUCATION_ALLOWED_HOSTS", f"localhost,127.0.0.1,{socket.gethostname()}"
+    ).split(",")
     if value.strip()
 ]
 
 
-PRODUCT_APPS = discover_product_apps(os.environ.get("EDUCATION_PRODUCTS", ""))
+PRODUCT_APPS = discover_product_apps(
+    os.environ.get("EDUCATION_PRODUCTS", ""), repository_root=BASE_DIR
+)
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -75,7 +75,7 @@ STORAGES = {
     },
     "staticfiles": {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
-    }
+    },
 }
 
 AUTH_PASSWORD_VALIDATORS = []

@@ -62,3 +62,22 @@ runner reads all entries before constructing `INSTALLED_APPS`, validates their
 names and module ownership, rejects conflicting advertisements, and sorts them
 for deterministic migration order. `EDUCATION_PRODUCTS` remains additive only
 for compatibility with legacy products that lack entry-point metadata.
+
+## 2026-09-09: Provenance-based local project discovery
+
+The repository runner cross-references directory names under `curricula/` with
+the `target_repository_name` recorded in each generated repository's provenance.
+Only matched products are added to the local import path, and their package and
+AppConfig names come from `pyproject.toml` entry-point metadata. Generated
+repository names, package names, and curriculum identifiers are opaque and do
+not need to contain `curriculum`. Installed entry-point discovery remains
+additive for independently distributed products.
+
+## 2026-09-09: Installation refreshes packaged curriculum data
+
+Schema migrations are not used as the sole signal for curriculum content
+updates. The runtime provides `load_curricula`, which imports every discovered
+product's current packaged `data/curriculum.json` using the existing atomic,
+conflict-preserving baseline importer. The root `install.sh` runs migrations,
+that explicit refresh, and static-file collection in sequence and fails on the
+first unsuccessful step.

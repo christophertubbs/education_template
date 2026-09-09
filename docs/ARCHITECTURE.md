@@ -35,5 +35,15 @@ evaluates supported items deterministically in the browser. Progress is
 versioned in IndexedDB, survives restarts and offline periods, and supports JSON
 export/import without identity or accounts.
 
-The runner supplies settings, URLs, ASGI, WSGI, SQLite defaults, and
-environment-driven product discovery. It contains no target knowledge.
+The runner supplies settings, URLs, ASGI, WSGI, SQLite defaults, and product
+discovery. In this checkout it cross-references `curricula/<project>` with each
+generated repository's target-project provenance, then reads the product's
+declared package entry point. It also discovers installed products through
+package metadata. No discovery path infers meaning from a `curriculum` suffix.
+The runner contains no target knowledge.
+
+Deployment preparation runs migrations and then imports each discovered
+product's current packaged `data/curriculum.json`. This separates schema history
+from content refreshes: a JSON-only change reaches the database without a dummy
+migration, while the baseline importer continues to preserve human edits. The
+same installation workflow collects Django static assets.
