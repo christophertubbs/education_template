@@ -4,14 +4,19 @@ This repository implements a shared Django Education Runtime, a thin optional
 runner, and a staged generator that produces independently installable
 Curriculum Products instead of duplicated websites.
 
-Install, migrate, test, and launch the runtime:
+Install dependencies, then prepare and launch the runtime:
 
 ```bash
 python -m pip install -e .
-python manage.py migrate
+./install.sh
 python manage.py test
 python manage.py runserver
 ```
+
+`install.sh` applies migrations, reloads every discovered product's current
+packaged curriculum JSON, and collects static assets. The explicit reload means
+a JSON-only curriculum update is applied even when all migrations were already
+recorded as complete. Set `PYTHON_BIN` to select a different Python executable.
 
 Generate the product configured by `project.json`:
 
@@ -23,12 +28,15 @@ The generator resolves an exact Target Repository commit, inventories source
 without executing it, validates the artifacts under `curricula/<target>/`,
 assembles in `.work/`, and promotes only passing output to `generated/`.
 
-Install a generated product. The runner discovers every installed Curriculum
-Product automatically:
+From this repository, the runner automatically loads products whose generated
+provenance matches a project directory under `curricula/`. Product directory,
+package, and curriculum names do not need a `curriculum` suffix. Install a
+generated product when using it outside this repository; installed products are
+also discovered automatically:
 
 ```bash
 python -m pip install -e generated/cfe-curriculum
-python manage.py migrate
+./install.sh
 python manage.py runserver
 ```
 

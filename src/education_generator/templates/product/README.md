@@ -11,12 +11,15 @@ or settings edit is required. Then run:
 
 ```bash
 python manage.py migrate
+python manage.py load_curricula
+python manage.py collectstatic --noinput
 python manage.py check
 ```
 
-The data migration deterministically loads the generated baseline. Runtime
-administrative overrides remain separate and are reported as conflicts when a
-later baseline changes.
+The migration establishes schema and initial data. `load_curricula` always
+imports the package's current `data/curriculum.json`, including content changes
+that do not add a migration. Runtime administrative overrides remain separate
+and are reported as conflicts when a later baseline changes.
 
 Run package tests with `python -m unittest discover -s tests`. Generation
 evidence and completion records are under `provenance/`.

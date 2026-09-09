@@ -32,6 +32,13 @@
   setting. Regenerated CFE product commit:
   `6ea878e9bde20f3fc0257edb1a501593cc38a27b`; SAC-SMA product commit:
   `43143a0bb892ba1f14c63fb632f51d61d7961dc1`.
+* Discover repository-local products by cross-referencing `curricula/` project
+  directories with generated provenance, without requiring `curriculum` in any
+  generated repository, package, or curriculum name. Keep installed and legacy
+  discovery additive and fail closed on conflicting matches.
+* Add an idempotent `install.sh` workflow that migrates the configured database,
+  imports current packaged curriculum JSON independently of migration state,
+  and collects static assets.
 
 ## Ready
 

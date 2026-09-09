@@ -1015,6 +1015,14 @@ launch commands must not require a per-product environment variable or settings
 edit. A legacy explicit package list may remain as an additive compatibility
 path, but it must not disable automatic discovery.
 
+When the Standalone Runner executes from the generator repository, it must also
+discover local products by cross-referencing project directories under
+`curricula/` with the `target_repository_name` provenance of repositories under
+`generated/`. A local product is eligible only when both sides exist. Discovery
+must use declared metadata and must not require the generated repository,
+Curriculum Product, package, or curriculum identifier to contain the word
+`curriculum` or follow another inferred naming convention.
+
 ---
 
 # 26. Optional Standalone Runner
@@ -1035,6 +1043,11 @@ Installed-product discovery must be deterministic, reject malformed or
 conflicting advertisements, and fail clearly before migration or server startup
 rather than silently omitting an available curriculum.
 
+Local project discovery must likewise be deterministic. It must reject multiple
+generated repositories that claim the same reviewed curriculum project and
+must not activate a generated repository that has no matching `curricula/`
+project directory.
+
 The Standalone Runner must not duplicate curriculum content or generic Education Runtime behavior.
 
 A default standalone deployment may use SQLite.
@@ -1052,6 +1065,14 @@ Curriculum Products must not require a specific database backend unless explicit
 Curriculum data should be represented through generic runtime models where practical.
 
 Curriculum Product migrations must be deterministic and safe to apply according to documented compatibility requirements.
+
+Installation and deployment preparation must not assume that curriculum content
+changes always require a new schema migration. After applying migrations, the
+Standalone Runner must explicitly import the current packaged
+`data/curriculum.json` from every discovered Curriculum Product through the
+conflict-preserving baseline importer. The installation workflow must also run
+Django static-file collection so current runtime and product assets are ready
+for service.
 
 ---
 

@@ -1,7 +1,7 @@
 # STATUS
 
-Current objective: automatically discover every available installed Curriculum
-Product for migration and runtime use.
+Current objective: provide repeatable installation that discovers products,
+loads their current curriculum JSON, and prepares static assets.
 
 Requirements: `SPEC.md` sections 3-46, especially generation architecture,
 completion state, product/runtime boundaries, assessment constraints, progress,
@@ -95,6 +95,56 @@ Automatic product discovery validation completed on 2026-09-09:
   request to its curriculum list rendered both CFE and SAC-SMA. The first server
   start inside the restricted sandbox could not bind a socket; the approved
   local-server retry passed.
+
+Local project discovery update completed on 2026-09-09:
+
+* The repository runner now cross-references each directory under `curricula/`
+  with `target_repository_name` in generated-product provenance. Matching does
+  not inspect or require `curriculum` in the generated repository, package, or
+  curriculum name. Matched products use their declared `pyproject.toml` entry
+  point and local `src/` directory; installed entry points and the legacy
+  explicit setting remain additive.
+* Discovery ignores generated directories without a reviewed curriculum match,
+  rejects duplicate generated products for one project, and validates matched
+  provenance and entry-point metadata before modifying the import path.
+* `ruff format --check src tests tools manage.py` and `ruff check src tests tools
+  manage.py` passed. All 24 Django/unit tests passed. `manage.py check` and
+  `manage.py makemigrations --check --dry-run` passed with no changes.
+* A clean temporary SQLite migration, with no product installation or explicit
+  product setting, discovered and applied both CFE and SAC-SMA product
+  migrations. The resulting curriculum identifiers were `cfe-curriculum` and
+  `sac-sma-curriculum`.
+* The root wheel built successfully with `python -m build --wheel
+  --no-isolation`. Setuptools warned that ignored `__pycache__` directories
+  beneath generator templates looked importable and included their bytecode;
+  this pre-existing package-data hygiene issue did not fail the build.
+* The first full test run exposed that repository-local product migrations
+  invalidate a runtime test's one-total-curriculum assumption and that manifest
+  static storage lacked a collected test manifest. Runtime tests were scoped to
+  the CFE fixture and given ordinary static storage; the full rerun passed.
+
+Installation refresh update completed on 2026-09-09:
+
+* Added executable `install.sh`. It uses `set -euo pipefail`, resolves the
+  repository root, supports a `PYTHON_BIN` override, and sequentially runs
+  `migrate --noinput`, `load_curricula`, and `collectstatic --noinput`.
+* Added the `load_curricula` management command and a typed product-loading
+  service. The service deterministically scans installed Django applications
+  for packaged `data/curriculum.json` resources and imports every current
+  payload through the existing atomic, conflict-preserving baseline importer.
+  Curriculum JSON changes therefore apply even when no migration is pending.
+* A regression test changes a packaged lesson title after migrations and
+  verifies that the explicit loader brings the new JSON value into the runtime
+  database. A shell-workflow regression test verifies the migration, refresh,
+  and static-collection command order.
+* An end-to-end `install.sh` run against a fresh temporary SQLite database
+  applied all runtime, CFE, and SAC-SMA migrations; explicitly loaded both
+  curriculum payloads; and collected static assets. The database contained
+  `cfe-curriculum` and `sac-sma-curriculum`, both at product version 1.1.0.
+* `bash -n install.sh`, Ruff formatting and lint, all 26 Django/unit tests,
+  Django system checks, migration-drift checks, and `git diff --check` passed.
+  The root wheel also built successfully; setuptools repeated the previously
+  recorded ignored-template-`__pycache__` package-data warnings.
 
 Next action: add browser-level WCAG 2.2 AA checks for MathJax output, responsive
 tables, definition navigation, and pop-quiz navigation.
