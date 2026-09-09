@@ -5,7 +5,8 @@
 Generic models, presentation, assessment execution, progress, administration,
 and accessibility live in `education_runtime`. Products contain target
 knowledge, provenance, and deterministic data migrations. `education_runner`
-discovers products through `EDUCATION_PRODUCTS` without target-specific edits.
+discovers installed products through package metadata without target-specific
+edits.
 
 ## 2026-09-08: Fail-closed staged generation
 
@@ -40,3 +41,24 @@ or configured alias mentioned without a visible lesson definition.
 The schema 2.1/product 1.1 release includes product migration 0002 so databases
 that already applied the original data migration receive regenerated baselines.
 The importer continues to preserve human-modified rows and records conflicts.
+
+## 2026-09-09: Explicit terminology closure
+
+Curriculum schema 2.2 stores stable terminology contracts in each curriculum
+payload. Lessons declare used and newly introduced terminology. Variable-table
+rows and equation symbols map to those contracts, and questions declare the
+terms they use. Validation fails when a contract is incomplete, an equation
+precedes its variable definitions, assessment language is not taught in its
+review lesson, either terminology/readability coverage dimension is incomplete,
+or contextual audit evidence is absent. Glossary summaries render after the
+lesson body so supplemental reference material does not introduce jargon before
+the lesson's ordered teaching.
+
+## 2026-09-09: Package-entry-point product discovery
+
+Each Curriculum Product advertises its Django `AppConfig` through the
+`education_curriculum.products` Python package entry-point group. The standalone
+runner reads all entries before constructing `INSTALLED_APPS`, validates their
+names and module ownership, rejects conflicting advertisements, and sorts them
+for deterministic migration order. `EDUCATION_PRODUCTS` remains additive only
+for compatibility with legacy products that lack entry-point metadata.

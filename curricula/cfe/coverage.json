@@ -17,7 +17,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "cfe-purpose"
@@ -49,7 +51,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "timestep-water-accounting"
@@ -81,7 +85,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "partitioning-and-et"
@@ -113,7 +119,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "conceptual-reservoirs"
@@ -145,7 +153,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "routing-paths"
@@ -177,7 +187,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "bmi-and-configuration"
@@ -209,7 +221,9 @@
         "bias_reasoning": true,
         "worked_examples": true,
         "diagnostic_exercises": true,
-        "assessment_coverage": true
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
       },
       "lesson_identifiers": [
         "build-test-debug"

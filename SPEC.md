@@ -401,6 +401,32 @@ The Generator must not silently assume undergraduate or graduate-level domain ed
 
 If no domain prerequisites are configured, the default assumption is a competent professional software developer with general programming knowledge but no specialized scientific or mathematical training beyond ordinary secondary-school mathematics.
 
+
+## 6.3 Learner Language and Terminology Contract
+
+Unless configured otherwise, the Learner is proficient in general-purpose
+software development but has no specialized knowledge of the Target
+Repository's scientific domain, mathematical notation, numerical methods, or
+implementation language.
+
+Ordinary explanatory prose should target approximately a United States grade
+8–10 reading level. This requirement does not apply mechanically to source
+code, equations, citations, or unavoidable proper names.
+
+The curriculum must use progressive disclosure:
+
+1. explain the idea in ordinary language;
+2. provide a concrete example or analogy;
+3. introduce the precise technical term;
+4. define its variables, units, and constraints;
+5. present the mathematics;
+6. map the mathematics to source code;
+7. translate relevant implementation logic into familiar C++ and Python
+   concepts; and
+8. explain assumptions, limitations, failure signatures, and common mistakes.
+
+A glossary entry elsewhere does not satisfy the first-use requirement.
+
 ---
 
 # 7. Target Repository Acquisition and Revision Control
@@ -699,7 +725,9 @@ For each major concept, the matrix must indicate coverage of applicable dimensio
 * bias or error reasoning;
 * worked examples;
 * diagnostic exercises;
-* assessment coverage.
+* assessment coverage;
+* terminology closure;
+* readability review.
 
 A concept may only be marked complete when every required applicable dimension is complete.
 
@@ -723,6 +751,12 @@ The expected logical passes are:
 8. **Gap-review pass**: determine what a successful Learner could still misunderstand.
 9. **Remediation pass**: generate missing or inadequate material.
 10. **Competency-audit pass**: verify every terminal learning outcome has sufficient instructional and assessment support.
+11. **Terminology-closure pass**: verify every specialized item is inventoried,
+    taught before use, distinguished from related items, and closed across
+    lessons and assessments.
+12. **Readability-review pass**: review ordinary prose for grade 8–10 clarity,
+    short sentences, jargon load, progressive disclosure, and retained
+    scientific and mathematical depth.
 
 These passes do not require ten separate model invocations if an implementation can achieve equivalent independence and verification more efficiently.
 
@@ -973,6 +1007,14 @@ The Education Runtime must not contain Target Repository-specific educational co
 
 The Education Runtime should support one or more installed Curriculum Products without product-specific source changes.
 
+Each installable Curriculum Product must advertise its Django application with
+the standard `education_curriculum.products` Python package entry-point group.
+The Standalone Runner must discover every advertised installed product
+automatically before Django constructs `INSTALLED_APPS`. Migration and server
+launch commands must not require a per-product environment variable or settings
+edit. A legacy explicit package list may remain as an additive compatibility
+path, but it must not disable automatic discovery.
+
 ---
 
 # 26. Optional Standalone Runner
@@ -988,6 +1030,10 @@ The Standalone Runner may provide:
 * static-file configuration;
 * administration;
 * discovery of installed Curriculum Products.
+
+Installed-product discovery must be deterministic, reject malformed or
+conflicting advertisements, and fail clearly before migration or server startup
+rather than silently omitting an available curriculum.
 
 The Standalone Runner must not duplicate curriculum content or generic Education Runtime behavior.
 
@@ -1312,6 +1358,23 @@ For scientific or numerical curricula, validation must also ensure that major me
 
 Validation failure must prevent incomplete output from being promoted as a successful release.
 
+Validation must include a terminology-closure and readability audit.
+
+The audit must verify that:
+
+* every specialized term and identifier is present in a terminology inventory;
+* every acronym is expanded on first use;
+* every variable is defined before it appears in an equation or worked example;
+* definitions do not rely on terms that are introduced later;
+* related variables with similar names are explicitly contrasted;
+* every parameter definition includes role, units, range, behavior, and source;
+* every lesson has been reviewed against the configured reading-level target;
+* unexplained terminology remains an unresolved required item.
+
+Automated readability scores may support this audit but must not be its sole
+evidence, because equations, identifiers, and scientific names can distort such
+scores.
+
 ---
 
 # 40. User Interface
@@ -1527,6 +1590,28 @@ Definitions should include applicable fields such as:
 
 Where multiple variables or parameters are introduced together, the Generator should prefer a table or other structured presentation.
 
+Every domain-specific variable, parameter, state, flux, and acronym must have a
+Terminology Contract before its first substantive use.
+
+A Terminology Contract must contain:
+
+* full or expanded name;
+* abbreviation or identifier decomposition where meaningful;
+* plain-language definition that does not depend on undefined domain terms;
+* purpose in the model;
+* semantic role: input, parameter, state, flux, intermediate, or output;
+* units and dimensionality;
+* expected or valid range;
+* interpretation of zero, larger values, smaller values, and important limits;
+* relationships and contrasts with similarly named quantities;
+* equation mappings;
+* source-code mappings;
+* at least one concrete example;
+* at least one likely misconception.
+
+A definition that merely expands an acronym or replaces it with equally
+specialized vocabulary is incomplete.
+
 ## Tables and Comparisons
 
 Structured tables should be used for information that is inherently comparative or tabular.
@@ -1708,6 +1793,9 @@ Generation is complete only when all applicable criteria below are satisfied.
 * Generated documentation is sufficient for independent use.
 * Generation metadata has been recorded.
 * Automated validation passes.
+* Terminology closure and first-use auditing pass with no unresolved terms.
+* A contextual readability and jargon review has completed; automated readability
+  scores, if used, are supporting evidence rather than the sole criterion.
 
 The Generator must continue generating, researching, reviewing, or remediating while required completion fields remain incomplete and further progress is possible.
 

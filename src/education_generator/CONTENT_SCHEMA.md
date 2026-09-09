@@ -1,11 +1,11 @@
-# Curriculum Artifact Contract 2.0
+# Curriculum Artifact Contract 2.2
 
 Each `curriculum_source_path` contains five JSON objects:
 
 * `knowledge-map.json`: stable concepts and typed, acyclic relationships;
 * `mastery-contracts.json`: competencies keyed to concepts;
-* `curriculum.json`: curriculum, sections, lessons, glossary, evidence,
-  assessments, and deterministically scored questions;
+* `curriculum.json`: curriculum, sections, lessons, terminology contracts,
+  glossary, evidence, assessments, and deterministically scored questions;
 * `coverage.json`: required dimensions and lesson/question mappings per concept;
 * `completion.json`: ten passes, terminal outcomes, unresolved items, and status.
 
@@ -27,6 +27,24 @@ relationships drive its visible definition callout. Glossary entries may list
 `aliases`; validation requires a lesson relationship whenever a term or alias is
 mentioned so the definition is visibly available at least once in that lesson.
 
+Every specialized domain term, acronym, abbreviation, source identifier,
+parameter, state, flux, intermediate, configuration name, output, and equation
+symbol has one stable record in `curriculum.terminology`. A record contains the
+term and full name, abbreviation decomposition, a non-circular plain-language
+definition, purpose, semantic role, units, dimensionality, valid range, behavior
+at zero/smaller/larger/limiting values, related-term distinctions, equation
+relationships, commit-pinned source mappings, a concrete example, a likely
+misconception, and the lessons that teach it. Use explicit `not applicable`
+text only when a field truly does not apply; absence is not acceptable.
+
+Lessons declare all vocabulary they use in `terminology_identifiers` and the
+subset first taught there in `introduced_terminology_identifiers`. Teaching must
+precede reuse. A glossary elsewhere is not first-use teaching. A variable-table
+row carries its `terminology_identifier`. Every equation carries
+`variable_identifiers`, and all of those variables must appear in an earlier
+variable table in the same lesson. Questions declare `terminology_identifiers`;
+each item may use only terms taught in its review lesson.
+
 Equations contain `latex`, `accessible_text`, and optional `caption` and `number`.
 Code blocks contain `code`, `language`, `kind`, and applicable source metadata.
 Callouts contain a supported `semantic_type`, a `title`, and semantic inline
@@ -44,9 +62,13 @@ review lesson. Types are `single_choice`, `multiple_select`, `true_false`,
 Coverage dimensions are `foundational_explanation`, `prerequisite_closure`,
 `theory`, `mathematics`, `assumptions`, `implementation_mapping`,
 `source_evidence`, `operational_behavior`, `limitations`, `failure_modes`,
-`bias_reasoning`, `worked_examples`, `diagnostic_exercises`, and
-`assessment_coverage`. Applicable dimensions must be true before promotion.
+`bias_reasoning`, `worked_examples`, `diagnostic_exercises`,
+`assessment_coverage`, `terminology_closure`, and `readability_review`.
+Applicable dimensions must be true before promotion.
 
-Overall status, every generation/audit pass, and every terminal outcome must be
-complete/covered with no unresolved required items. These declarations are
-review records, not evidence substitutes; never set them optimistically.
+Overall status, every generation/audit pass (including `terminology_closure` and
+`readability_review`), and every terminal outcome must be complete/covered with
+no unresolved required items. Readability review combines a contextual jargon and
+first-use review with any automated score; a score alone is not evidence. These
+declarations are review records, not evidence substitutes; never set them
+optimistically.

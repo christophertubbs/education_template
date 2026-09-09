@@ -4,31 +4,25 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+import socket
+
+from django.conf.global_settings import STORAGES
+
+from .product_discovery import discover_product_apps
 
 BASE_DIR = Path(__file__).resolve().parents[2]
 SECRET_KEY = os.environ.get("EDUCATION_SECRET_KEY", "unsafe-development-key")
 DEBUG = os.environ.get("EDUCATION_DEBUG", "true").lower() == "true"
 ALLOWED_HOSTS = [
     value.strip()
-    for value in os.environ.get("EDUCATION_ALLOWED_HOSTS", "localhost,127.0.0.1").split(
+    for value in os.environ.get("EDUCATION_ALLOWED_HOSTS", f"localhost,127.0.0.1,{socket.gethostname()}").split(
         ","
     )
     if value.strip()
 ]
 
 
-def product_app_configuration(package_name: str) -> str:
-    """Derive the conventional product AppConfig path."""
-
-    class_name = "".join(word.capitalize() for word in package_name.split("_"))
-    return f"{package_name}.apps.{class_name}Config"
-
-
-PRODUCT_APPS = [
-    product_app_configuration(value.strip())
-    for value in os.environ.get("EDUCATION_PRODUCTS", "").split(",")
-    if value.strip()
-]
+PRODUCT_APPS = discover_product_apps(os.environ.get("EDUCATION_PRODUCTS", ""))
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -41,6 +35,7 @@ INSTALLED_APPS = [
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -73,6 +68,16 @@ DATABASES = {
         ),
     }
 }
+
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"
+    }
+}
+
 AUTH_PASSWORD_VALIDATORS = []
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "UTC"

@@ -5,8 +5,9 @@ This independent package contains the generated curriculum and provenance for
 Education Runtime `__RUNTIME_COMPATIBILITY__` and contains no generic learning
 views, models, or client-side application code.
 
-Install it beside a compatible Education Runtime, add
-`__APP_NAME__.apps.__APP_CONFIG_CLASS__` to `INSTALLED_APPS`, then run:
+Install it beside a compatible Education Runtime. The Standalone Runner
+discovers the product from its package entry point, so no environment variable
+or settings edit is required. Then run:
 
 ```bash
 python manage.py migrate
@@ -19,4 +20,3 @@ later baseline changes.
 
 Run package tests with `python -m unittest discover -s tests`. Generation
 evidence and completion records are under `provenance/`.
-
