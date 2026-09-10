@@ -1,0 +1,328 @@
+{
+  "mastery_contracts": [
+    {
+      "identifier": "lgar-mastery-scope",
+      "concept_identifier": "lgar-concept-scope",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-scope-1",
+          "description": "Explain the LGAR, LASAM, and CASAM names without confusing component and whole model."
+        },
+        {
+          "identifier": "lgar-competency-scope-2",
+          "description": "Trace water from rain into soil, surface runoff, and optional delayed streamflow."
+        },
+        {
+          "identifier": "lgar-competency-scope-3",
+          "description": "Reject uses that require water levels, flood extent, or resolved hillslope physics."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-water-budget",
+      "concept_identifier": "lgar-concept-water-budget",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-water-budget-1",
+          "description": "Convert rainfall intensity to substep water depth."
+        },
+        {
+          "identifier": "lgar-competency-water-budget-2",
+          "description": "Derive storage change from an explicit control boundary."
+        },
+        {
+          "identifier": "lgar-competency-water-budget-3",
+          "description": "Use residuals without mistaking conservation for physical accuracy."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-math-soil",
+      "concept_identifier": "lgar-concept-math-soil",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-math-soil-1",
+          "description": "Distinguish water content, water depth, and effective saturation."
+        },
+        {
+          "identifier": "lgar-competency-math-soil-2",
+          "description": "Explain suction and the positive-head convention."
+        },
+        {
+          "identifier": "lgar-competency-math-soil-3",
+          "description": "Interpret derivatives, gradients, and finite-step approximations."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-soil-curves",
+      "concept_identifier": "lgar-concept-soil-curves",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-soil-curves-1",
+          "description": "Derive the inverse retention relation and its limiting behavior."
+        },
+        {
+          "identifier": "lgar-competency-soil-curves-2",
+          "description": "Compute water content and unsaturated conductivity."
+        },
+        {
+          "identifier": "lgar-competency-soil-curves-3",
+          "description": "Explain parameter sensitivity and unsafe parameter combinations."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-green-ampt",
+      "concept_identifier": "lgar-concept-green-ampt",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-green-ampt-1",
+          "description": "Derive the classical ponded Green\u2013Ampt capacity relation."
+        },
+        {
+          "identifier": "lgar-competency-green-ampt-2",
+          "description": "Distinguish rainfall-limited infiltration from capacity-limited infiltration."
+        },
+        {
+          "identifier": "lgar-competency-green-ampt-3",
+          "description": "Predict effects of suction, depth, and antecedent water content."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-richards-layering",
+      "concept_identifier": "lgar-concept-richards-layering",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-richards-layering-1",
+          "description": "Derive a one-dimensional conservation equation and explain a Richards-type model."
+        },
+        {
+          "identifier": "lgar-competency-richards-layering-2",
+          "description": "Explain hydraulic resistance across layers and equal-head unequal-moisture states."
+        },
+        {
+          "identifier": "lgar-competency-richards-layering-3",
+          "description": "Separate infiltration agreement from profile agreement and universal validity."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-front-state",
+      "concept_identifier": "lgar-concept-front-state",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-front-state-1",
+          "description": "Interpret depth, moisture, layer number, and to_bottom together."
+        },
+        {
+          "identifier": "lgar-competency-front-state-2",
+          "description": "Preserve water across merges and boundary crossings."
+        },
+        {
+          "identifier": "lgar-competency-front-state-3",
+          "description": "Diagnose pointer lifetime and indexing failures."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-capillary-integral",
+      "concept_identifier": "lgar-concept-capillary-integral",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-capillary-integral-1",
+          "description": "Explain the dimensions and integration limits of Geff."
+        },
+        {
+          "identifier": "lgar-competency-capillary-integral-2",
+          "description": "Distinguish local sampling criteria from proven error control."
+        },
+        {
+          "identifier": "lgar-competency-capillary-integral-3",
+          "description": "Design a fair comparison of quadrature and the closed-form approximation."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-time-integration",
+      "concept_identifier": "lgar-concept-time-integration",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-time-integration-1",
+          "description": "Trace a forcing interval through the model driver."
+        },
+        {
+          "identifier": "lgar-competency-time-integration-2",
+          "description": "Distinguish heuristic adaptation, clipping, and convergence."
+        },
+        {
+          "identifier": "lgar-competency-time-integration-3",
+          "description": "Test interval divisibility and event transitions."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-evaporation-boundary",
+      "concept_identifier": "lgar-concept-evaporation-boundary",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-evaporation-boundary-1",
+          "description": "Derive and evaluate the implemented evaporation reduction."
+        },
+        {
+          "identifier": "lgar-competency-evaporation-boundary-2",
+          "description": "Distinguish potential demand from actual storage removal."
+        },
+        {
+          "identifier": "lgar-competency-evaporation-boundary-3",
+          "description": "Predict no-flow and free-drainage consequences."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-reservoirs",
+      "concept_identifier": "lgar-concept-reservoirs",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-reservoirs-1",
+          "description": "Derive units and update behavior for storage-dependent discharge."
+        },
+        {
+          "identifier": "lgar-competency-reservoirs-2",
+          "description": "Explain bypass activation and the fast/slow recharge split."
+        },
+        {
+          "identifier": "lgar-competency-reservoirs-3",
+          "description": "Recognize explicit-step bias, storage clipping, and parameter ambiguity."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-interflow-routing",
+      "concept_identifier": "lgar-concept-interflow-routing",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-interflow-routing-1",
+          "description": "Explain interflow eligibility and storage-limited application."
+        },
+        {
+          "identifier": "lgar-competency-interflow-routing-2",
+          "description": "Compute a unit-hydrograph convolution and its conservation condition."
+        },
+        {
+          "identifier": "lgar-competency-interflow-routing-3",
+          "description": "Distinguish runoff depth, delayed discharge depth, and volume rate."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-build-config",
+      "concept_identifier": "lgar-concept-build-config",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-build-config-1",
+          "description": "Build the standalone and shared-library targets without privileged installation."
+        },
+        {
+          "identifier": "lgar-competency-build-config-2",
+          "description": "Separate build failures, input failures, and model failures."
+        },
+        {
+          "identifier": "lgar-competency-build-config-3",
+          "description": "Record a reproducible experiment manifest."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-bmi-coupling",
+      "concept_identifier": "lgar-concept-bmi-coupling",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-bmi-coupling-1",
+          "description": "Test names, units, shapes, pointer lifetimes, and time advancement."
+        },
+        {
+          "identifier": "lgar-competency-bmi-coupling-2",
+          "description": "Explain freeze/thaw coupling boundaries."
+        },
+        {
+          "identifier": "lgar-competency-bmi-coupling-3",
+          "description": "Form source-backed defect reports with minimal reproductions."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-performance-tests",
+      "concept_identifier": "lgar-concept-performance-tests",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-performance-tests-1",
+          "description": "Separate verification, validation, and regression testing."
+        },
+        {
+          "identifier": "lgar-competency-performance-tests-2",
+          "description": "Design conservation, refinement, interface, and transition tests."
+        },
+        {
+          "identifier": "lgar-competency-performance-tests-3",
+          "description": "Evaluate caching with matched scientific error budgets."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-calibration",
+      "concept_identifier": "lgar-concept-calibration",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-calibration-1",
+          "description": "Distinguish input, parameter, numerical, implementation, and structural errors."
+        },
+        {
+          "identifier": "lgar-competency-calibration-2",
+          "description": "Design holdout and sensitivity experiments."
+        },
+        {
+          "identifier": "lgar-competency-calibration-3",
+          "description": "Interpret log-mode parameters and correlated fits."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-model-criticism",
+      "concept_identifier": "lgar-concept-model-criticism",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-model-criticism-1",
+          "description": "Predict error direction conditionally from model structure."
+        },
+        {
+          "identifier": "lgar-competency-model-criticism-2",
+          "description": "Compare LGAR, classical Green\u2013Ampt, Richards-type solvers, and conceptual stores."
+        },
+        {
+          "identifier": "lgar-competency-model-criticism-3",
+          "description": "Design a controlled diagnosis of suspicious runoff."
+        }
+      ]
+    },
+    {
+      "identifier": "lgar-mastery-capstone",
+      "concept_identifier": "lgar-concept-capstone",
+      "competencies": [
+        {
+          "identifier": "lgar-competency-capstone-1",
+          "description": "Produce a minimal source-backed defect report and bounded correction plan."
+        },
+        {
+          "identifier": "lgar-competency-capstone-2",
+          "description": "Design a scientific validation and performance evidence bundle."
+        },
+        {
+          "identifier": "lgar-competency-capstone-3",
+          "description": "Explain the whole lifecycle and the limits of the final conclusion."
+        }
+      ]
+    }
+  ]
+}

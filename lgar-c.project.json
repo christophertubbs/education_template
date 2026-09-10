@@ -1,0 +1,35 @@
+{
+  "name": "lgar-c",
+  "repository_url": "https://github.com/NOAA-OWP/LGAR-C.git",
+  "revision": "9166bcfa1d8c37af26a4f6329872400f07a33ff6",
+  "curriculum_product_name": "lgar_c_curriculum",
+  "display_name": "LGAR-C and CASAM: Soil Physics, Numerics, and Implementation",
+  "curriculum_source_path": "curricula/lgar-c",
+  "runtime_compatibility": ">=1.1,<2.0",
+  "assumed_learner_prerequisites": [
+    "Professional software development using Python, C, or C++",
+    "Secondary-school algebra and arithmetic; no assumed hydrology, calculus, or numerical-modeling education"
+  ],
+  "required_topics": [
+    "What LGAR-C actually models: Explain the LGAR, LASAM, and CASAM names without confusing component and whole model.; Trace water from rain into soil, surface runoff, and optional delayed streamflow.; Reject uses that require water levels, flood extent, or resolved hillslope physics.",
+    "Depth, rates, and conservation: Convert rainfall intensity to substep water depth.; Derive storage change from an explicit control boundary.; Use residuals without mistaking conservation for physical accuracy.",
+    "Water content, pressure, and change: Distinguish water content, water depth, and effective saturation.; Explain suction and the positive-head convention.; Interpret derivatives, gradients, and finite-step approximations.",
+    "From soil parameters to water and conductivity: Derive the inverse retention relation and its limiting behavior.; Compute water content and unsaturated conductivity.; Explain parameter sensitivity and unsafe parameter combinations.",
+    "Derive infiltration from a moving wetting front: Derive the classical ponded Green–Ampt capacity relation.; Distinguish rainfall-limited infiltration from capacity-limited infiltration.; Predict effects of suction, depth, and antecedent water content.",
+    "Why layers and redistribution change the problem: Derive a one-dimensional conservation equation and explain a Richards-type model.; Explain hydraulic resistance across layers and equal-head unequal-moisture states.; Separate infiltration agreement from profile agreement and universal validity.",
+    "Representing and conserving a front list: Interpret depth, moisture, layer number, and to_bottom together.; Preserve water across merges and boundary crossings.; Diagnose pointer lifetime and indexing failures.",
+    "Capillary drive and adaptive quadrature: Explain the dimensions and integration limits of Geff.; Distinguish local sampling criteria from proven error control.; Design a fair comparison of quadrature and the closed-form approximation.",
+    "Following one update and testing timestep behavior: Trace a forcing interval through the model driver.; Distinguish heuristic adaptation, clipping, and convergence.; Test interval divisibility and event transitions.",
+    "Drying and the lower boundary: Derive and evaluate the implemented evaporation reduction.; Distinguish potential demand from actual storage removal.; Predict no-flow and free-drainage consequences.",
+    "Preferential bypass and nonlinear reservoirs: Derive units and update behavior for storage-dependent discharge.; Explain bypass activation and the fast/slow recharge split.; Recognize explicit-step bias, storage clipping, and parameter ambiguity.",
+    "Interflow removal and outlet routing: Explain interflow eligibility and storage-limited application.; Compute a unit-hydrograph convolution and its conservation condition.; Distinguish runoff depth, delayed discharge depth, and volume rate.",
+    "Build, configure, and reproduce a run: Build the standalone and shared-library targets without privileged installation.; Separate build failures, input failures, and model failures.; Record a reproducible experiment manifest.",
+    "Audit BMI contracts and coupled models: Test names, units, shapes, pointer lifetimes, and time advancement.; Explain freeze/thaw coupling boundaries.; Form source-backed defect reports with minimal reproductions.",
+    "Verification, performance, and useful regression tests: Separate verification, validation, and regression testing.; Design conservation, refinement, interface, and transition tests.; Evaluate caching with matched scientific error budgets.",
+    "Calibration, sensitivity, and identifiable claims: Distinguish input, parameter, numerical, implementation, and structural errors.; Design holdout and sensitivity experiments.; Interpret log-mode parameters and correlated fits.",
+    "Model selection from assumptions and evidence: Predict error direction conditionally from model structure.; Compare LGAR, classical Green–Ampt, Richards-type solvers, and conceptual stores.; Design a controlled diagnosis of suspicious runoff.",
+    "A reproducible contribution and model audit: Produce a minimal source-backed defect report and bounded correction plan.; Design a scientific validation and performance evidence bundle.; Explain the whole lifecycle and the limits of the final conclusion."
+  ],
+  "initial_branch": "main",
+  "automated_commit": false
+}

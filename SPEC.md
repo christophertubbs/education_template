@@ -704,6 +704,68 @@ The Generator should prefer primary sources for governing equations, numerical m
 
 External research must retain enough provenance for later verification.
 
+## 16.1 Source and Citation Requirements
+
+All externally derived factual claims MUST be explicitly cited.
+
+This includes, but is not limited to:
+
+- equations, formulas, and mathematical notation;
+- definitions of variables, symbols, objective functions, and metrics;
+- numerical constants, thresholds, coefficients, parameter ranges, and defaults;
+- descriptions of algorithms, models, physical processes, calibration methods, and optimization methods;
+- statements about model behavior, limitations, assumptions, accuracy, or computational characteristics;
+- historical claims or claims about how a method is commonly implemented;
+- terminology or notation attributed to a particular field, publication, software package, or modeling framework.
+
+### 16.1.1 Citation placement
+
+Citations MUST appear adjacent to the claim they support. Do not rely solely on a bibliography or "Sources" section at the end of a document.
+
+For example:
+
+> The calibration objective can be represented as a mean-squared-error loss,
+> \(J(\theta) = \frac{1}{N}\sum_{i=1}^{N}(y_i-\hat{y}_i(\theta))^2\) [Smith et al., 2024].
+
+If the source defines the objective function but does NOT use the symbol `J`, do not imply that it does. Instead state explicitly that the notation is being introduced for the curriculum:
+
+> Using `J` here as curriculum notation, define the mean-squared-error objective as ...
+
+### 16.1.2 Source fidelity
+
+Never invent, infer, or fabricate a citation.
+
+A citation MUST correspond to a source that was actually consulted and that materially supports the associated claim.
+
+If no authoritative source can be found for a factual claim:
+
+1. omit the claim;
+2. qualify it as an interpretation or illustrative example; or
+3. explicitly state that no supporting source was identified.
+
+Do not present uncited external knowledge as established fact.
+
+### 16.1.3 Original synthesis
+
+Reasoning, explanations, examples, analogies, exercises, and pedagogical simplifications created by the curriculum generator do not require citations merely because they are original synthesis.
+
+However, any factual premises used by that synthesis MUST still be cited.
+
+### 16.1.4 References
+
+Every generated curriculum document containing cited material MUST include a `References` section containing enough information to identify and retrieve each cited source.
+
+Where available, include:
+
+- author or organization;
+- title;
+- publication or documentation name;
+- publication year or version;
+- DOI or stable URL;
+- date accessed for mutable web documentation.
+
+Prefer primary sources, official documentation, peer-reviewed literature, standards, and authoritative technical reports over secondary summaries.
+
 ---
 
 # 17. Curriculum Coverage Matrix
@@ -1395,6 +1457,21 @@ The audit must verify that:
 Automated readability scores may support this audit but must not be its sole
 evidence, because equations, identifiers, and scientific names can distort such
 scores.
+
+## 39.1 Citation Verification During Generation
+
+Before finalizing each lesson, maintain an internal claim-source mapping for externally derived factual content.
+
+For each factual claim, record:
+
+- the claim or concept;
+- the supporting source;
+- the exact section, page, heading, equation, or other locator when available;
+- whether the curriculum is quoting, paraphrasing, synthesizing, or introducing its own notation.
+
+Before emitting the final lesson, verify that every externally derived factual claim has at least one supporting citation.
+
+The final curriculum need not expose this internal ledger unless requested.
 
 ---
 

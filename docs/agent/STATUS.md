@@ -1,7 +1,8 @@
 # STATUS
 
-Current objective: provide repeatable installation that discovers products,
-loads their current curriculum JSON, and prepares static assets.
+Current objective: provide Sphinx documentation that lets a new maintainer map
+everything under ``src/``, understand cross-package effects, and build the guide
+reliably.
 
 Requirements: `SPEC.md` sections 3-46, especially generation architecture,
 completion state, product/runtime boundaries, assessment constraints, progress,
@@ -38,8 +39,10 @@ plain-language, bounded soil-sponge analogy before technical names and equations
 
 Expected uncommitted root state on `project-pivot`: the user-modified
 `project.json`, user-provided `cfe.project.json` and `prompt.md`, reviewed
-`curricula/sac-sma/`, schema 2.2 artifacts and validation changes, runtime lesson
-ordering, tests, the terminology maintenance tool, and these durable state
+`curricula/sac-sma/`, imported LGAR-C draft archive and expanded draft directory,
+reviewed `curricula/lgar-c/`, `lgar-c.project.json`, schema 2.2 artifacts and
+validation changes, runtime lesson ordering and coverage-preserving assessment
+selection, tests, the terminology maintenance tool, and these durable state
 updates. Generated output and target checkouts remain outside root tracking.
 
 Generation and validation completed on 2026-09-09:
@@ -145,6 +148,79 @@ Installation refresh update completed on 2026-09-09:
   Django system checks, migration-drift checks, and `git diff --check` passed.
   The root wheel also built successfully; setuptools repeated the previously
   recorded ignored-template-`__pycache__` package-data warnings.
+
+LGAR-C continuation and finalization completed on 2026-09-10:
+
+* Continued the user-provided ChatGPT Work review candidate without modifying
+  its original ZIP or expanded draft. Canonical reviewed artifacts now live at
+  `curricula/lgar-c/`, with the pinned configuration in
+  `lgar-c.project.json`. The generated product remains outside root tracking at
+  `generated/lgar-c-curriculum/`.
+* LGAR-C 1.1.0 pins target commit
+  `9166bcfa1d8c37af26a4f6329872400f07a33ff6`. It contains six sections, 18
+  lessons, 156 independently scored questions, 160 terminology contracts, 21
+  source-reference records, and 12 cumulative multi-contract final cases.
+* The continuation reviewed the complete 2023 LGAR paper and Wang et al.
+  frozen-soil paper. It added the published validity boundary, all four
+  iterative front-correction branches, the exact freeze/thaw multiplier and
+  bounded source-observed risks, every pinned configuration key, literal versus
+  instructional identifier distinctions, and cumulative diagnosis.
+* The runtime now preserves configured major-concept quotas and coverage of
+  every major Mastery Contract. Midterm and final attempts additionally retain
+  all represented sections and terminal outcomes. Pop quizzes retain randomized
+  prior-lesson filtering. Tests cover each non-pop kind, repeated-attempt
+  variation, configured quotas, and prior-lesson restriction.
+* Canonical and packaged LGAR-C payloads match exactly. Schema 2.2 and pinned
+  source-reference validation reported zero errors. All 332 lesson blocks
+  rendered through the runtime template. Ten final attempts preserved the
+  three-question-per-major-concept quota, major contracts, sections, and
+  outcomes while varying the selected set.
+* The product built a `py3-none-any` wheel, installed without dependencies into
+  an isolated target, advertised the expected entry point, and passed all six
+  portable tests from both source and the installed wheel. The final checked
+  download is `generated/lgar-c-curriculum-1.1.0.zip` with SHA-256
+  `598eefa2940a79617ed42138f9abfe9a96fedf98b454ef8039b93fb58ec0f517`.
+* A clean `install.sh` run with no explicit product setting discovered CFE,
+  LGAR-C, and SAC-SMA; applied every migration; refreshed all three payloads;
+  and collected static assets. LGAR-C loaded one curriculum, six sections, 18
+  lessons, and 156 questions. Repeat loading preserved counts, and changed
+  incoming baseline validation preserved a human edit while recording a
+  conflict.
+* Ruff formatting and lint passed. All 31 Django/unit tests passed with all
+  three local products discovered. Django system checks, migration-drift
+  checks, and `git diff --check` passed. Representative LGAR-C curriculum,
+  BMI-lesson, glossary, source, final-assessment, and progress routes returned
+  HTTP 200.
+* Initial validation invocations exposed three non-product issues: the
+  restricted Ruff cache was read-only; a route check omitted `testserver` from
+  allowed hosts; and its first corrected-host retry used an extra `/curricula/`
+  prefix. Temporary Ruff caching and the actual root-mounted routes passed.
+* Actual LGAR simulations and coupled model runs were not executed. Analytical
+  examples remain explicitly instructional, and source-observed defect impacts
+  remain unmeasured. No upstream repository was pushed, no release was
+  published, and automated product commits remain disabled by the supplied
+  configuration.
+
+Source onboarding documentation completed on 2026-09-10:
+
+* Added a Sphinx guide under ``docs/sphinx`` covering architecture and data
+  flows, generator phases, runtime models/import/assessment behavior, runner
+  discovery and settings, templates/static assets, generated-product templates,
+  operations, specification traceability, every maintained source category, and
+  autodoc API references including policy-bearing private helpers.
+* Added ``docs/BUILDING_DOCUMENTATION.md``, an executable ``build-docs.sh``, and
+  a ``docs`` project extra containing Sphinx. The build uses warnings as errors
+  and configures an in-memory minimal Django registry for autodoc, so it neither
+  reads the project database nor activates generated products.
+* Documented the current schema-label discrepancy: the artifact contract and
+  current terminology rules describe schema 2.2, while generator constants and
+  generated agent templates still emit/describe schema 2.1.
+* ``PYTHON_BIN=.venv/bin/python ./build-docs.sh`` built all 11 source pages and
+  API/viewcode indices successfully with Sphinx 8.2.3. A separate warning-strict
+  linkcheck build also passed. ``bash -n build-docs.sh``, Ruff check/format for
+  all Python source plus ``docs/sphinx/conf.py``, and ``git diff --check``
+  passed. All 31 Django/unit tests, Django system checks, and the migration-drift
+  check also passed.
 
 Next action: add browser-level WCAG 2.2 AA checks for MathJax output, responsive
 tables, definition navigation, and pop-quiz navigation.

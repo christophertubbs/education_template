@@ -39,6 +39,16 @@
 * Add an idempotent `install.sh` workflow that migrates the configured database,
   imports current packaged curriculum JSON independently of migration state,
   and collects static assets.
+* Continue and complete the source-pinned LGAR-C/CASAM curriculum begun in
+  ChatGPT Work: review the primary literature and target source, close
+  terminology and scientific-depth gaps, add cumulative assessments, synchronize
+  the canonical and packaged artifacts, and validate stable product 1.1.0.
+* Preserve section, major-concept, major-Mastery-Contract, and terminal-outcome
+  coverage during randomized non-pop assessment selection while retaining
+  prior-lesson filtering and variation for pop quizzes.
+* Add warning-strict Sphinx onboarding documentation for every maintained source
+  category, cross-package behavior and change effects, with an isolated Django
+  autodoc setup, Markdown build guide, and executable build script.
 
 ## Ready
 

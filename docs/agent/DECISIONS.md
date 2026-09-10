@@ -81,3 +81,32 @@ product's current packaged `data/curriculum.json` using the existing atomic,
 conflict-preserving baseline importer. The root `install.sh` runs migrations,
 that explicit refresh, and static-file collection in sequence and fails on the
 first unsuccessful step.
+
+## 2026-09-10: Coverage-preserving assessment selection
+
+Non-pop assessment selection randomizes an oversized bank while enforcing each
+configured major-concept quota and at least one item for every represented major
+Mastery Contract. Midterm and final selection additionally retain every
+represented curriculum section and terminal outcome. Pop-quiz selection remains
+restricted to the eligible prior lessons supplied by learner progress. An
+infeasible bank fails explicitly instead of silently dropping required coverage.
+
+## 2026-09-10: Source-pinned LGAR-C stable product
+
+LGAR-C product 1.1.0 is based on target commit
+`9166bcfa1d8c37af26a4f6329872400f07a33ff6` and the complete reviewed 2023 LGAR
+and Wang et al. frozen-soil papers. Literature comparisons retain their original
+experimental boundaries. Suspected freeze/thaw implementation effects remain
+source-observed and unmeasured because target code is read-only evidence and no
+model runs were performed. The supplied configuration disables automated Git
+commits, so no product history or external release is created automatically.
+
+## 2026-09-10: Executable source-onboarding documentation
+
+Source onboarding lives as Sphinx reStructuredText under ``docs/sphinx`` and
+combines subsystem narratives, change-impact guidance, an exhaustive maintained
+source inventory, and Python autodoc. Documentation imports use a minimal
+in-memory Django configuration so builds cannot depend on or mutate a developer
+database or activate local Curriculum Products. The root ``build-docs.sh`` is
+the canonical warning-strict build interface, and ``docs/_build`` remains
+disposable ignored output.

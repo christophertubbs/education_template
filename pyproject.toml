@@ -11,6 +11,7 @@ dependencies = ["Django>=5.2,<5.3"]
 
 [project.optional-dependencies]
 dev = ["coverage>=7.6", "ruff>=0.12"]
+docs = ["Sphinx>=8,<9"]
 
 [project.scripts]
 education-generate = "education_generator.cli:main"

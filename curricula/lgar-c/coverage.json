@@ -1,0 +1,712 @@
+{
+  "concepts": [
+    {
+      "concept_identifier": "lgar-concept-scope",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-scope"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-scope-capstone",
+        "lgar-question-scope-01",
+        "lgar-question-scope-02",
+        "lgar-question-scope-03",
+        "lgar-question-scope-04",
+        "lgar-question-scope-05",
+        "lgar-question-scope-06",
+        "lgar-question-scope-07",
+        "lgar-question-scope-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-water-budget",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-water-budget"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-interflow-routing",
+        "lgar-question-cumulative-units-timestep",
+        "lgar-question-water-budget-01",
+        "lgar-question-water-budget-02",
+        "lgar-question-water-budget-03",
+        "lgar-question-water-budget-04",
+        "lgar-question-water-budget-05",
+        "lgar-question-water-budget-06",
+        "lgar-question-water-budget-07",
+        "lgar-question-water-budget-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-math-soil",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-math-soil"
+      ],
+      "question_identifiers": [
+        "lgar-question-math-soil-01",
+        "lgar-question-math-soil-02",
+        "lgar-question-math-soil-03",
+        "lgar-question-math-soil-04",
+        "lgar-question-math-soil-05",
+        "lgar-question-math-soil-06",
+        "lgar-question-math-soil-07",
+        "lgar-question-math-soil-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-soil-curves",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-soil-curves"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-curves-fronts",
+        "lgar-question-soil-curves-01",
+        "lgar-question-soil-curves-02",
+        "lgar-question-soil-curves-03",
+        "lgar-question-soil-curves-04",
+        "lgar-question-soil-curves-05",
+        "lgar-question-soil-curves-06",
+        "lgar-question-soil-curves-07",
+        "lgar-question-soil-curves-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-green-ampt",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-green-ampt"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-green-layering",
+        "lgar-question-green-ampt-01",
+        "lgar-question-green-ampt-02",
+        "lgar-question-green-ampt-03",
+        "lgar-question-green-ampt-04",
+        "lgar-question-green-ampt-05",
+        "lgar-question-green-ampt-06",
+        "lgar-question-green-ampt-07",
+        "lgar-question-green-ampt-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-richards-layering",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-richards-layering"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-green-layering",
+        "lgar-question-richards-layering-01",
+        "lgar-question-richards-layering-02",
+        "lgar-question-richards-layering-03",
+        "lgar-question-richards-layering-04",
+        "lgar-question-richards-layering-05",
+        "lgar-question-richards-layering-06",
+        "lgar-question-richards-layering-07",
+        "lgar-question-richards-layering-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-front-state",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-front-state"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-curves-fronts",
+        "lgar-question-front-state-01",
+        "lgar-question-front-state-02",
+        "lgar-question-front-state-03",
+        "lgar-question-front-state-04",
+        "lgar-question-front-state-05",
+        "lgar-question-front-state-06",
+        "lgar-question-front-state-07",
+        "lgar-question-front-state-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-capillary-integral",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-capillary-integral"
+      ],
+      "question_identifiers": [
+        "lgar-question-capillary-integral-01",
+        "lgar-question-capillary-integral-02",
+        "lgar-question-capillary-integral-03",
+        "lgar-question-capillary-integral-04",
+        "lgar-question-capillary-integral-05",
+        "lgar-question-capillary-integral-06",
+        "lgar-question-capillary-integral-07",
+        "lgar-question-capillary-integral-08",
+        "lgar-question-cumulative-capillary-step"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-time-integration",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-time-integration"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-capillary-step",
+        "lgar-question-cumulative-units-timestep",
+        "lgar-question-time-integration-01",
+        "lgar-question-time-integration-02",
+        "lgar-question-time-integration-03",
+        "lgar-question-time-integration-04",
+        "lgar-question-time-integration-05",
+        "lgar-question-time-integration-06",
+        "lgar-question-time-integration-07",
+        "lgar-question-time-integration-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-evaporation-boundary",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-evaporation-boundary"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-drainage-reservoir",
+        "lgar-question-cumulative-evap-calibration",
+        "lgar-question-evaporation-boundary-01",
+        "lgar-question-evaporation-boundary-02",
+        "lgar-question-evaporation-boundary-03",
+        "lgar-question-evaporation-boundary-04",
+        "lgar-question-evaporation-boundary-05",
+        "lgar-question-evaporation-boundary-06",
+        "lgar-question-evaporation-boundary-07",
+        "lgar-question-evaporation-boundary-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-reservoirs",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-reservoirs"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-drainage-reservoir",
+        "lgar-question-reservoirs-01",
+        "lgar-question-reservoirs-02",
+        "lgar-question-reservoirs-03",
+        "lgar-question-reservoirs-04",
+        "lgar-question-reservoirs-05",
+        "lgar-question-reservoirs-06",
+        "lgar-question-reservoirs-07",
+        "lgar-question-reservoirs-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-interflow-routing",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-interflow-routing"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-interflow-routing",
+        "lgar-question-interflow-routing-01",
+        "lgar-question-interflow-routing-02",
+        "lgar-question-interflow-routing-03",
+        "lgar-question-interflow-routing-04",
+        "lgar-question-interflow-routing-05",
+        "lgar-question-interflow-routing-06",
+        "lgar-question-interflow-routing-07",
+        "lgar-question-interflow-routing-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-build-config",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-build-config"
+      ],
+      "question_identifiers": [
+        "lgar-question-build-config-01",
+        "lgar-question-build-config-02",
+        "lgar-question-build-config-03",
+        "lgar-question-build-config-04",
+        "lgar-question-build-config-05",
+        "lgar-question-build-config-06",
+        "lgar-question-build-config-07",
+        "lgar-question-build-config-08",
+        "lgar-question-cumulative-build-bmi"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-bmi-coupling",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-bmi-coupling"
+      ],
+      "question_identifiers": [
+        "lgar-question-bmi-coupling-01",
+        "lgar-question-bmi-coupling-02",
+        "lgar-question-bmi-coupling-03",
+        "lgar-question-bmi-coupling-04",
+        "lgar-question-bmi-coupling-05",
+        "lgar-question-bmi-coupling-06",
+        "lgar-question-bmi-coupling-07",
+        "lgar-question-bmi-coupling-08",
+        "lgar-question-cumulative-build-bmi",
+        "lgar-question-cumulative-freeze-bmi"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-performance-tests",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-performance-tests"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-freeze-bmi",
+        "lgar-question-cumulative-model-evidence",
+        "lgar-question-performance-tests-01",
+        "lgar-question-performance-tests-02",
+        "lgar-question-performance-tests-03",
+        "lgar-question-performance-tests-04",
+        "lgar-question-performance-tests-05",
+        "lgar-question-performance-tests-06",
+        "lgar-question-performance-tests-07",
+        "lgar-question-performance-tests-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-calibration",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-calibration"
+      ],
+      "question_identifiers": [
+        "lgar-question-calibration-01",
+        "lgar-question-calibration-02",
+        "lgar-question-calibration-03",
+        "lgar-question-calibration-04",
+        "lgar-question-calibration-05",
+        "lgar-question-calibration-06",
+        "lgar-question-calibration-07",
+        "lgar-question-calibration-08",
+        "lgar-question-cumulative-calibration-criticism",
+        "lgar-question-cumulative-evap-calibration"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-model-criticism",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-model-criticism"
+      ],
+      "question_identifiers": [
+        "lgar-question-cumulative-calibration-criticism",
+        "lgar-question-cumulative-model-evidence",
+        "lgar-question-model-criticism-01",
+        "lgar-question-model-criticism-02",
+        "lgar-question-model-criticism-03",
+        "lgar-question-model-criticism-04",
+        "lgar-question-model-criticism-05",
+        "lgar-question-model-criticism-06",
+        "lgar-question-model-criticism-07",
+        "lgar-question-model-criticism-08"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    },
+    {
+      "concept_identifier": "lgar-concept-capstone",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "lgar-lesson-capstone"
+      ],
+      "question_identifiers": [
+        "lgar-question-capstone-01",
+        "lgar-question-capstone-02",
+        "lgar-question-capstone-03",
+        "lgar-question-capstone-04",
+        "lgar-question-capstone-05",
+        "lgar-question-capstone-06",
+        "lgar-question-capstone-07",
+        "lgar-question-capstone-08",
+        "lgar-question-cumulative-scope-capstone"
+      ],
+      "notes": {
+        "assessment_coverage": "Eight bank items exist; current runtime random sampling does not guarantee per-attempt coverage.",
+        "terminology_closure": "Core concept and equation variables inventoried; exhaustive source-identifier/parameter first-use audit is not certified."
+      }
+    }
+  ]
+}

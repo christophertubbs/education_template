@@ -1,0 +1,204 @@
+{
+  "schema_version": "2.2",
+  "entry_knowledge": [
+    "Professional software development using Python, C, or C++",
+    "Secondary-school algebra and arithmetic; no assumed hydrology, calculus, or numerical-modeling education"
+  ],
+  "concepts": [
+    {
+      "identifier": "lgar-concept-scope",
+      "title": "What LGAR-C actually models",
+      "description": "Separate soil infiltration, catchment runoff, and river hydraulics.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-water-budget",
+      "title": "Depth, rates, and conservation",
+      "description": "Build water accounting from units before reading the model loops.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-math-soil",
+      "title": "Water content, pressure, and change",
+      "description": "Introduce the mathematical and physical quantities used by the soil functions.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-soil-curves",
+      "title": "From soil parameters to water and conductivity",
+      "description": "Derive and inspect the retention and conductivity functions.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-green-ampt",
+      "title": "Derive infiltration from a moving wetting front",
+      "description": "Use a simple front to understand the later layered algorithm.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-richards-layering",
+      "title": "Why layers and redistribution change the problem",
+      "description": "Compare a moving-front approximation with a distributed flow equation.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-front-state",
+      "title": "Representing and conserving a front list",
+      "description": "Connect physical regions to pointer ownership and topology changes.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-capillary-integral",
+      "title": "Capillary drive and adaptive quadrature",
+      "description": "Read the numerical and closed-form paths without treating them as identical.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-time-integration",
+      "title": "Following one update and testing timestep behavior",
+      "description": "Trace forcing, subcycles, state transitions, and numerical safeguards.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-evaporation-boundary",
+      "title": "Drying and the lower boundary",
+      "description": "Trace atmospheric demand, actual removal, and drainage options.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-reservoirs",
+      "title": "Preferential bypass and nonlinear reservoirs",
+      "description": "Explain thresholded recharge, two stores, and explicit discharge.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-interflow-routing",
+      "title": "Interflow removal and outlet routing",
+      "description": "Separate a lateral-loss parameterization from the delay queue.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-build-config",
+      "title": "Build, configure, and reproduce a run",
+      "description": "Use the actual CMake targets and keep paths and parameter roles explicit.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-bmi-coupling",
+      "title": "Audit BMI contracts and coupled models",
+      "description": "Treat the adapter as testable code rather than a trustworthy label.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-performance-tests",
+      "title": "Verification, performance, and useful regression tests",
+      "description": "Build evidence beyond a successful executable and one benchmark.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-calibration",
+      "title": "Calibration, sensitivity, and identifiable claims",
+      "description": "Explain what a fitted parameter can and cannot tell you.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-model-criticism",
+      "title": "Model selection from assumptions and evidence",
+      "description": "Make defensible choices under good, marginal, and inappropriate conditions.",
+      "importance": "major"
+    },
+    {
+      "identifier": "lgar-concept-capstone",
+      "title": "A reproducible contribution and model audit",
+      "description": "Combine theory, source tracing, experiments, and a reviewable change.",
+      "importance": "major"
+    }
+  ],
+  "relationships": [
+    {
+      "source": "lgar-concept-water-budget",
+      "target": "lgar-concept-scope",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-math-soil",
+      "target": "lgar-concept-water-budget",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-soil-curves",
+      "target": "lgar-concept-math-soil",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-green-ampt",
+      "target": "lgar-concept-soil-curves",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-richards-layering",
+      "target": "lgar-concept-green-ampt",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-front-state",
+      "target": "lgar-concept-richards-layering",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-capillary-integral",
+      "target": "lgar-concept-front-state",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-time-integration",
+      "target": "lgar-concept-capillary-integral",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-evaporation-boundary",
+      "target": "lgar-concept-time-integration",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-reservoirs",
+      "target": "lgar-concept-evaporation-boundary",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-interflow-routing",
+      "target": "lgar-concept-reservoirs",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-build-config",
+      "target": "lgar-concept-interflow-routing",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-bmi-coupling",
+      "target": "lgar-concept-build-config",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-performance-tests",
+      "target": "lgar-concept-bmi-coupling",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-calibration",
+      "target": "lgar-concept-performance-tests",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-model-criticism",
+      "target": "lgar-concept-calibration",
+      "type": "prerequisite"
+    },
+    {
+      "source": "lgar-concept-capstone",
+      "target": "lgar-concept-model-criticism",
+      "type": "prerequisite"
+    }
+  ]
+}

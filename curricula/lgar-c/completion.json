@@ -1,0 +1,93 @@
+{
+  "status": "complete",
+  "release_status": "stable",
+  "passes": {
+    "knowledge": "complete",
+    "prerequisite": "complete",
+    "mastery": "complete",
+    "structure": "complete",
+    "content": "complete",
+    "assessment": "complete",
+    "adversarial": "complete",
+    "gap_review": "complete",
+    "remediation": "complete",
+    "competency_audit": "complete",
+    "terminology_closure": "complete",
+    "readability_review": "complete"
+  },
+  "unresolved_required_items": [],
+  "terminal_learning_outcomes": {
+    "lgar-outcome-scope": "covered",
+    "lgar-outcome-water-budget": "covered",
+    "lgar-outcome-math-soil": "covered",
+    "lgar-outcome-soil-curves": "covered",
+    "lgar-outcome-green-ampt": "covered",
+    "lgar-outcome-richards-layering": "covered",
+    "lgar-outcome-front-state": "covered",
+    "lgar-outcome-capillary-integral": "covered",
+    "lgar-outcome-time-integration": "covered",
+    "lgar-outcome-evaporation-boundary": "covered",
+    "lgar-outcome-reservoirs": "covered",
+    "lgar-outcome-interflow-routing": "covered",
+    "lgar-outcome-build-config": "covered",
+    "lgar-outcome-bmi-coupling": "covered",
+    "lgar-outcome-performance-tests": "covered",
+    "lgar-outcome-calibration": "covered",
+    "lgar-outcome-model-criticism": "covered",
+    "lgar-outcome-capstone": "covered"
+  },
+  "audit_evidence": {
+    "readability_review": {
+      "status": "complete",
+      "method": "Author contextual review: plain-language introductions, explicit units, worked calculations and diagnostic scenarios; no numerical reading score asserted.",
+      "manual_contextual_review": true,
+      "reviewed_lesson_identifiers": [
+        "lgar-lesson-scope",
+        "lgar-lesson-water-budget",
+        "lgar-lesson-math-soil",
+        "lgar-lesson-soil-curves",
+        "lgar-lesson-green-ampt",
+        "lgar-lesson-richards-layering",
+        "lgar-lesson-front-state",
+        "lgar-lesson-capillary-integral",
+        "lgar-lesson-time-integration",
+        "lgar-lesson-evaporation-boundary",
+        "lgar-lesson-reservoirs",
+        "lgar-lesson-interflow-routing",
+        "lgar-lesson-build-config",
+        "lgar-lesson-bmi-coupling",
+        "lgar-lesson-performance-tests",
+        "lgar-lesson-calibration",
+        "lgar-lesson-model-criticism",
+        "lgar-lesson-capstone"
+      ],
+      "unresolved_items": []
+    },
+    "terminology_closure": {
+      "status": "complete",
+      "method": "Independent continuation review expanded all pinned configuration keys, classified semantic roles, distinguished literal source identifiers from instructional notation, synchronized exact term and alias uses, and reran the schema 2.2 first-use/equation/question gates.",
+      "reviewed_lesson_identifiers": [
+        "lgar-lesson-scope",
+        "lgar-lesson-water-budget",
+        "lgar-lesson-math-soil",
+        "lgar-lesson-soil-curves",
+        "lgar-lesson-green-ampt",
+        "lgar-lesson-richards-layering",
+        "lgar-lesson-front-state",
+        "lgar-lesson-capillary-integral",
+        "lgar-lesson-time-integration",
+        "lgar-lesson-evaporation-boundary",
+        "lgar-lesson-reservoirs",
+        "lgar-lesson-interflow-routing",
+        "lgar-lesson-build-config",
+        "lgar-lesson-bmi-coupling",
+        "lgar-lesson-performance-tests",
+        "lgar-lesson-calibration",
+        "lgar-lesson-model-criticism",
+        "lgar-lesson-capstone"
+      ],
+      "unresolved_items": []
+    }
+  },
+  "scope_note": "Stable source-pinned release after primary-literature review, correction-path and freeze/thaw instruction, cumulative assessment expansion, terminology closure, runtime coverage-preserving selection, and installation validation."
+}

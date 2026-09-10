@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import random
 import tempfile
 from pathlib import Path
 from types import SimpleNamespace
@@ -13,8 +14,9 @@ from django.urls import reverse
 
 from education_generator.artifacts import load_artifacts
 from education_runtime.importing import import_product_payload
-from education_runtime.models import Curriculum, ImportConflict, Lesson
+from education_runtime.models import Assessment, Curriculum, ImportConflict, Lesson
 from education_runtime.product_loading import load_installed_product_payloads
+from education_runtime.services import select_assessment_questions
 
 
 @override_settings(
@@ -121,3 +123,112 @@ class RuntimeTests(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response.context["questions"]), 50)
+
+    def test_non_pop_selection_preserves_required_coverage(self) -> None:
+        """Every section or examination attempt retains required coverage."""
+
+        assessments = Assessment.objects.filter(curriculum_id="cfe-curriculum").exclude(
+            kind="pop"
+        )
+        for assessment in assessments:
+            with self.subTest(assessment=assessment.identifier):
+                selected = select_assessment_questions(assessment)
+                bank = assessment.questions.prefetch_related(
+                    "concepts", "mastery_contracts__concept", "review_lesson__section"
+                )
+                selected_concepts = {
+                    concept.identifier
+                    for question in selected
+                    for concept in question.concepts.all()
+                    if concept.importance == "major"
+                }
+                required_concepts = {
+                    concept.identifier
+                    for question in bank
+                    for concept in question.concepts.all()
+                    if concept.importance == "major"
+                }
+                selected_contracts = {
+                    contract.identifier
+                    for question in selected
+                    for contract in question.mastery_contracts.all()
+                    if contract.concept.importance == "major"
+                }
+                required_contracts = {
+                    contract.identifier
+                    for question in bank
+                    for contract in question.mastery_contracts.all()
+                    if contract.concept.importance == "major"
+                }
+                self.assertEqual(selected_concepts, required_concepts)
+                self.assertEqual(selected_contracts, required_contracts)
+                if assessment.kind in {"midterm", "final"}:
+                    selected_sections = {
+                        question.review_lesson.section_id for question in selected
+                    }
+                    required_sections = {
+                        question.review_lesson.section_id for question in bank
+                    }
+                    selected_outcomes = {
+                        outcome
+                        for question in selected
+                        for outcome in question.terminal_outcomes
+                    }
+                    required_outcomes = {
+                        outcome
+                        for question in bank
+                        for outcome in question.terminal_outcomes
+                    }
+                    self.assertEqual(selected_sections, required_sections)
+                    self.assertEqual(selected_outcomes, required_outcomes)
+
+    def test_randomized_attempts_vary_while_preserving_coverage(self) -> None:
+        """Different random seeds produce materially different valid attempts."""
+
+        assessment = Assessment.objects.get(pk="cfe-final")
+        attempts: set[frozenset[str]] = set()
+        for seed in range(6):
+            with patch(
+                "education_runtime.services.random.SystemRandom",
+                return_value=random.Random(seed),
+            ):
+                selected = select_assessment_questions(assessment)
+            attempts.add(frozenset(question.identifier for question in selected))
+        self.assertGreater(len(attempts), 1)
+
+    def test_pop_selection_respects_eligible_prior_lessons(self) -> None:
+        """A pop quiz cannot draw material outside the completed lesson set."""
+
+        assessment = Assessment.objects.get(pk="cfe-pop-review")
+        eligible_lessons = set(
+            Lesson.objects.filter(section__curriculum_id="cfe-curriculum").values_list(
+                "identifier", flat=True
+            )[:3]
+        )
+        selected = select_assessment_questions(assessment, eligible_lessons)
+        self.assertEqual(len(selected), assessment.selection_count)
+        self.assertTrue(
+            all(question.review_lesson_id in eligible_lessons for question in selected)
+        )
+
+    def test_configured_major_concept_minimum_is_enforced(self) -> None:
+        """A product may require multiple independently scored items per concept."""
+
+        assessment = Assessment.objects.get(pk="cfe-final")
+        assessment.configuration = {"required_minimum_per_major_concept": 2}
+        selected = select_assessment_questions(assessment)
+        counts: dict[str, int] = {}
+        for question in selected:
+            for concept in question.concepts.all():
+                if concept.importance == "major":
+                    counts[concept.identifier] = counts.get(concept.identifier, 0) + 1
+        self.assertTrue(counts)
+        self.assertTrue(all(count >= 2 for count in counts.values()))
+
+    def test_infeasible_coverage_requirement_fails_explicitly(self) -> None:
+        """The runtime must not silently return an under-covered examination."""
+
+        assessment = Assessment.objects.get(pk="cfe-final")
+        assessment.configuration = {"required_minimum_per_major_concept": 100}
+        with self.assertRaisesRegex(ValueError, "major concepts"):
+            select_assessment_questions(assessment)
