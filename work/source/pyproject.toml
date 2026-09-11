@@ -1,0 +1,32 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "education-curriculum-system"
+version = "1.1.0"
+description = "A shared Django education runtime and curriculum-product generator."
+requires-python = ">=3.11"
+dependencies = ["Django>=5.2,<5.3"]
+
+[project.optional-dependencies]
+dev = ["coverage>=7.6", "ruff>=0.12"]
+docs = ["Sphinx>=8,<9"]
+
+[project.scripts]
+education-generate = "education_generator.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+education_runtime = ["templates/**/*.html", "static/**/*"]
+education_generator = ["templates/**/*"]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+

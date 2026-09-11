@@ -1,5 +1,28 @@
 # TASKS
 
+## Blocked: TOPMODEL authoring (2026-09-11)
+
+* Continue `prompt.md` from `authored/topmodel/MANIFEST.md`. Master resolves to
+  `89e4dc529dfdf7f23b7365530973e9f238fb740d`; configuration and clean checkout
+  agree. Missing-revision issue resolved. Source inventory, 19 evidence records
+  and detailed static analysis saved. Deterministic checkpoint checks pass;
+  exact command in `review-checks.md`.
+* Obtain readable Beven–Kirkby 1979 paper evidence for topic 23. Publisher PDF
+  returns HTTP 403; institutional pages have no full text; OCR equations/plots
+  are insufficient. Issue: `topmodel-paper-readable-evidence`.
+  User has no copy; further legacy IAHS and NTUA checks returned HTTP 404.
+  Do not repeat the same request for a user copy.
+* Complete knowledge/prerequisite/mastery design, all 26 topic groups, lessons,
+  terminology, question banks and twelve reviews. Now written: one evidence
+  lesson, one mastery contract, six questions and one pop-review definition;
+  all in_review. The 24-domain draft graph covers all 26 topic groups.
+  Checks pass acyclicity, source closure, answer-key shape and all 20 pop subsets.
+  Packet blocked, not `authoring_ready`.
+  Resolve documented schema-profile mismatch before serialization release.
+* Full packet grammar validation remains outstanding (PyYAML unavailable;
+  only framing and JSON-within-YAML source records checked). Scoped documentation
+  whitespace checks pass; preserve pre-existing `AGENTS.md:83` EOF whitespace.
+
 ## Complete
 
 * Replace per-target Django generation with a shared runtime and data-oriented

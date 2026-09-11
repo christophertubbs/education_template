@@ -1,0 +1,603 @@
+{
+  "repository": "https://github.com/christophertubbs/education_template",
+  "ref": "project-pivot",
+  "commit": "6aea0519d9297049f371952915b011f7a51ba7f4",
+  "retrieved": "2026-09-11",
+  "files": [
+    {
+      "path": ".gitignore",
+      "sha": "8a5977c74699d0b3a1d183f3a7f327a69fcdda3e",
+      "size": 4342
+    },
+    {
+      "path": "AGENTS.md",
+      "sha": "725cc63fde1220f380b3c644789401bf034f5983",
+      "size": 3561
+    },
+    {
+      "path": "README.md",
+      "sha": "fc20e0032743b7abd0547cc4af8d3305cb002383",
+      "size": 1754
+    },
+    {
+      "path": "SPEC.md",
+      "sha": "41f3a10e5b0ddb54d901ca6e5455e52ca4988ece",
+      "size": 84426
+    },
+    {
+      "path": "STYLE.md",
+      "sha": "3ae4705bcf6347b6a3cfe2ecb2ee2e898c3b0e56",
+      "size": 1390
+    },
+    {
+      "path": "build-docs.sh",
+      "sha": "c7c3eef37f15bb11bf2caee1025762a254c02957",
+      "size": 607
+    },
+    {
+      "path": "cfe.project.json",
+      "sha": "f0fc5f77525e80a83716723c58b625b677a70b41",
+      "size": 689
+    },
+    {
+      "path": "curricula/cfe/completion.json",
+      "sha": "b85451c69bc70c7a81ecee31f929ad464fbf83d7",
+      "size": 2108
+    },
+    {
+      "path": "curricula/cfe/coverage.json",
+      "sha": "23696dfd1cd3ac749434817f85d55be70aa5c92b",
+      "size": 7340
+    },
+    {
+      "path": "curricula/cfe/curriculum.json",
+      "sha": "676394dbaee3a8a9f1d283d893b82f9fecbce506",
+      "size": 301013
+    },
+    {
+      "path": "curricula/cfe/knowledge-map.json",
+      "sha": "f87b243ed04d233780f31281a24d27b16eadbc95",
+      "size": 3205
+    },
+    {
+      "path": "curricula/cfe/mastery-contracts.json",
+      "sha": "b7990a0b9e0d441714a21085ab8825e45a99d483",
+      "size": 3496
+    },
+    {
+      "path": "curricula/lgar-c/completion.json",
+      "sha": "4f0e7bf36dfa938daad0fae6eea63b346ed82d3c",
+      "size": 3715
+    },
+    {
+      "path": "curricula/lgar-c/coverage.json",
+      "sha": "4af13dcc02a8a3a5bdc6cc099ac78b8ca11c7779",
+      "size": 26591
+    },
+    {
+      "path": "curricula/lgar-c/curriculum.json",
+      "sha": "743b15b09a9f53fe8fdc8442c76810f6f56a8232",
+      "size": 910040
+    },
+    {
+      "path": "curricula/lgar-c/knowledge-map.json",
+      "sha": "73f615a49f553aae949e7b5bd134bfc9ff63bc62",
+      "size": 6936
+    },
+    {
+      "path": "curricula/lgar-c/mastery-contracts.json",
+      "sha": "3aed93c37ddfbd61447650f307234b03c0c194f4",
+      "size": 11977
+    },
+    {
+      "path": "curricula/sac-sma/completion.json",
+      "sha": "8d5b6ce9fc0a1f3ab29368c7c96081f1b6a578bb",
+      "size": 2142
+    },
+    {
+      "path": "curricula/sac-sma/coverage.json",
+      "sha": "1e38ea2bba64a569119d4bb0a0d36b508abe6c3b",
+      "size": 8128
+    },
+    {
+      "path": "curricula/sac-sma/curriculum.json",
+      "sha": "c15b5a900c707125451c6cb70f3800bdd959953c",
+      "size": 332052
+    },
+    {
+      "path": "curricula/sac-sma/knowledge-map.json",
+      "sha": "d1d346c274da1f07031073a610b5d9c1f1a659ce",
+      "size": 3579
+    },
+    {
+      "path": "curricula/sac-sma/mastery-contracts.json",
+      "sha": "4b89a62a2a65f40c8b70bad2bcc26fb82fd60cae",
+      "size": 5209
+    },
+    {
+      "path": "docs/ARCHITECTURE.md",
+      "sha": "a95390116bfa1fbc93a0f38d5f8753ef56348f9b",
+      "size": 2518
+    },
+    {
+      "path": "docs/BUILDING_DOCUMENTATION.md",
+      "sha": "b094f63f503c1c513aeaee4e93d40dbd3896c2a2",
+      "size": 1850
+    },
+    {
+      "path": "docs/agent/DECISIONS.md",
+      "sha": "f4bd83d549d9454800bb58cdcc2b16390dfc105f",
+      "size": 5950
+    },
+    {
+      "path": "docs/agent/STATUS.md",
+      "sha": "2d3a78e886ec062077bce3bf2fbe9913655b795a",
+      "size": 14361
+    },
+    {
+      "path": "docs/agent/TASKS.md",
+      "sha": "8caedbaa4829c59c8d3da01b1ba0d17fd1737acf",
+      "size": 3425
+    },
+    {
+      "path": "docs/sphinx/api.rst",
+      "sha": "55fbb1c781a2a63af8d77ad9262eb2f8069638b7",
+      "size": 1865
+    },
+    {
+      "path": "docs/sphinx/architecture.rst",
+      "sha": "33ddd6b118300bf1646a7b819587f46a539d2546",
+      "size": 5685
+    },
+    {
+      "path": "docs/sphinx/conf.py",
+      "sha": "3dafc35b81a2998f7158c4cc72bbd8f0fca876cd",
+      "size": 1620
+    },
+    {
+      "path": "docs/sphinx/frontend.rst",
+      "sha": "f354e9d45ff00ce33c987938a55f5bf26cb8755d",
+      "size": 3217
+    },
+    {
+      "path": "docs/sphinx/generated-products.rst",
+      "sha": "3e1790bfb41e8da89d5768d8931980bb22721c28",
+      "size": 2462
+    },
+    {
+      "path": "docs/sphinx/generator.rst",
+      "sha": "b2daae8bdab838a0e19f704cad91ed690dc164a7",
+      "size": 5232
+    },
+    {
+      "path": "docs/sphinx/index.rst",
+      "sha": "658705b7ab42b65bbdcb7afc7bf24e5c4f7fe136",
+      "size": 1936
+    },
+    {
+      "path": "docs/sphinx/operations.rst",
+      "sha": "b692584943d2dcc14d344e209987168bdc8db322",
+      "size": 2970
+    },
+    {
+      "path": "docs/sphinx/runner.rst",
+      "sha": "10d6c6f4b7ccde46eaa06b8e562e750e996ff651",
+      "size": 2533
+    },
+    {
+      "path": "docs/sphinx/runtime.rst",
+      "sha": "8f896a920b04142104ac6313d923c22614cbd4c5",
+      "size": 3925
+    },
+    {
+      "path": "docs/sphinx/source-inventory.rst",
+      "sha": "776b976d2045345fd2b46ce42c1516cdcebd6916",
+      "size": 5400
+    },
+    {
+      "path": "docs/sphinx/specification-map.rst",
+      "sha": "e032d742c67d391d5fc0e18c8260cd8cadddee4a",
+      "size": 2832
+    },
+    {
+      "path": "install.sh",
+      "sha": "c03ad34c2e89fb760f3c99c04f85de3cc5c68d2c",
+      "size": 520
+    },
+    {
+      "path": "launch.sh",
+      "sha": "fa1a317ceed294a817dde9ec1ef16862a6d8e78d",
+      "size": 3695
+    },
+    {
+      "path": "lgar-c.project.json",
+      "sha": "97eb1bec1e610390ee49beb8f5affffbc982a676",
+      "size": 5041
+    },
+    {
+      "path": "manage.py",
+      "sha": "3f4613f903de842cf9feeeed99484ed8d63c0e57",
+      "size": 369
+    },
+    {
+      "path": "project.json",
+      "sha": "915742ba6f79a14671726b6bf398c2fbf3190eaf",
+      "size": 829
+    },
+    {
+      "path": "prompt.md",
+      "sha": "2c996ca525725bd421f9e610f77236bfe06cd912",
+      "size": 8452
+    },
+    {
+      "path": "pyproject.toml",
+      "sha": "d63120aa3eb9437e7dd5cb0429973b3979bb4e60",
+      "size": 754
+    },
+    {
+      "path": "repository/.gitkeep",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "run-prompt.sh",
+      "sha": "6fb75b8fd9d903d5b51f015872e9d555dad83316",
+      "size": 9170
+    },
+    {
+      "path": "src/education_generator/CONTENT_SCHEMA.md",
+      "sha": "7cd3a4c1bcbe34fe276a4180d81846a5d42d9900",
+      "size": 4619
+    },
+    {
+      "path": "src/education_generator/__init__.py",
+      "sha": "8a7db923d6a2b749103c8fb49d828cf77f277bf8",
+      "size": 102
+    },
+    {
+      "path": "src/education_generator/__main__.py",
+      "sha": "9129ef9f4d1539091776e6161652e86369e410d5",
+      "size": 158
+    },
+    {
+      "path": "src/education_generator/artifacts.py",
+      "sha": "2b77b8a7d6ad4d68bfa0285be022d8b56fbf820c",
+      "size": 2089
+    },
+    {
+      "path": "src/education_generator/cli.py",
+      "sha": "c7c750f0fff873c10fb725f866a3ddb94e1e2a7b",
+      "size": 2334
+    },
+    {
+      "path": "src/education_generator/configuration.py",
+      "sha": "c9cce3056493f6523b61e020802a2bb1cbd41ddf",
+      "size": 4452
+    },
+    {
+      "path": "src/education_generator/constants.py",
+      "sha": "39957bf2365f7f4b3b3aab5c22463fafcd43f1f0",
+      "size": 463
+    },
+    {
+      "path": "src/education_generator/context.py",
+      "sha": "988341130ac7a5c5bb81d8a82856b570404b661f",
+      "size": 550
+    },
+    {
+      "path": "src/education_generator/generator.py",
+      "sha": "db08a7b188f9d29f9b647d73514ebd2662475e12",
+      "size": 580
+    },
+    {
+      "path": "src/education_generator/inventory.py",
+      "sha": "a7b255dc49e28391592477bc85213d19f37e3dd1",
+      "size": 1949
+    },
+    {
+      "path": "src/education_generator/metadata.py",
+      "sha": "5fc8d2e1c1f57c94e0dbdc02751c53a4f89e7581",
+      "size": 1840
+    },
+    {
+      "path": "src/education_generator/pipeline.py",
+      "sha": "5f5355641dc623052d109940f412fe9e17b2eaf3",
+      "size": 4201
+    },
+    {
+      "path": "src/education_generator/processes.py",
+      "sha": "cc3314cdec0979c02ff7a927a5bdcbf8fc9b40ee",
+      "size": 715
+    },
+    {
+      "path": "src/education_generator/rendering.py",
+      "sha": "882d0e4d51d0cdb321a24bb145f9ffe936fc3b27",
+      "size": 2896
+    },
+    {
+      "path": "src/education_generator/repositories.py",
+      "sha": "8da155783fe3ca1dc102ac5ae73027555b9f2ab5",
+      "size": 3632
+    },
+    {
+      "path": "src/education_generator/scaffold.py",
+      "sha": "8f3980fe41d892c45b002d31ccd3dd39459809c1",
+      "size": 2707
+    },
+    {
+      "path": "src/education_generator/source_validation.py",
+      "sha": "c8e7f77d47eda60b0abf7b876ee85d68f53783c3",
+      "size": 1941
+    },
+    {
+      "path": "src/education_generator/templates/agent/DECISIONS.md",
+      "sha": "94f1673483ece7374e6c9e80450c44581ef315a3",
+      "size": 658
+    },
+    {
+      "path": "src/education_generator/templates/agent/STATUS.md",
+      "sha": "b6ff0062d662bd5880308f585cb5ae57a5859824",
+      "size": 688
+    },
+    {
+      "path": "src/education_generator/templates/agent/TASKS.md",
+      "sha": "8d857808ef75969876e1562f837b061902f7c5ee",
+      "size": 492
+    },
+    {
+      "path": "src/education_generator/templates/product/.gitignore",
+      "sha": "38efbf8ad0d8e036f9e4ff94b4df0575536ac270",
+      "size": 94
+    },
+    {
+      "path": "src/education_generator/templates/product/README.md",
+      "sha": "8f7359bcd4e6b305754dd8a1c2a2e82a919707b9",
+      "size": 1073
+    },
+    {
+      "path": "src/education_generator/templates/product/pyproject.toml",
+      "sha": "05c75e843dd4c89f376894dc351887825cf6ac03",
+      "size": 530
+    },
+    {
+      "path": "src/education_generator/templates/product/src/__APP_NAME__/__init__.py",
+      "sha": "fa2246b0996b7b6da4b4e07203503d16f0bad820",
+      "size": 84
+    },
+    {
+      "path": "src/education_generator/templates/product/src/__APP_NAME__/apps.py",
+      "sha": "94b7720fe5d01726cb4e6a3736717465601607b7",
+      "size": 348
+    },
+    {
+      "path": "src/education_generator/templates/product/src/__APP_NAME__/migrations/0001_load_curriculum.py",
+      "sha": "b6c9db31ec6222d34a70dfa26051a11bd6da0f68",
+      "size": 1083
+    },
+    {
+      "path": "src/education_generator/templates/product/src/__APP_NAME__/migrations/0002_refresh_structured_lessons.py",
+      "sha": "f72ca19cd03a25596fd5b1d586c8157b6ca4ad33",
+      "size": 757
+    },
+    {
+      "path": "src/education_generator/templates/product/src/__APP_NAME__/migrations/__init__.py",
+      "sha": "be354fa61cc95ff6eaece46c66c4dc1f988f21e2",
+      "size": 51
+    },
+    {
+      "path": "src/education_generator/templates/product/tests/test_product.py",
+      "sha": "1d10c48b872b57c35d10cf98ea0bb5fe92d8f19a",
+      "size": 990
+    },
+    {
+      "path": "src/education_generator/validation.py",
+      "sha": "dcd87689396712233ac3cc458c212d8c8c02ac01",
+      "size": 29086
+    },
+    {
+      "path": "src/education_runner/__init__.py",
+      "sha": "e6a6ef08a17a9aa58b56081e54eb1927d392e0f9",
+      "size": 61
+    },
+    {
+      "path": "src/education_runner/asgi.py",
+      "sha": "95fa273b4b74eb9a5139188c21f4167296704257",
+      "size": 227
+    },
+    {
+      "path": "src/education_runner/product_discovery.py",
+      "sha": "a0aad44a70ba7e94aaf65ab506e84d952bcfc53c",
+      "size": 8325
+    },
+    {
+      "path": "src/education_runner/settings.py",
+      "sha": "52e73b0bbeeacfa9522120d6cb2315ca522e1f88",
+      "size": 2660
+    },
+    {
+      "path": "src/education_runner/urls.py",
+      "sha": "3555275679c33568c0669cb66c050cc9c2fca0e5",
+      "size": 241
+    },
+    {
+      "path": "src/education_runner/wsgi.py",
+      "sha": "f675344ce85d9bc49f3a9a3e842a2043ded30d37",
+      "size": 227
+    },
+    {
+      "path": "src/education_runtime/__init__.py",
+      "sha": "51993fb166840666d239940339f3f7b2b9bbe5dd",
+      "size": 100
+    },
+    {
+      "path": "src/education_runtime/admin.py",
+      "sha": "2d557818102fe41f6b1657dfdf11d9115a5bfd38",
+      "size": 1082
+    },
+    {
+      "path": "src/education_runtime/apps.py",
+      "sha": "acb752b84380089021b6d8fd7a1470d6a42aa08d",
+      "size": 316
+    },
+    {
+      "path": "src/education_runtime/importing.py",
+      "sha": "28c44e339e73f3d9d5b6ca67564813949eda59f9",
+      "size": 10820
+    },
+    {
+      "path": "src/education_runtime/management/__init__.py",
+      "sha": "f0e995531dffbd14ac5a21186bedc80e44e8f34d",
+      "size": 62
+    },
+    {
+      "path": "src/education_runtime/management/commands/__init__.py",
+      "sha": "89508912509bfc93f66f96bc7d4752b4b9615a65",
+      "size": 61
+    },
+    {
+      "path": "src/education_runtime/management/commands/load_curricula.py",
+      "sha": "70021e344cfbacd301d1e00c289b3567025a90f3",
+      "size": 1571
+    },
+    {
+      "path": "src/education_runtime/migrations/0001_initial.py",
+      "sha": "b260be0aa4ed90044c07353481d02504abeacb0c",
+      "size": 15408
+    },
+    {
+      "path": "src/education_runtime/migrations/__init__.py",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0
+    },
+    {
+      "path": "src/education_runtime/models.py",
+      "sha": "749645453dfb2c3d5639bb6c0fa891ada1ee84df",
+      "size": 7727
+    },
+    {
+      "path": "src/education_runtime/product_loading.py",
+      "sha": "a37f956207a58973b4b903081ebc8fe12eeb08ec",
+      "size": 1635
+    },
+    {
+      "path": "src/education_runtime/services.py",
+      "sha": "78e5d8db360261eaf39dcbea058b7a393644c772",
+      "size": 6268
+    },
+    {
+      "path": "src/education_runtime/static/education_runtime/assessment.js",
+      "sha": "fc863864ea457a6f2461bcbd71d94d4b569fd1c9",
+      "size": 14083
+    },
+    {
+      "path": "src/education_runtime/static/education_runtime/favicon.ico",
+      "sha": "890c308c2136f0e6147f461b1bd0bb7b08b50abf",
+      "size": 1134582
+    },
+    {
+      "path": "src/education_runtime/static/education_runtime/progress.js",
+      "sha": "a91ccd26fbc729f62b2f598c6b3dc6fb1429c116",
+      "size": 5987
+    },
+    {
+      "path": "src/education_runtime/static/education_runtime/runtime.css",
+      "sha": "774c067cf5a3f9bb7ecbb57fd2495b9e8485a21a",
+      "size": 5611
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/assessment.html",
+      "sha": "feb54a16c53bb780fd58156ce0c5fe8ebae779d4",
+      "size": 1813
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/base.html",
+      "sha": "a5d54a2275bedefa6f24327757e80ab14c1ba870",
+      "size": 1580
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/content_block.html",
+      "sha": "2d0f1a82bf62a7e0c346b15f814be687dc98a73a",
+      "size": 5201
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/curriculum_detail.html",
+      "sha": "317aadffdb32c5623572419d111262ec8bfbd770",
+      "size": 670
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/curriculum_list.html",
+      "sha": "8bb59f8a77ae77786fcef0bcf9eac117210c51c9",
+      "size": 390
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/glossary.html",
+      "sha": "150131c0aca02a19eade18667e2ebb58f4f6d570",
+      "size": 320
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/inline_content.html",
+      "sha": "e6d1af0e6def846a29774042c76b4b8a4e762ec3",
+      "size": 759
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/lesson.html",
+      "sha": "64c1a665910e722f9967097b99eb034aec46bda4",
+      "size": 1675
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/progress.html",
+      "sha": "4242b918241c98e8afba85473143b1f6015d2d0f",
+      "size": 528
+    },
+    {
+      "path": "src/education_runtime/templates/education_runtime/sources.html",
+      "sha": "aef21dca3fc8e726e053cb9748324109657b4cef",
+      "size": 497
+    },
+    {
+      "path": "src/education_runtime/urls.py",
+      "sha": "341bc8d660574cdaeb8aa0cd15546ddcb2efc977",
+      "size": 788
+    },
+    {
+      "path": "src/education_runtime/views.py",
+      "sha": "4abe3df314d8a49a2f83a18ba4f88e7e99cdcffc",
+      "size": 6649
+    },
+    {
+      "path": "tests/__init__.py",
+      "sha": "114a59d6d4ffff95ed047e637ee190794566df67",
+      "size": 26
+    },
+    {
+      "path": "tests/test_generator.py",
+      "sha": "23f52e734863c0954242288a8f8a9efc68ba805f",
+      "size": 7333
+    },
+    {
+      "path": "tests/test_install.py",
+      "sha": "33e0f11b4249e39d54a98df4aa711003ab195ddd",
+      "size": 1583
+    },
+    {
+      "path": "tests/test_product_discovery.py",
+      "sha": "558bf519993dcf3639a875898b4e16a6a9f2246f",
+      "size": 5149
+    },
+    {
+      "path": "tests/test_runtime.py",
+      "sha": "b4a7ca9f790b63b113b5b301c778c0ad4912a7ef",
+      "size": 10544
+    },
+    {
+      "path": "tools/add_terminology_contracts.py",
+      "sha": "6e802f6535772986f03ecfd44c6af97375920989",
+      "size": 41586
+    },
+    {
+      "path": "tools/migrate_legacy_curriculum.py",
+      "sha": "63fd1639fa14855f78072d80215701beb99bceae",
+      "size": 14750
+    }
+  ]
+}

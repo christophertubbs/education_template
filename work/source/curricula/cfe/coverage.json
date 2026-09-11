@@ -1,0 +1,252 @@
+{
+  "schema_version": "2.0",
+  "concepts": [
+    {
+      "concept_identifier": "cfe-purpose",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "cfe-purpose"
+      ],
+      "question_identifiers": [
+        "q-purpose-equivalent",
+        "q-purpose-source",
+        "q-purpose-ngen",
+        "q-mid-purpose",
+        "q-final-purpose",
+        "q-foundations-source-01",
+        "q-foundations-source-03",
+        "q-foundations-source-05"
+      ]
+    },
+    {
+      "concept_identifier": "timestep-water-accounting",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "timestep-water-accounting"
+      ],
+      "question_identifiers": [
+        "q-flow-et-order",
+        "q-flow-qout",
+        "q-flow-capacity",
+        "q-mid-balance",
+        "q-final-flow",
+        "q-review-qout",
+        "q-foundations-source-02",
+        "q-foundations-source-04"
+      ]
+    },
+    {
+      "concept_identifier": "partitioning-and-et",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "partitioning-and-et"
+      ],
+      "question_identifiers": [
+        "q-partition-xinanjiang",
+        "q-partition-et-sources",
+        "q-partition-ice",
+        "q-mid-et",
+        "q-final-partition",
+        "q-hydrologic-processes-source-01",
+        "q-hydrologic-processes-source-03",
+        "q-hydrologic-processes-source-05"
+      ]
+    },
+    {
+      "concept_identifier": "conceptual-reservoirs",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "conceptual-reservoirs"
+      ],
+      "question_identifiers": [
+        "q-reservoir-outlets",
+        "q-reservoir-exponent",
+        "q-reservoir-depth-validation",
+        "q-mid-reservoir",
+        "q-final-reservoir",
+        "q-hydrologic-processes-source-02",
+        "q-hydrologic-processes-source-04",
+        "q-hydrologic-processes-source-06"
+      ]
+    },
+    {
+      "concept_identifier": "routing-paths",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "routing-paths"
+      ],
+      "question_identifiers": [
+        "q-routing-giuh",
+        "q-routing-lateral",
+        "q-routing-state",
+        "q-final-routing",
+        "q-review-surface",
+        "q-routing-and-interface-source-01",
+        "q-routing-and-interface-source-03",
+        "q-routing-and-interface-source-05"
+      ]
+    },
+    {
+      "concept_identifier": "bmi-and-configuration",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "bmi-and-configuration"
+      ],
+      "question_identifiers": [
+        "q-bmi-forcing",
+        "q-bmi-grid",
+        "q-bmi-finalize",
+        "q-final-bmi",
+        "q-review-forcing",
+        "q-routing-and-interface-source-02",
+        "q-routing-and-interface-source-04",
+        "q-routing-and-interface-source-06"
+      ]
+    },
+    {
+      "concept_identifier": "build-test-debug",
+      "dimensions": {
+        "foundational_explanation": true,
+        "prerequisite_closure": true,
+        "theory": true,
+        "mathematics": true,
+        "assumptions": true,
+        "implementation_mapping": true,
+        "source_evidence": true,
+        "operational_behavior": true,
+        "limitations": true,
+        "failure_modes": true,
+        "bias_reasoning": true,
+        "worked_examples": true,
+        "diagnostic_exercises": true,
+        "assessment_coverage": true,
+        "terminology_closure": true,
+        "readability_review": true
+      },
+      "lesson_identifiers": [
+        "build-test-debug"
+      ],
+      "question_identifiers": [
+        "q-build-tests",
+        "q-build-debug",
+        "q-build-contribution",
+        "q-final-debug",
+        "q-review-test",
+        "q-operations-source-01",
+        "q-operations-source-02",
+        "q-operations-source-03",
+        "q-operations-source-04",
+        "q-operations-source-05",
+        "q-operations-source-06",
+        "q-operations-source-07",
+        "q-operations-source-08",
+        "q-operations-source-09",
+        "q-operations-source-10",
+        "q-operations-source-11"
+      ]
+    }
+  ]
+}
+

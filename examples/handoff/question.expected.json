@@ -1,0 +1,28 @@
+{
+  "identifier": "demo-question",
+  "type": "numeric",
+  "difficulty": "foundational",
+  "accepted_value": 3,
+  "tolerance": 0.01,
+  "concept_identifiers": [
+    "demo-rate"
+  ],
+  "mastery_contract_identifiers": [
+    "demo-master-rate"
+  ],
+  "assessment_identifiers": [
+    "demo-assessment"
+  ],
+  "terminal_outcomes": [
+    "demo-outcome"
+  ],
+  "review_lesson_identifier": "demo-lesson",
+  "terminology_identifiers": [
+    "demo-amount",
+    "demo-duration",
+    "demo-rate-term"
+  ],
+  "prompt": "In the invented lesson example, 12 meters accumulates over 4 seconds. What is the average rate in meters per second? Enter a number only; answers within 0.01 of the expected value are accepted.",
+  "feedback_correct": "Dividing 12 meters by 4 seconds gives 3 meters per second.",
+  "feedback_incorrect": "Divide the accumulated amount by the duration, rather than multiplying them. The calculation is 12 divided by 4, which gives 3 meters per second. Review the rate calculation lesson."
+}

@@ -10,7 +10,7 @@ When instructions conflict, follow this order: current user instructions,
 
 ## Required startup and handoff
 
-Before substantial work, read the task-relevant `SPEC.md` sections,
+Before substantial work, read the task-relevant `SPEC.md` routing and selected stage specifications,
 `docs/agent/STATUS.md`, `docs/agent/TASKS.md`, relevant decisions, `git status`,
 the current diff, and recent relevant history. Inspect the configured Target
 Repository only when required. Continue recorded work instead of reconstructing
@@ -78,4 +78,6 @@ or skip a failing test merely to report success.
 A task is complete only when relevant specification requirements pass,
 documentation and agent state are current, repository boundaries remain valid,
 and another agent can continue without conversation history. Curriculum
-generation also requires every criterion in `SPEC.md` section 46.
+generation also requires every criterion in `spec/serialization/validation.md` section 46 and the stage acceptance gates in
+`spec/common/handoff.md`.
+

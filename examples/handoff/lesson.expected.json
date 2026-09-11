@@ -1,0 +1,96 @@
+{
+  "identifier": "demo-lesson",
+  "section_identifier": "demo-section",
+  "sequence": 1,
+  "title": "An illustrative rate calculation",
+  "summary": "Separate an amount from its rate using invented values.",
+  "concept_identifiers": [
+    "demo-rate"
+  ],
+  "source_identifiers": [],
+  "terminology_identifiers": [
+    "demo-amount",
+    "demo-duration",
+    "demo-rate-term"
+  ],
+  "introduced_terminology_identifiers": [
+    "demo-amount",
+    "demo-duration",
+    "demo-rate-term"
+  ],
+  "content": [
+    {
+      "type": "paragraph",
+      "inline": [
+        {
+          "type": "text",
+          "text": "This is an invented arithmetic example. An amount and a rate answer "
+        },
+        {
+          "type": "strong",
+          "text": "different questions"
+        },
+        {
+          "type": "text",
+          "text": "."
+        }
+      ]
+    },
+    {
+      "type": "variable_table",
+      "caption": "Symbols used in this example",
+      "rows": [
+        {
+          "symbol": "A",
+          "accessible_symbol": "A",
+          "identifier": "amount",
+          "meaning": "The amount accumulated during the interval",
+          "units": "m",
+          "role": "input",
+          "constraints": "12 m in this invented example",
+          "terminology_identifier": "demo-amount"
+        },
+        {
+          "symbol": "t",
+          "accessible_symbol": "t",
+          "identifier": "duration",
+          "meaning": "The duration of the interval",
+          "units": "s",
+          "role": "input",
+          "constraints": "4 s in this invented example; greater than zero",
+          "terminology_identifier": "demo-duration"
+        },
+        {
+          "symbol": "r",
+          "accessible_symbol": "r",
+          "identifier": "rate",
+          "meaning": "The average amount per second during the interval",
+          "units": "m/s",
+          "role": "output",
+          "constraints": "3 m/s in this invented example",
+          "terminology_identifier": "demo-rate-term"
+        }
+      ]
+    },
+    {
+      "type": "equation",
+      "variable_identifiers": [
+        "demo-amount",
+        "demo-duration",
+        "demo-rate-term"
+      ],
+      "caption": "Average rate for the invented interval",
+      "latex": "r = \\frac{A}{t} = \\frac{12\\,\\mathrm{m}}{4\\,\\mathrm{s}} = 3\\,\\mathrm{m/s}",
+      "accessible_text": "The average rate r equals amount A divided by duration t: twelve meters divided by four seconds is three meters per second."
+    },
+    {
+      "type": "paragraph",
+      "inline": [
+        {
+          "type": "text",
+          "text": "The calculation describes the average during this interval. It does not tell us whether the amount arrived steadily or in a short burst."
+        }
+      ]
+    }
+  ]
+}

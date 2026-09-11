@@ -1,5 +1,40 @@
 # STATUS
 
+Current requested work (2026-09-11): execute `prompt.md` to author TOPMODEL.
+User selected `master`; configuration passes and pins its verified head,
+`89e4dc529dfdf7f23b7365530973e9f238fb740d`. Newly cloned target is clean at
+that commit. Original missing-revision issue resolved. Initial sandbox
+ls-remote failed DNS; approved retry passed. Generator HEAD remains
+`9efb8fa3190594acf157e826d55e6591777ee781`; user specification edits preserved.
+
+Completed a bounded source-analysis checkpoint under `authored/topmodel/`:
+94 files and 3 gitlinks inventoried; 19 consulted source records; architecture,
+timestep, BMI, infiltration, routing, restart, test and terrain findings saved.
+Verified supplied defect cases and an additional uninitialized `fx` expression
+against historical Fortran `FC`. Target code was not modified or executed.
+The exact command in `review-checks.md` passes configuration, pin/cleanliness,
+unique source IDs, locator bounds, citation closure, framing and arithmetic.
+Optional PyYAML import failed (not installed); full grammar validation remains
+outstanding. Scoped documentation whitespace checks pass; preserve pre-existing
+user `AGENTS.md:83` EOF whitespace reported by the root check.
+
+Current blocker: readable original Beven–Kirkby 1979 paper required by topic 23.
+Publisher PDF retrieval through web and curl returned HTTP 403; institutional
+records offer abstracts/DOI; consulted OCR has damaged equations and unreadable
+response-surface plots. See `research.md` and `topmodel-paper-readable-evidence`
+in `issues.md`. User has no copy; additional legacy IAHS and NTUA URLs returned
+HTTP 404. Continued independent authoring: 24-domain prerequisite graph covering
+all 26 topic groups, one full evidence lesson, one initial mastery contract,
+six single-choice questions and a three-item pop-review definition. These are
+draft/in_review. The new command in `review-checks.md` passes topic coverage,
+acyclicity, answer-key shape, all 20 pop subsets, source closure and framing.
+The packet is not `authoring_ready`. A schema-profile mismatch is a separate
+serialization release concern. No Django, migration, package or target-runtime
+tests were claimed. Next action: continue remaining source-supported teaching;
+resolve the paper evidence gap before final acceptance. Do not ask the user
+again for the copy they do not have. Retain the pin and saved analysis.
+Prior completed work follows.
+
 Current objective: provide Sphinx documentation that lets a new maintainer map
 everything under ``src/``, understand cross-package effects, and build the guide
 reliably.

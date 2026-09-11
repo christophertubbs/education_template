@@ -1,0 +1,44 @@
+{% if block.type == "heading" %}
+  <h2>{{ block.text }}</h2>
+{% elif block.type == "paragraph" %}
+  <p>{% include "education_runtime/inline_content.html" with inline=block.inline %}</p>
+{% elif block.type == "equation" %}
+  <figure class="equation"{% if block.identifier %} id="{{ block.identifier }}"{% endif %}>
+    <div class="math-display" role="math" aria-label="{{ block.accessible_text }}">\[{{ block.latex }}{% if block.number %}\tag{ {{ block.number }} }{% endif %}\]</div>
+    {% if block.caption %}<figcaption>{{ block.caption }}</figcaption>{% endif %}
+  </figure>
+{% elif block.type == "code" %}
+  <figure class="code-example">
+    {% if block.caption %}<figcaption>{{ block.caption }}</figcaption>{% endif %}
+    <pre><code class="language-{{ block.language }}">{{ block.code }}</code></pre>
+    <p class="code-metadata"><span>{{ block.kind }}</span>{% if block.source_file %}<code>{{ block.source_file }}</code>{% endif %}{% if block.line_range %}<span>lines {{ block.line_range }}</span>{% endif %}{% if block.source_revision %}<span>revision {{ block.source_revision }}</span>{% endif %}</p>
+  </figure>
+{% elif block.type == "callout" or block.type == "warning" or block.type == "note" %}
+  <aside class="callout callout-{{ block.semantic_type|default:block.type }}">
+    <h3>{{ block.title }}</h3>
+    <p>{% include "education_runtime/inline_content.html" with inline=block.inline %}</p>
+  </aside>
+{% elif block.type == "definition" %}
+  <aside class="definition-card"><h3>{{ block.term }}</h3><p>{% include "education_runtime/inline_content.html" with inline=block.inline %}</p></aside>
+{% elif block.type == "variable_table" %}
+  <div class="table-scroll" role="region" aria-label="{{ block.caption }}" tabindex="0"><table class="variable-table"><caption>{{ block.caption }}</caption><thead><tr><th scope="col">Symbol</th><th scope="col">Code / configuration</th><th scope="col">Meaning</th><th scope="col">Units</th><th scope="col">Role and constraints</th></tr></thead><tbody>{% for row in block.rows %}<tr><th scope="row"><span class="math-inline" role="math" aria-label="{{ row.accessible_symbol }}">\({{ row.symbol }}\)</span></th><td><code>{{ row.identifier }}</code></td><td>{{ row.meaning }}</td><td>{{ row.units }}</td><td>{{ row.role }}{% if row.constraints %}; {{ row.constraints }}{% endif %}</td></tr>{% endfor %}</tbody></table></div>
+{% elif block.type == "table" or block.type == "comparison_table" %}
+  <div class="table-scroll" role="region" aria-label="{{ block.caption }}" tabindex="0"><table><caption>{{ block.caption }}</caption><thead><tr>{% for header in block.headers %}<th scope="col">{{ header }}</th>{% endfor %}</tr></thead><tbody>{% for row in block.rows %}<tr>{% for cell in row %}<td>{% include "education_runtime/inline_content.html" with inline=cell %}</td>{% endfor %}</tr>{% endfor %}</tbody></table></div>
+{% elif block.type == "ordered_list" %}
+  <ol>{% for item in block.items %}<li>{% include "education_runtime/inline_content.html" with inline=item %}</li>{% endfor %}</ol>
+{% elif block.type == "unordered_list" %}
+  <ul>{% for item in block.items %}<li>{% include "education_runtime/inline_content.html" with inline=item %}</li>{% endfor %}</ul>
+{% elif block.type == "worked_example" %}
+  <section class="worked-example"><h3>{{ block.title }}</h3><p><strong>Scenario:</strong> {{ block.scenario }}</p>{% if block.known_values %}<dl class="known-values">{% for value in block.known_values %}<div><dt>{{ value.name }}</dt><dd>{{ value.value }}</dd></div>{% endfor %}</dl>{% endif %}<h4>Method</h4><ol>{% for step in block.steps %}<li>{% include "education_runtime/inline_content.html" with inline=step %}</li>{% endfor %}</ol><p class="example-result"><strong>Result:</strong> {{ block.result }}</p><p><strong>Interpretation:</strong> {{ block.interpretation }}</p></section>
+{% elif block.type == "diagnostic_example" %}
+  <section class="diagnostic-example"><h3>{{ block.title }}</h3><dl><dt>Observed behavior</dt><dd>{{ block.observed_behavior }}</dd><dt>Relevant conditions</dt><dd>{{ block.conditions }}</dd><dt>Candidate causes</dt><dd>{{ block.candidate_causes }}</dd><dt>Reasoning and likely cause</dt><dd>{{ block.reasoning }}</dd><dt>Recommended investigation</dt><dd>{{ block.recommended_action }}</dd></dl></section>
+{% elif block.type == "procedure" %}
+  <section class="procedure"><h3>{{ block.title }}</h3><ol>{% for item in block.steps %}<li>{% include "education_runtime/inline_content.html" with inline=item %}</li>{% endfor %}</ol></section>
+{% elif block.type == "principle" or block.type == "rule" or block.type == "theorem" %}
+  <aside class="principle"><h3>{{ block.title }}</h3><p>{% include "education_runtime/inline_content.html" with inline=block.inline %}</p></aside>
+{% elif block.type == "quote" %}
+  <figure class="source-quote"><blockquote>{{ block.text }}</blockquote><figcaption>{{ block.citation }}</figcaption></figure>
+{% elif block.type == "source_reference" %}
+  <p class="source-reference"><strong>Source:</strong> <code>{{ block.file_path }}</code>{% if block.symbol %}, <code>{{ block.symbol }}</code>{% endif %}{% if block.line_range %}, lines {{ block.line_range }}{% endif %}</p>
+{% endif %}
+

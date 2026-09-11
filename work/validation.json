@@ -1,0 +1,11 @@
+{
+  "checks": [
+    "46 original numbered sections retained; section 2 navigation replaced explicitly",
+    "81 relative Markdown links checked",
+    "Fixture metadata, question prose and equation bytes preserved",
+    "Paired lesson/question fragments pass applicable existing validator checks; no whole-curriculum pass claimed",
+    "26 source snapshots matched GitHub blob IDs allowing one transport-added terminal newline"
+  ],
+  "errors": [],
+  "scope": "Documentation and illustrative fragments only; no general Markdown converter or complete curriculum generated; no application code changed."
+}
